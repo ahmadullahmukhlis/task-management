@@ -63,6 +63,13 @@ class UserManagementController extends Controller
         ]);
         return $token;
     }
+    public function register(Request $request) {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+        ]);
+    }
 
     public function changePassword(){
         $data = \request()->validate([

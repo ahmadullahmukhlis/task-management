@@ -57,5 +57,6 @@ Route::get('language/words', [\App\Http\Controllers\Configurations\LanguagesCont
 Route::middleware('auth:sanctum')->post('/logout', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'logout']);
 
 Route::post('/login', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'login']);
+Route::post('/register', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'register']);
 Route::any('general/{what}', [\App\Http\Controllers\GeneralController::class, "what"]);
 
