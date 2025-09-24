@@ -473,6 +473,8 @@ import { Form as ValidationForm, Field } from 'vee-validate'
 import * as yup from 'yup'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
+import { errorHandler } from 'src/lib/errorHandler'
+import { useAuthStore } from 'src/stores/UserManagementStores/AuthStore'
 
 export default defineComponent({
     name: 'AuthPage',
@@ -481,8 +483,10 @@ export default defineComponent({
         Field,
     },
     setup() {
-        const $q = useQuasar()
+        const authStore = useAuthStore()
         const router = useRouter()
+        const $q = useQuasar()
+
 
         // Login form validation schema
         const loginSchema = yup.object({
@@ -509,7 +513,8 @@ export default defineComponent({
             loginSchema,
             signupSchema,
             $q,
-            router
+            router,
+            authStore
         }
     },
     data() {
@@ -533,30 +538,31 @@ export default defineComponent({
         async onLoginSubmit(values, actions) {
             this.loginLoading = true
 
-            try {
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 1500))
-
+           try {
+                await this.authStore.getToken()
+                const result = await this.authStore.login(
+                    values?.email,
+                    values?.password,
+                    values?.remember,
+                )
+                this.loading = false
+                this.authStore.token = result.data
+                localStorage.setItem('token', result.data)
                 this.$q.notify({
-                    message: 'Logged in successfully! Redirecting...',
-                    color: 'positive',
-                    position: 'top',
-                    icon: 'check_circle',
-                    timeout: 2000
+                    message: 'Logged in successfully',
+                    color: 'green',
                 })
-
-                // Redirect to dashboard
-                await this.router.push('/dashboard')
-            } catch (error) {
+                await this.router.push('/')
+                window.location.reload()
+            } catch (e) {
+                this.loading = false
                 this.$q.notify({
-                    message: 'Login failed. Please check your credentials.',
-                    color: 'negative',
-                    position: 'top',
-                    icon: 'error'
+                    message: 'Something went wrong',
+                    color: 'red',
                 })
-                actions.setFieldError('email', 'Invalid credentials')
-                actions.setFieldError('password', 'Invalid credentials')
-            } finally {
+                console.log(e)
+                errorHandler(e, actions.setErrors)
+            }finally {
                 this.loginLoading = false
             }
         },
