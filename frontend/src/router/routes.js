@@ -22,6 +22,9 @@ const routes = [
     {
         path: '/login',
         component: () => import('pages/LoginPage.vue'),
+    },    {
+        path: '/message',
+        component: () => import('pages/messagePage.vue'),
     },
 
     {
