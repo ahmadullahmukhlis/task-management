@@ -185,23 +185,27 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, onUnmounted } from 'vue'
+import { defineComponent } from 'vue'
 import { useQuasar } from 'quasar'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+
+import { lOCALdecrypt } from 'src/lib/crypto'
 
 export default defineComponent({
     name: 'EmailVerificationPage',
     setup() {
         const $q = useQuasar()
         const router = useRouter()
-
+        const route = useRoute();
+      const encryptedParam = decodeURIComponent(route.params.email)
         // Get user email from route params or store
-        const userEmail = ref('user@example.com') // This would typically come from your auth store
+        const userEmail = lOCALdecrypt(encryptedParam) // This would typically come from your auth store
 
         return {
             userEmail,
             $q,
-            router
+            router,
+            route
         }
     },
     data() {
@@ -210,7 +214,8 @@ export default defineComponent({
             resendCooldownInterval: null,
             verificationSuccess: false,
             supportDialog: false,
-            checkingStatus: false
+            checkingStatus: false ,
+
         }
     },
     computed: {

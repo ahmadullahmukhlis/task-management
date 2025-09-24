@@ -475,7 +475,7 @@ import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 import { errorHandler } from 'src/lib/errorHandler'
 import { useAuthStore } from 'src/stores/UserManagementStores/AuthStore'
-import { encrypt } from 'src/lib/crypto'
+import {  LocalEncrypt } from 'src/lib/crypto'
 
 export default defineComponent({
     name: 'AuthPage',
@@ -587,7 +587,10 @@ export default defineComponent({
                     message: 'The Account Has been Register Please Confirm Your email',
                     color: 'green',
                 })
-                await this.router.push(`/message/${encrypt(values.email)}`)
+               // inside onSignupSubmit
+const encrypted = LocalEncrypt(values.email)
+await this.router.push(`/message/${encodeURIComponent(encrypted)}`)
+
             } catch (e) {
                 this.loading = false
                 this.$q.notify({
