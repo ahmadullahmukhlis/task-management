@@ -571,31 +571,33 @@ export default defineComponent({
         async onSignupSubmit(values, actions) {
             this.signupLoading = true
 
-            try {
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 2000))
-
+         try {
+                await this.authStore.getToken()
+                const result = await this.authStore.register(
+                    values?.name,
+                    values?.email,
+                    values?.password,
+                    values?.terms,
+                )
+                this.loading = false
+                this.authStore.token = result.data
+                localStorage.setItem('token', result.data)
                 this.$q.notify({
-                    message: 'Account created successfully! Please check your email for verification.',
-                    color: 'positive',
-                    position: 'top',
-                    icon: 'check_circle',
-                    timeout: 3000
+                    message: 'The Account Has been Register Please Confirm Your email',
+                    color: 'green',
                 })
+                await this.router.push('/')
 
-                // Switch to login tab after successful signup
-                setTimeout(() => {
-                    this.activeTab = 'login'
-                }, 2000)
-            } catch (error) {
+            } catch (e) {
+                this.loading = false
                 this.$q.notify({
-                    message: 'Signup failed. This email might already be registered.',
-                    color: 'negative',
-                    position: 'top',
-                    icon: 'error'
+                    message: 'Something went wrong',
+                    color: 'red',
                 })
-            } finally {
-                this.signupLoading = false
+                console.log(e)
+                errorHandler(e, actions.setErrors)
+            }finally {
+               this.signupLoading = false
             }
         },
 
