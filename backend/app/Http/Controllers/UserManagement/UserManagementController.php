@@ -69,6 +69,25 @@ class UserManagementController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
         ]);
+                DB::transaction(function () use ($request) {
+            $fullName = $request->name;
+            $parts = explode(' ', trim($fullName), 2);
+
+            $user = User::create([
+                'first_name' => $parts[0],
+                'last_name' => $parts[1] ?? '',
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+            $this->userService->verification($user, $request);
+            $user->student()->create([
+                'first_name' => $parts[0],
+                'last_name' => $parts[1] ?? '',
+                'email' => $request->email,
+            ]);
+        });
+
+        return response()->json(['status' => true, 'message' => 'Successfully registered please check your email for activation']);
     }
 
     public function changePassword(){
