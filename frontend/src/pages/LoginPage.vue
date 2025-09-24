@@ -333,10 +333,7 @@
                                         </template>
                                     </q-input>
                                 </Field>
-                                <div class="flex items-center mt-1 text-xs text-gray-500">
-                                    <q-icon name="info" size="12px" class="mr-1" />
-                                    Must be at least 8 characters with numbers and symbols
-                                </div>
+
                             </div>
 
                             <!-- Confirm Password Field -->
@@ -449,7 +446,7 @@
             </div>
 
             <!-- Bottom Navigation Helper -->
-            <div class="p-4 mt-6 text-center bg-white/80 rounded-2xl backdrop-blur-sm">
+            <div class="p-4 mt-2 text-center bg-white/80 rounded-2xl backdrop-blur-sm">
                 <p v-if="activeTab === 'login'" class="text-sm text-gray-600">
                     Don't have an account?
                     <a href="#" @click.prevent="switchTab('signup')" class="ml-1 font-semibold text-green-600 hover:text-green-500">
