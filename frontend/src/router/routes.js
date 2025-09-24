@@ -23,7 +23,7 @@ const routes = [
         path: '/login',
         component: () => import('pages/LoginPage.vue'),
     },    {
-        path: '/message',
+        path: '/message/:email',
         component: () => import('pages/messagePage.vue'),
     },
 
