@@ -1,13 +1,14 @@
 // src/utils/crypto.js
 import CryptoJS from 'crypto-js'
 
-const SECRET = 'my-secret-key' // keep it safe
+// get key from env
+const SECRET = import.meta.env.VITE_ENCRYPTION_KEY
 
-export function encryptEmail(email) {
+export function encrypt(email) {
   return CryptoJS.AES.encrypt(email, SECRET).toString()
 }
 
-export function decryptEmail(cipherText) {
+export function decrypt(cipherText) {
   const bytes = CryptoJS.AES.decrypt(cipherText, SECRET)
   return bytes.toString(CryptoJS.enc.Utf8)
 }
