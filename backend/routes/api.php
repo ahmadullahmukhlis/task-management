@@ -58,5 +58,6 @@ Route::middleware('auth:sanctum')->post('/logout', [\App\Http\Controllers\UserMa
 
 Route::post('/login', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'register']);
+Route::post('/resend', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'resend']);
 Route::any('general/{what}', [\App\Http\Controllers\GeneralController::class, "what"]);
 

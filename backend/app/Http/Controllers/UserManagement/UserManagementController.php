@@ -99,8 +99,10 @@ class UserManagementController extends Controller
                 'email' => ['User is not fund.'],
                 ]);
             }
+            $this->userService->expired($user);
 
              $this->userService->verification($user, $request);
+        return response()->json(['status' => true, 'message' => 'Successfully registered please check your email for activation']);
 
     }
 
