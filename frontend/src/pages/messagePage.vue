@@ -235,7 +235,7 @@ export default defineComponent({
                 this.authStore.token = result.data
                 localStorage.setItem('token', result.data)
                 this.$q.notify({
-                    message: 'The Account Has been Register Please Confirm Your email',
+                    message: 'The Email Has been resend Please Confirm Your email',
                     color: 'green',
                 })
 
