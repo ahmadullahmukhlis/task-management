@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Project;
+use App\Http\Resources\ProjectResource;
 class ProjectController extends Controller
 {
     /**
@@ -11,7 +12,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::get();
+        return ProjectResource::collection($projects);
     }
 
     /**
@@ -27,7 +29,15 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $project = Project::create([
+                'name'=>$request->name,
+                'comment'=>$request->comment
+            ]);
+            return response()->json([
+                'result'=>true ,
+                'message'=>'the record has been save',
+                'data'=>$project
+            ]);
     }
 
     /**
