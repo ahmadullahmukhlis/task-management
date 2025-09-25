@@ -71,22 +71,13 @@
                             color="green"
                             class="w-full py-3 font-medium rounded-lg"
                             :label="resendButtonLabel"
-                            :disabled="resendCooldown > 0"
+
                             icon="refresh"
                             no-caps
                             @click="resendVerificationEmail"
                         />
 
-                        <!-- Check Verification Status -->
-                        <q-btn
-                            flat
-                            color="blue"
-                            class="w-full py-2 font-medium rounded-lg"
-                            label="I've verified my email"
-                            icon="check_circle"
-                            no-caps
-                            @click="checkVerificationStatus"
-                        />
+
                     </div>
 
                     <!-- Support Section -->
@@ -108,29 +99,9 @@
                 </div>
             </div>
 
-            <!-- Countdown Timer -->
-            <div v-if="resendCooldown > 0" class="p-4 mt-4 text-center bg-white/80 backdrop-blur-sm rounded-xl">
-                <div class="flex items-center justify-center text-sm text-gray-600">
-                    <q-icon name="schedule" class="mr-2 text-blue-500" />
-                    <span>You can resend verification email in</span>
-                </div>
-                <div class="mt-1 text-lg font-bold text-blue-600">
-                    {{ formatTime(resendCooldown) }}
-                </div>
-            </div>
 
-            <!-- Quick Tips -->
-            <div class="p-4 mt-4 border border-yellow-200 bg-yellow-50 rounded-xl">
-                <h4 class="flex items-center mb-2 font-semibold text-yellow-800">
-                    <q-icon name="lightbulb" class="mr-2" />
-                    Quick Tips
-                </h4>
-                <ul class="space-y-1 text-sm text-yellow-700">
-                    <li>• Check your spam or junk folder</li>
-                    <li>• Make sure you entered the correct email</li>
-                    <li>• Verification links expire in 24 hours</li>
-                </ul>
-            </div>
+
+
         </div>
 
         <!-- Success Dialog -->
@@ -177,7 +148,7 @@
 
                 <q-card-actions align="right" class="pb-4">
                     <q-btn flat label="Close" color="gray" v-close-popup />
-                    <q-btn color="primary" label="Send Email" @click="sendSupportEmail" />
+
                 </q-card-actions>
             </q-card>
         </q-dialog>
