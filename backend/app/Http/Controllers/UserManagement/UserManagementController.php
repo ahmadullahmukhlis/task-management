@@ -13,6 +13,7 @@ use App\Http\Resources\UserResource;
 use App\Models\LoginLog;
 use App\Models\User;
 use App\Models\UserRole;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,10 @@ use Spatie\Activitylog\Models\Activity;
 
 class UserManagementController extends Controller
 {
+    public function __construct(protected UserService $userService)
+    {
+
+    }
     public function login(Request $request){
         $request->validate([
             'email' => 'required',
@@ -80,14 +85,23 @@ class UserManagementController extends Controller
                 'password' => Hash::make($request->password),
             ]);
             $this->userService->verification($user, $request);
-            $user->student()->create([
-                'first_name' => $parts[0],
-                'last_name' => $parts[1] ?? '',
-                'email' => $request->email,
-            ]);
         });
 
         return response()->json(['status' => true, 'message' => 'Successfully registered please check your email for activation']);
+    }
+    public function resend(Request $request) {
+            $request->validate([
+                 'email' => 'required',
+            ]);
+            $user = User::where('email',$request->email)->first();
+            if(!$user) {
+                  throw ValidationException::withMessages([
+                'email' => ['User is not fund.'],
+                ]);
+            }
+
+             $this->userService->verification($user, $request);
+
     }
 
     public function changePassword(){

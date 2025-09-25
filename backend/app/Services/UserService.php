@@ -35,6 +35,11 @@ class UserService
 
         return $verify;
     }
+    public function expired($user) {
+        return UserVerification::where('user_id',$user->id)->update([
+            'status'=>'verified'
+        ]);
+    }
 
     private function generateUniqueOtp()
     {
