@@ -190,6 +190,8 @@ import { useQuasar } from 'quasar'
 import { useRoute, useRouter } from 'vue-router'
 
 import { lOCALdecrypt } from 'src/lib/crypto'
+import { errorHandler } from 'src/lib/errorHandler'
+import { useAuthStore } from 'src/stores/UserManagementStores/AuthStore'
 
 export default defineComponent({
     name: 'EmailVerificationPage',
@@ -197,6 +199,7 @@ export default defineComponent({
         const $q = useQuasar()
         const router = useRouter()
         const route = useRoute();
+        const authStore = useAuthStore()
       const encryptedParam = decodeURIComponent(route.params.email)
         // Get user email from route params or store
         const userEmail = lOCALdecrypt(encryptedParam) // This would typically come from your auth store
@@ -205,7 +208,7 @@ export default defineComponent({
             userEmail,
             $q,
             router,
-            route
+            route,authStore
         }
     },
     data() {
@@ -246,42 +249,34 @@ export default defineComponent({
             // In a real app, this would open the default email client
             setTimeout(() => {
                 window.location.href = 'mailto:'
-            }, 1000)
+            }, 100)
         },
 
         // Resend verification email
         async resendVerificationEmail() {
-            if (this.resendCooldown > 0) return
 
-            this.$q.notify({
-                message: 'Sending verification email...',
-                color: 'info',
-                icon: 'send',
-                position: 'top'
-            })
-
-            try {
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 1500))
-
+          try {
+                await this.authStore.getToken()
+                const result = await this.authStore.resend(
+                  this.userEmail
+                )
+                this.loading = false
+                this.authStore.token = result.data
+                localStorage.setItem('token', result.data)
                 this.$q.notify({
-                    message: 'Verification email sent successfully!',
-                    color: 'positive',
-                    icon: 'check_circle',
-                    position: 'top'
+                    message: 'The Account Has been Register Please Confirm Your email',
+                    color: 'green',
                 })
 
-                // Start cooldown timer (5 minutes)
-                this.resendCooldown = 300
-                this.startCooldownTimer()
 
-            } catch (error) {
+            } catch (e) {
+                this.loading = false
                 this.$q.notify({
-                    message: 'Failed to send verification email. Please try again.',
-                    color: 'negative',
-                    icon: 'error',
-                    position: 'top'
+                    message: 'Something went wrong',
+                    color: 'red',
                 })
+                console.log(e)
+                errorHandler(e)
             }
         },
 

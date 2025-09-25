@@ -19,6 +19,12 @@ export const useAuthStore = defineStore('AuthStore', {
                 remember,
             })
         },
+          async resend(email) {
+            return await api.post('resend', {
+                email,
+
+            })
+        },
           async register(name,email, password, terms = false) {
             return await api.post('register', {
               name,
