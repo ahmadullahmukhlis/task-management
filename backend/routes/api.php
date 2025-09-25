@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ProjectController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -48,6 +48,10 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::post('backup/change', [\App\Http\Controllers\Configurations\BackupController::class, 'change']);
         Route::delete('backup/delete/{db}', [\App\Http\Controllers\Configurations\BackupController::class, 'delete']);
         Route::resource('backup', \App\Http\Controllers\Configurations\BackupController::class);
+    });
+    Route::prefix('projects')->Controller(ProjectController::class)->group(function() {
+        Route::get('/','index');
+        Route::post('/','index');
     });
 
     Route::resource('notifications', \App\Http\Controllers\NotificationController::class);
