@@ -31,7 +31,7 @@ class UserService
             'user_agent' => $request->header('User-Agent'),
             'device' => $this->getDevice($request->header('User-Agent')),
         ]);
-        Mail::to($user->email)->queue(new OtpLoginMail($user, $otp));
+        Mail::to($user->email)->send(new OtpLoginMail($user, $otp));
 
         return $verify;
     }
