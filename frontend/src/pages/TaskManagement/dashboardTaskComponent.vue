@@ -115,6 +115,7 @@
           color="purple"
           icon="add"
           no-caps
+          @click="openProject"
         />
       </div>
 
@@ -169,13 +170,19 @@
       </div>
     </div>
   </div>
+  <ProjectFormModel   v-if="projectModel"
+        :handle-modal="closeModel"
+        :project="null"
+        />
 </template>
 
 <script>
 import { ref } from 'vue'
+import ProjectFormModel from './ProjectFormModel.vue'
 
 export default {
   name: 'dashboardTaskComponent',
+  components:{ProjectFormModel},
   setup() {
     const stats = ref([
       {
@@ -330,7 +337,18 @@ export default {
       recentActivities,
       projects
     }
-  }
+  },data(){
+    return {
+      projectModel :false
+    }
+  },
+      methods: {
+        closeModel(){
+          this.projectModel =false
+        },openProject() {
+          this.projectModel = true;
+        }
+      }
 }
 </script>
 

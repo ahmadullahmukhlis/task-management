@@ -49,7 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::delete('backup/delete/{db}', [\App\Http\Controllers\Configurations\BackupController::class, 'delete']);
         Route::resource('backup', \App\Http\Controllers\Configurations\BackupController::class);
     });
-    Route::prefix('projects')->Controller(ProjectController::class)->group(function() {
+    Route::prefix('projects')->controller(ProjectController::class)->group(function() {
         Route::get('/','index');
         Route::post('/','index');
     });

@@ -210,14 +210,14 @@
                                 :error="errorMessage"
                             />
                         </div>
-                        <div v-if="field.type === 'tip_editor'">
+                        <!-- <div v-if="field.type === 'tip_editor'">
                             <p class="font-bold">{{ field?.label }}</p>
                             <tip-editor
                                 :defaultValue="value"
                                 :errorMessage="errorMessage"
                                 @onChange="data => formField.onChange(data)"
                             />
-                        </div>
+                        </div> -->
                     </div>
                 </field>
             </template>
@@ -269,16 +269,16 @@ import { errorHandler } from 'src/lib/errorHandler'
 import NewSelectComponent from 'components/NewSelectComponent.vue'
 import FormValuesListener from 'components/FormValuesListener.vue'
 import MoneyInput from 'components/MonyField.vue'
-import FileSelectorComponent from 'components/FileSelectorComponent.vue'
+// import FileSelectorComponent from 'components/FileSelectorComponent.vue'
 import FullEditorComponent from 'components/FullEditorComponent.vue'
-import TipEditorComponent from 'components/TipEditor/TipEditorComponent.vue'
+// import TipEditorComponent from 'components/TipEditor/TipEditorComponent.vue'
 import ColorPacker from './ColorPacker.vue'
 
 export default {
     components: {
-        TipEditor: TipEditorComponent,
+        // TipEditor: TipEditorComponent,
         FullEditorComponent,
-        FileSelectorComponent,
+        // FileSelectorComponent,
         MoneyInput,
         FormValuesListener,
         DatepickerComponent,
