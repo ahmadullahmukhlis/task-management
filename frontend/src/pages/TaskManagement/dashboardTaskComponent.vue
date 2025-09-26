@@ -119,9 +119,15 @@
         />
       </div>
 
+          <ServerData
+            url="projects"
+            v-slot="{ data }"
+            id="project"
+        >
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <q-card
-          v-for="project in projects"
+
+           <q-card
+          v-for="project in data"
           :key="project.id"
           class="transition-shadow bg-white rounded-lg shadow-sm cursor-pointer hover:shadow-md"
         >
@@ -139,7 +145,7 @@
               </div>
             </div>
 
-            <p class="mb-4 text-sm text-gray-600">{{ project.description }}</p>
+            <p class="mb-4 text-sm text-gray-600" v-html="project.description"></p>
 
             <div class="flex items-center justify-between">
               <div class="flex -space-x-2">
@@ -168,6 +174,8 @@
           </q-card-section>
         </q-card>
       </div>
+        </ServerData>
+
     </div>
   </div>
   <ProjectFormModel   v-if="projectModel"
@@ -180,10 +188,11 @@
 <script>
 import { ref } from 'vue'
 import ProjectFormModel from './ProjectFormModel.vue'
+import ServerData from 'src/components/ServerData.vue'
 
 export default {
   name: 'dashboardTaskComponent',
-  components:{ProjectFormModel},
+  components:{ProjectFormModel , ServerData},
   setup() {
     const stats = ref([
       {
@@ -286,57 +295,12 @@ export default {
       }
     ])
 
-    const projects = ref([
-      {
-        id: 1,
-        name: 'Website Redesign',
-        initials: 'WR',
-        color: 'bg-purple-600',
-        description: 'Complete overhaul of company website with modern design',
-        tasks: 24,
-        progress: 65,
-        progressColor: 'purple',
-        members: [
-          { initials: 'AJ', color: 'blue' },
-          { initials: 'SW', color: 'green' },
-          { initials: 'TS', color: 'orange' }
-        ]
-      },
-      {
-        id: 2,
-        name: 'Mobile App',
-        initials: 'MA',
-        color: 'bg-blue-600',
-        description: 'Development of new mobile application for iOS and Android',
-        tasks: 18,
-        progress: 30,
-        progressColor: 'blue',
-        members: [
-          { initials: 'YD', color: 'purple' },
-          { initials: 'MJ', color: 'red' }
-        ]
-      },
-      {
-        id: 3,
-        name: 'Q4 Marketing',
-        initials: 'QM',
-        color: 'bg-green-600',
-        description: 'Quarterly marketing campaign planning and execution',
-        tasks: 12,
-        progress: 85,
-        progressColor: 'green',
-        members: [
-          { initials: 'TS', color: 'orange' },
-          { initials: 'RK', color: 'teal' }
-        ]
-      }
-    ])
 
     return {
       stats,
       myTasks,
       recentActivities,
-      projects
+
     }
   },data(){
     return {

@@ -17,12 +17,12 @@ class ProjectResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            'comment'=>$this->comment,
+            'description'=>$this->comment,
             'initials'=>$this->firstTwoWords($this->name),
-            'color'=>$this->dynamicBgColor(),
+            'color'=>'bg-'.$this->color($this->id),
             'tasks'=>25 + $this->id,
             'progress'=>$this->id + 41,
-            'progressColor'=>$this->color(),
+            'progressColor'=>$this->color($this->id),
             'members'=>[
                 [
                     'initials'=>'AJ',
@@ -70,22 +70,31 @@ class ProjectResource extends JsonResource
 
         return $colors[array_rand($colors)];
     }
-      private   function color(): string
-    {
+private function color(?int $id = null): string
+{
+    $colors = [
+        'blue',
+        'pink',
+        'purple',
+        'green',
+        'yellow',
+        'red',
+        'indigo',
+        'teal',
+        'orange',
+        'gray',
+    ];
 
- $colors = [
-            'blue',
-            'pink',
-            'purple',
-            'green',
-            'yellow',
-            'red',
-            'indigo',
-            'teal',
-            'orange',
-            'gray',
-        ];
-
+    if ($id === null) {
+        // no id passed → random colour
         return $colors[array_rand($colors)];
     }
+
+    // id passed → pick by index (wrap if bigger than array)
+    // ensure non-negative integer
+    $index = abs($id) % count($colors);
+
+    return $colors[$index];
+}
+
 }
