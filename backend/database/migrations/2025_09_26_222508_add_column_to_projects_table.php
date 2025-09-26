@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->longtext('comment')->nullable();
-            $table->timestamps();
+        Schema::table('projects', function (Blueprint $table) {
+            $table->unsignedBigInteger('created_by');
         });
     }
 
@@ -24,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-         Schema::table('projects', function (Blueprint $table) {
-            $table->dropColumn('nickname');
+        Schema::table('projects', function (Blueprint $table) {
+            //
         });
     }
 };
