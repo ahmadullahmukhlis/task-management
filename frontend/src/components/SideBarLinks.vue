@@ -13,10 +13,10 @@
         >
         <div v-for="item in data" :key="item.id" class="my-1">
           <SidebarLink
-            icon="dashboard"
+            :icon="item.icon"
             :name="$translate(item.name)"
             :to="`/projects/${url(this.item)}`"
-            :active="generalStore.active_page === 'home'"
+            :active="generalStore.active_page === url(this.id)"
         />
         </div>
         </ServerData>
