@@ -24,7 +24,23 @@
           :method="project ? 'PUT' : 'POST'"
           service="CashrenevalSystem"
           submit-area-class-name="mt-3"
-          :fields="fields"
+          :fields="
+ [               {
+        label: translate('Project Name'),
+        type: 'text',
+        name: 'name',
+        value: project?.name ??'',
+        validation: yup.string().required(),
+      },
+      {
+        label: translate('Description'),
+        type: 'editor',
+        name: 'comment',
+              value: project?.description ??'',
+
+        validation: yup.string().required(),
+      },]
+          "
         />
       </q-card-section>
     </q-card>
@@ -49,29 +65,14 @@ export default defineComponent({
     const generalStore = useGeneralStore()
     const { translate } = useLanguageStore()
 
-    const fields = [
-      {
-        label: translate('Project Name'),
-        type: 'text',
-        name: 'name',
-        value: '',
-        validation: yup.string().required(),
-      },
-      {
-        label: translate('Description'),
-        type: 'editor',
-        name: 'comment',
-        value: '',
-        validation: yup.string().required(),
-      },
-    ]
+
 
     return {
       q,
       generalStore,
       translate,
       yup,
-      fields,
+
     }
   },
 })

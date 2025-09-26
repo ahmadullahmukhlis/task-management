@@ -148,13 +148,13 @@
               </div>
               </div>
 
-            <div v-if="project.created_by">
+            <div >
     <q-btn  icon="more_vert" flat
   dense  >
       <q-menu persistent auto-close>
         <q-list style="min-width: 100px">
           <q-item clickable>
-            <q-item-section>edit</q-item-section>
+            <q-item-section @click="openProject(project)">edit</q-item-section>
           </q-item>
           <q-item clickable>
            Add User
@@ -326,14 +326,18 @@ export default {
   },data(){
     return {
       projectModel :false ,
-      open : false
+      open : false ,
+      project:null
     }
   },
       methods: {
         closeModel(){
           this.projectModel =false
-        },openProject() {
+          this.project =null
+        },openProject(project = null) {
           this.projectModel = true;
+          this.project =project
+
         }
       }
 }
