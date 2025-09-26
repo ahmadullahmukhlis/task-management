@@ -54,7 +54,8 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $project = Project::find($id);
+        return  new  ProjectResource($project);
     }
 
     /**
@@ -62,7 +63,17 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $project = Project::find($id);
+
+        $project->update([
+            'name'=>$request->name,
+                'comment'=>$request->comment,
+        ]);
+             return response()->json([
+                'result'=>true ,
+                'message'=>'the record has been updated',
+                'data'=>$project
+            ]);
     }
 
     /**
