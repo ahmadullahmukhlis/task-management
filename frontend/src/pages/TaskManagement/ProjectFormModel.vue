@@ -7,7 +7,13 @@
         </p>
       </q-card-section>
       <q-card-section>
-        <form-builder-component
+             <ServerData
+            :url="`projects/${project?.id}`"
+            v-slot="{ data }"
+            :fetchData="project??false"
+            id="project"
+        >
+          <form-builder-component
           :action="project ? `projects/${project?.id}` : `projects/add`"
           class-name="grid grid-cols-1 gap-x-3"
           :on-submit-completed="
@@ -29,19 +35,21 @@
         label: translate('Project Name'),
         type: 'text',
         name: 'name',
-        value: project?.name ??'',
+        value: data?.name ??'',
         validation: yup.string().required(),
       },
       {
         label: translate('Description'),
         type: 'editor',
         name: 'comment',
-              value: project?.description ??'',
+              value: data?.description ??'',
 
         validation: yup.string().required(),
       },]
           "
         />
+        </ServerData>
+
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -54,11 +62,12 @@ import { useQuasar } from 'quasar'
 import { useGeneralStore } from 'stores/generalStore'
 import { useLanguageStore } from 'stores/languageStore'
 import FormBuilderComponent from 'src/components/FormBuilderComponent.vue'
+import ServerData from 'src/components/ServerData.vue'
 
 export default defineComponent({
   name: 'ProjectFormModel',
   props: ['model', 'handleModelClose', 'mutate', 'project'],
-  components: { FormBuilderComponent },
+  components: { FormBuilderComponent ,ServerData },
 
   setup() {
     const q = useQuasar()

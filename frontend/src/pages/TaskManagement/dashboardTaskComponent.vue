@@ -202,7 +202,7 @@
   <ProjectFormModel   v-if="projectModel"
         :handle-modal="projectModel"
         :handleModelClose="closeModel"
-        :project="null"
+        :project="project"
         />
 </template>
 
