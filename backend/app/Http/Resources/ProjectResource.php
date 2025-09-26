@@ -38,7 +38,8 @@ class ProjectResource extends JsonResource
                     'initials'=>'AJ',
                     'color'=> $this->color()
                 ]
-            ]
+                ],
+                'created_by'=> $this->created_by == auth()->user()->id ? true : false
 
         ];
     }
