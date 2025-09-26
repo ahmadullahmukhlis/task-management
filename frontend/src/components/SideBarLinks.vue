@@ -6,6 +6,20 @@
             to="/"
             :active="generalStore.active_page === 'home'"
         />
+              <ServerData
+            url="projects"
+            v-slot="{ data }"
+            id="project"
+        >
+        <div v-for="item in data" :key="item.id" class="my-1">
+          <SidebarLink
+            icon="dashboard"
+            :name="$translate(item.name)"
+            :to="`/projects/${url(this.item)}`"
+            :active="generalStore.active_page === 'home'"
+        />
+        </div>
+        </ServerData>
         <!-- <protected-component permission-key="user-management-access">
             <SidebarLink
                 icon="people"
@@ -28,15 +42,25 @@
 import { defineComponent } from 'vue'
 import { useGeneralStore } from 'stores/generalStore'
 import SidebarLink from 'components/SidebarLink.vue'
+import { LocalEncrypt } from 'src/lib/crypto'
+import ServerData from './ServerData.vue'
 
 export default defineComponent({
     name: 'SidebarLinks',
-    components: {  SidebarLink },
+    components: {  SidebarLink ,ServerData},
     setup() {
         const generalStore = useGeneralStore()
+
+
         return {
             generalStore,
+
         }
     },
+    methods : {
+      url(link) {
+        return encodeURIComponent(LocalEncrypt(link));
+      }
+    }
 })
 </script>
