@@ -16,6 +16,8 @@ const routes = [
                     disable_layout: true,
                 },
             },
+            { path: 'projects/:id', component: () => import('pages/IndexPage.vue') },
+
         ],
     },
 
