@@ -132,17 +132,38 @@
           class="transition-shadow bg-white rounded-lg shadow-sm cursor-pointer hover:shadow-md"
         >
           <q-card-section class="p-4">
-            <div class="flex items-center mb-3">
-              <div
+            <div class="flex justify-between mb-3">
+              <div>
+                        <div
                 class="flex items-center justify-center w-10 h-10 mr-3 font-bold text-white rounded-md"
                 :class="project.color"
               >
-                {{ project.initials }}
+
+                 {{ project.initials }}
+
               </div>
               <div>
                 <h4 class="font-semibold text-gray-800">{{ project.name }}</h4>
                 <p class="text-xs text-gray-500">{{ project.tasks }} tasks</p>
               </div>
+              </div>
+
+                <div class="">
+    <q-btn  icon="more_vert" flat
+  dense >
+      <q-menu persistent auto-close>
+        <q-list style="min-width: 100px">
+          <q-item clickable>
+            <q-item-section>edit</q-item-section>
+          </q-item>
+          <q-item clickable>
+           Add User
+          </q-item>
+
+        </q-list>
+      </q-menu>
+    </q-btn>
+  </div>
             </div>
 
             <p class="mb-4 text-sm text-gray-600" v-html="project.description"></p>
@@ -304,7 +325,8 @@ export default {
     }
   },data(){
     return {
-      projectModel :false
+      projectModel :false ,
+      open : false
     }
   },
       methods: {

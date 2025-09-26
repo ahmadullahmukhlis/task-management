@@ -18,7 +18,7 @@ class ProjectResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'description'=>$this->comment,
-            'initials'=>$this->firstTwoWords($this->name),
+            'initials'=>$this->charecktor($this->name),
             'color'=>'bg-'.$this->color($this->id),
             'tasks'=>25 + $this->id,
             'progress'=>$this->id + 41,
@@ -42,17 +42,22 @@ class ProjectResource extends JsonResource
 
         ];
     }
-    private function firstTwoWords(string $name): string
-    {
-        $parts = array_values(array_filter(explode(' ', trim($name))));
-        if (empty($parts)) {
-            return '';
-        }
-        if (count($parts) === 1) {
-            return $parts[0];
-        }
-        return $parts[0] . ' ' . $parts[1];
+private function charecktor(string $name): string
+{
+    $parts = array_values(array_filter(explode(' ', trim($name))));
+    $initials = '';
+
+    if (!empty($parts)) {
+        $initials .= strtoupper($parts[0][0]); // first letter of first word
     }
+
+    if (count($parts) > 1) {
+        $initials .= strtoupper($parts[1][0]); // first letter of second word
+    }
+
+    return $initials;
+}
+
     private   function dynamicBgColor(): string
     {
 
