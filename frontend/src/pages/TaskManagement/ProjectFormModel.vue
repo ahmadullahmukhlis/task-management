@@ -8,7 +8,7 @@
       </q-card-section>
       <q-card-section>
         <form-builder-component
-          :action="project ? `client/update/${project.id}` : `client/add`"
+          :action="project ? `projects/${project?.id}` : `projects`"
           class-name="grid grid-cols-1 gap-x-3"
           :on-submit-completed="
             response => {
