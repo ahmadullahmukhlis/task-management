@@ -171,7 +171,8 @@
     </div>
   </div>
   <ProjectFormModel   v-if="projectModel"
-        :handle-modal="closeModel"
+        :handle-modal="projectModel"
+        :handleModelClose="closeModel"
         :project="null"
         />
 </template>

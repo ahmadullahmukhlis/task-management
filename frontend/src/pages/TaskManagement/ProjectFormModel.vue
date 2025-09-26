@@ -17,7 +17,7 @@
                 color: 'green',
               })
               handleModelClose()
-              generalStore.revalidate('client')
+              generalStore.revalidate('project')
             }
           "
           :onValuesChanged="values => { console.log(values) }"
