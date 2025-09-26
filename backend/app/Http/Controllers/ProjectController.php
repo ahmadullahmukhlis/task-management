@@ -31,7 +31,8 @@ class ProjectController extends Controller
     {
             $project = Project::create([
                 'name'=>$request->name,
-                'comment'=>$request->comment
+                'comment'=>$request->comment,
+                'created_by'=>auth()->user()->id
             ]);
             return response()->json([
                 'result'=>true ,
