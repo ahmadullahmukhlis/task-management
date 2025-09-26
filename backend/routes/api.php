@@ -51,7 +51,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     });
     Route::prefix('projects')->controller(ProjectController::class)->group(function() {
         Route::get('/','index');
-        Route::post('/','index');
+        Route::post('add','store');
     });
 
     Route::resource('notifications', \App\Http\Controllers\NotificationController::class);
