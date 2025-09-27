@@ -34,7 +34,8 @@
                       @keyup.enter="addTask"
                     >
                       <template v-slot:prepend>
-                        <q-icon name="add" class="cursor-pointer" @click="addTask" />
+                        <q-icon name="add" class="cursor-pointer"  @click="addTask" />
+
                       </template>
                     </q-input>
                   </div>
@@ -295,6 +296,7 @@
 </template>
 
 <script>
+import { api } from 'src/boot/axios'
 import { ref, computed, onMounted } from 'vue'
 
 export default {
@@ -412,15 +414,30 @@ export default {
     // Methods
     const addTask = () => {
       if (newTaskTitle.value.trim()) {
-        tasks.value.unshift({
-          id: Date.now(),
-          title: newTaskTitle.value.trim(),
+
+        try {
+        console.log(this.project)
+       const result = api.post(`tasks}`,{
+           title: newTaskTitle.value.trim(),
           description: '',
           completed: false,
           dueDate: selectedDueDate.value || '',
           priority: selectedPriority.value,
-          tags: []
-        })
+          project_id:route.parms.id
+        });
+
+             this.q.notify({
+                        message: this.$translate("the user has been add tot ehe project"),
+                        color: 'green',
+                    })
+      }catch(e) {
+        console.log(e)
+          this.q.notify({
+                        message: this.$translate(e.message),
+                        color: 'red',
+                    })
+      }
+
         newTaskTitle.value = ''
         selectedDueDate.value = ''
         selectedPriority.value = 'Medium'
