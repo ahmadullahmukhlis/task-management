@@ -405,17 +405,14 @@ generalStore,
    async saveTask () {
       if (!this.editTaskTitle.trim()) return
       if (this.editingTask) {
-        const idx = this.tasks.findIndex(t => t.id === this.editingTask.id)
-        if (idx !== -1) {
-          return
-        }
+
            try {
          const result =await api.post('tasks/update/'+this.editingTask.id, {
 
          title: this.editTaskTitle.trim(),
             description: this.editTaskDescription,
             dueDate: this.editDueDate,
-            priority: this.editPriority
+            type: this.editPriority
         })
         this.q.notify({ message: result.data.message, color: 'green' })
          this.generalStore.revalidate('tasks')

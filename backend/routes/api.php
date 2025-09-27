@@ -64,6 +64,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/project/{id}','index');
         Route::post('add','store');
         Route::post('complate/{id}','complate');
+        Route::post('update/{id}','update');
+
 
     });
 
