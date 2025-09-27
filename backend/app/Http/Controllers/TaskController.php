@@ -44,8 +44,15 @@ class TaskController extends Controller
             'title'=>$request->title,
             'description'=>$request->description,
             'type'=>$request->type,
-            'status'=>$request->status,
+            'status'=>$request->status ? 'Complate' : 'Pending',
+            'due_to'=>$request->dueDate ?? now()
         ]);
+        return response()->json(
+            [
+                'result'=>true ,
+                'message'=>'the task has been created'
+            ]
+        );
     }
 
     /**

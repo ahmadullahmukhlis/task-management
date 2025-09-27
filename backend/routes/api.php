@@ -61,7 +61,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('user/{id}','loadUser');
     });
      Route::prefix('tasks')->controller(TaskController::class)->group(function() {
-        Route::get('/project/{id]','index');
+        Route::get('/project/{id}','index');
         Route::post('add','store');
 
     });

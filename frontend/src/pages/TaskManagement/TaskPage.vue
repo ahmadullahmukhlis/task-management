@@ -57,11 +57,12 @@
 
         <!-- Task List -->
         <div class="q-mb-xl">
-          <div class="text-h6 q-mb-md">Pending List ({{ pendingTasks.length }})</div>
 
-          <div class="task-list">
+          <server-data :url="`tasks/project/${this.route.params.id}`" v-slot="data" >
+           <div class="text-h6 q-mb-md">Pending List ({{ pendingTasks.length }})</div>
+              <div class="task-list">
             <div
-              v-for="task in pendingTasks"
+              v-for="task in data"
               :key="task.id"
               class="q-mb-sm"
             >
@@ -154,6 +155,8 @@
               </q-card>
             </div>
           </div>
+          </server-data>
+
         </div>
 
         <!-- Completed Tasks Section -->
@@ -297,285 +300,223 @@
 
 <script>
 import { api } from 'src/boot/axios'
-import { ref, computed, onMounted } from 'vue'
+import { useQuasar } from 'quasar'
+import ServerData from 'src/components/ServerData.vue';
+import { useRoute } from 'vue-router';
 
 export default {
   name: 'TaskListApp',
-  setup() {
-    // State
-    const leftDrawerOpen = ref(true)
-    const newTaskTitle = ref('')
-    const showDueDatePicker = ref(false)
-    const showPriorityDialog = ref(false)
-    const showEditDialog = ref(false)
-    const selectedDueDate = ref('')
-    const selectedPriority = ref('Medium')
-    const activeMenu = ref('today')
-    const activeProject = ref(1)
+  components : {
+    ServerData
+  },
 
-    // Edit task state
-    const editingTask = ref(null)
-    const editTaskTitle = ref('')
-    const editTaskDescription = ref('')
-    const editDueDate = ref('')
-    const editPriority = ref('Medium')
+  data () {
+    const q = useQuasar();
+    const route = useRoute();
+    return {
+      leftDrawerOpen: true,
+      newTaskTitle: '',
+      showDueDatePicker: false,
+      showPriorityDialog: false,
+      showEditDialog: false,
+      selectedDueDate: '',
+      selectedPriority: 'Medium',
+      activeMenu: 'today',
+      activeProject: 1,
 
-    // Static data
-    const tasks = ref([
-      {
-        id: 1,
-        title: 'Design new dashboard layout',
-        description: 'Create wireframes and mockups for the new dashboard',
-        completed: false,
-        dueDate: '2024/09/28',
-        priority: 'High',
-        tags: ['Design', 'UI/UX']
-      },
-      {
-        id: 2,
-        title: 'Implement user authentication',
-        description: 'Set up login and registration functionality',
-        completed: false,
-        dueDate: '2024/09/30',
-        priority: 'Medium',
-        tags: ['Backend', 'Security']
-      },
-      {
-        id: 3,
-        title: 'Write documentation for API',
-        description: 'Create comprehensive API documentation for developers',
-        completed: false,
-        dueDate: '2024/10/02',
-        priority: 'Low',
-        tags: ['Documentation']
-      },
-      {
-        id: 4,
-        title: 'Meeting with design team',
-        description: 'Weekly sync with design team about new features',
-        completed: true,
-        dueDate: '2024/09/26',
-        priority: 'Medium',
-        tags: ['Meeting', 'Design']
-      },
-      {
-        id: 5,
-        title: 'Fix mobile responsive issues',
-        description: 'Address CSS issues on mobile devices',
-        completed: false,
-        dueDate: '2024/09/29',
-        priority: 'High',
-        tags: ['Frontend', 'CSS']
-      },
-      {
-        id: 6,
-        title: 'Setup CI/CD pipeline',
-        description: 'Configure continuous integration and deployment',
-        completed: true,
-        dueDate: '2024/09/25',
-        priority: 'Medium',
-        tags: ['DevOps', 'CI/CD']
-      }
-    ])
+      editingTask: null,
+      editTaskTitle: '',
+      editTaskDescription: '',
+      editDueDate: '',
+      editPriority: 'Medium',
+      q,
+      route,
+      tasks: [
+        {
+          id: 1,
+          title: 'Design new dashboard layout',
+          description: 'Create wireframes and mockups for the new dashboard',
+          completed: false,
+          dueDate: '2024/09/28',
+          priority: 'High',
+          tags: ['Design', 'UI/UX']
+        },
+        {
+          id: 2,
+          title: 'Implement user authentication',
+          description: 'Set up login and registration functionality',
+          completed: false,
+          dueDate: '2024/09/30',
+          priority: 'Medium',
+          tags: ['Backend', 'Security']
+        },
+        {
+          id: 3,
+          title: 'Write documentation for API',
+          description: 'Create comprehensive API documentation for developers',
+          completed: false,
+          dueDate: '2024/10/02',
+          priority: 'Low',
+          tags: ['Documentation']
+        },
+        {
+          id: 4,
+          title: 'Meeting with design team',
+          description: 'Weekly sync with design team about new features',
+          completed: true,
+          dueDate: '2024/09/26',
+          priority: 'Medium',
+          tags: ['Meeting', 'Design']
+        },
+        {
+          id: 5,
+          title: 'Fix mobile responsive issues',
+          description: 'Address CSS issues on mobile devices',
+          completed: false,
+          dueDate: '2024/09/29',
+          priority: 'High',
+          tags: ['Frontend', 'CSS']
+        },
+        {
+          id: 6,
+          title: 'Setup CI/CD pipeline',
+          description: 'Configure continuous integration and deployment',
+          completed: true,
+          dueDate: '2024/09/25',
+          priority: 'Medium',
+          tags: ['DevOps', 'CI/CD']
+        }
+      ],
 
-    const projects = ref([
-      { id: 1, name: 'Website Redesign', icon: 'public', color: 'blue', count: 12 },
-      { id: 2, name: 'Mobile App', icon: 'phone_iphone', color: 'green', count: 8 },
-      { id: 3, name: 'Marketing Campaign', icon: 'campaign', color: 'orange', count: 5 },
-      { id: 4, name: 'API Development', icon: 'code', color: 'purple', count: 3 },
-      { id: 5, name: 'Customer Portal', icon: 'people', color: 'teal', count: 7 }
-    ])
+      priorityOptions: [
+        { label: 'Low', value: 'Low' },
+        { label: 'Medium', value: 'Medium' },
+        { label: 'High', value: 'High' },
+        { label: 'Urgent', value: 'Urgent' }
+      ]
+    }
+  },
 
-    const priorityOptions = [
-      { label: 'Low', value: 'Low' },
-      { label: 'Medium', value: 'Medium' },
-      { label: 'High', value: 'High' },
-      { label: 'Urgent', value: 'Urgent' }
-    ]
-
-    // Computed properties
-    const pendingTasks = computed(() => {
-      return tasks.value.filter(task => !task.completed)
-    })
-
-    const completedTasks = computed(() => {
-      return tasks.value.filter(task => task.completed)
-    })
-
-    const currentDate = computed(() => {
+  computed: {
+    pendingTasks () {
+      return this.tasks.filter(t => !t.completed)
+    },
+    completedTasks () {
+      return this.tasks.filter(t => t.completed)
+    },
+    currentDate () {
       return new Date().toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
       })
-    })
+    }
+  },
 
-    // Methods
-    const addTask = () => {
-      if (newTaskTitle.value.trim()) {
-
-        try {
-        console.log(this.project)
-       const result = api.post(`tasks}`,{
-           title: newTaskTitle.value.trim(),
+  methods: {
+    async addTask () {
+      if (!this.newTaskTitle.trim()) return
+      try {
+         const result =await api.post('tasks/add', {
+          title: this.newTaskTitle.trim(),
           description: '',
-          completed: false,
-          dueDate: selectedDueDate.value || '',
-          priority: selectedPriority.value,
-          project_id:route.parms.id
-        });
-
-             this.q.notify({
-                        message: this.$translate("the user has been add tot ehe project"),
-                        color: 'green',
-                    })
-      }catch(e) {
-        console.log(e)
-          this.q.notify({
-                        message: this.$translate(e.message),
-                        color: 'red',
-                    })
+          status: false,
+          dueDate: this.selectedDueDate || '',
+          type: this.selectedPriority,
+          project_id: this.$route.params.id
+        })
+        this.q.notify({ message: result.data.message, color: 'green' })
+      } catch (e) {
+        console.error(e)
+        this.q.notify({ message: e.message, color: 'red' })
       }
+      this.newTaskTitle = ''
+      this.selectedDueDate = ''
+      this.selectedPriority = 'Medium'
+    },
 
-        newTaskTitle.value = ''
-        selectedDueDate.value = ''
-        selectedPriority.value = 'Medium'
-      }
-    }
+    toggleTask (task) {
+      const idx = this.tasks.findIndex(t => t.id === task.id)
+      if (idx !== -1) this.tasks[idx].completed = !this.tasks[idx].completed
+    },
 
-    const toggleTask = (task) => {
-      const taskIndex = tasks.value.findIndex(t => t.id === task.id)
-      if (taskIndex !== -1) {
-        tasks.value[taskIndex].completed = !tasks.value[taskIndex].completed
-      }
-    }
+    editTask (task) {
+      this.editingTask = task
+      this.editTaskTitle = task.title
+      this.editTaskDescription = task.description || ''
+      this.editDueDate = task.dueDate || ''
+      this.editPriority = task.priority || 'Medium'
+      this.showEditDialog = true
+    },
 
-    const editTask = (task) => {
-      editingTask.value = task
-      editTaskTitle.value = task.title
-      editTaskDescription.value = task.description || ''
-      editDueDate.value = task.dueDate || ''
-      editPriority.value = task.priority || 'Medium'
-      showEditDialog.value = true
-    }
-
-    const saveTask = () => {
-      if (editTaskTitle.value.trim()) {
-        if (editingTask.value) {
-          // Update existing task
-          const taskIndex = tasks.value.findIndex(t => t.id === editingTask.value.id)
-          if (taskIndex !== -1) {
-            tasks.value[taskIndex] = {
-              ...tasks.value[taskIndex],
-              title: editTaskTitle.value.trim(),
-              description: editTaskDescription.value,
-              dueDate: editDueDate.value,
-              priority: editPriority.value
-            }
+    saveTask () {
+      if (!this.editTaskTitle.trim()) return
+      if (this.editingTask) {
+        const idx = this.tasks.findIndex(t => t.id === this.editingTask.id)
+        if (idx !== -1) {
+          this.tasks[idx] = {
+            ...this.tasks[idx],
+            title: this.editTaskTitle.trim(),
+            description: this.editTaskDescription,
+            dueDate: this.editDueDate,
+            priority: this.editPriority
           }
-        } else {
-          // Add new task
-          tasks.value.unshift({
-            id: Date.now(),
-            title: editTaskTitle.value.trim(),
-            description: editTaskDescription.value,
-            completed: false,
-            dueDate: editDueDate.value,
-            priority: editPriority.value,
-            tags: []
-          })
         }
-        closeEditDialog()
+      } else {
+        this.tasks.unshift({
+          id: Date.now(),
+          title: this.editTaskTitle.trim(),
+          description: this.editTaskDescription,
+          completed: false,
+          dueDate: this.editDueDate,
+          priority: this.editPriority,
+          tags: []
+        })
       }
-    }
+      this.closeEditDialog()
+    },
 
-    const closeEditDialog = () => {
-      showEditDialog.value = false
-      editingTask.value = null
-      editTaskTitle.value = ''
-      editTaskDescription.value = ''
-      editDueDate.value = ''
-      editPriority.value = 'Medium'
-    }
+    closeEditDialog () {
+      this.showEditDialog = false
+      this.editingTask = null
+      this.editTaskTitle = ''
+      this.editTaskDescription = ''
+      this.editDueDate = ''
+      this.editPriority = 'Medium'
+    },
 
-    const deleteTask = (task) => {
-      tasks.value = tasks.value.filter(t => t.id !== task.id)
-    }
+    deleteTask (task) {
+      this.tasks = this.tasks.filter(t => t.id !== task.id)
+    },
 
-    const setDueDate = () => {
-      // Implementation for setting due date
-      console.log('Due date set to:', selectedDueDate.value)
-    }
+    setDueDate () {
+      console.log('Due date set to:', this.selectedDueDate)
+    },
 
-    const setPriority = () => {
-      // Implementation for setting priority
-      console.log('Priority set to:', selectedPriority.value)
-    }
+    setPriority () {
+      console.log('Priority set to:', this.selectedPriority)
+    },
 
-    const addProject = () => {
-      const newProject = {
-        id: projects.value.length + 1,
-        name: `New Project ${projects.value.length + 1}`,
-        icon: 'folder',
-        color: 'grey',
-        count: 0
-      }
-      projects.value.push(newProject)
-    }
-
-    const formatDate = (dateString) => {
+    formatDate (dateString) {
       if (!dateString) return ''
-      const date = new Date(dateString)
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-    }
+      const d = new Date(dateString)
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    },
 
-    const getPriorityColor = (priority) => {
+    getPriorityColor (priority) {
       const colors = {
-        'Low': 'green',
-        'Medium': 'blue',
-        'High': 'orange',
-        'Urgent': 'red'
+        Low: 'green',
+        Medium: 'blue',
+        High: 'orange',
+        Urgent: 'red'
       }
       return colors[priority] || 'grey'
-    }
-
-    return {
-      leftDrawerOpen,
-      newTaskTitle,
-      showDueDatePicker,
-      showPriorityDialog,
-      showEditDialog,
-      selectedDueDate,
-      selectedPriority,
-      activeMenu,
-      activeProject,
-      editingTask,
-      editTaskTitle,
-      editTaskDescription,
-      editDueDate,
-      editPriority,
-      tasks,
-      projects,
-      priorityOptions,
-      pendingTasks,
-      completedTasks,
-      currentDate,
-      addTask,
-      toggleTask,
-      editTask,
-      saveTask,
-      deleteTask,
-      setDueDate,
-      setPriority,
-      addProject,
-      formatDate,
-      getPriorityColor,
-      closeEditDialog
     }
   }
 }
 </script>
+
 
 <style scoped>
 .active-menu {
