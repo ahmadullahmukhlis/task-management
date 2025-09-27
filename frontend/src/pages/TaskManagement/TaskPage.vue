@@ -192,14 +192,15 @@
             </div>
           </div>
         </div>
-          </server-data>
-
-        <!-- Empty State -->
-        <div v-if="tasks.length === 0" class="text-center q-pa-xl">
+              <div v-if="data.complate.length === 0 && data.panding.length === 0 " class="text-center q-pa-xl">
           <q-icon name="check_circle" size="64px" color="grey-4" />
           <div class="text-h6 text-grey-6 q-mt-md">No tasks yet</div>
           <div class="text-grey-6">Add your first task to get started!</div>
         </div>
+          </server-data>
+
+
+
       </q-page>
     </q-page-container>
 
@@ -333,62 +334,7 @@ generalStore,
       editPriority: 'Medium',
       q,
       route,
-      tasks: [
-        {
-          id: 1,
-          title: 'Design new dashboard layout',
-          description: 'Create wireframes and mockups for the new dashboard',
-          completed: false,
-          dueDate: '2024/09/28',
-          priority: 'High',
-          tags: ['Design', 'UI/UX']
-        },
-        {
-          id: 2,
-          title: 'Implement user authentication',
-          description: 'Set up login and registration functionality',
-          completed: false,
-          dueDate: '2024/09/30',
-          priority: 'Medium',
-          tags: ['Backend', 'Security']
-        },
-        {
-          id: 3,
-          title: 'Write documentation for API',
-          description: 'Create comprehensive API documentation for developers',
-          completed: false,
-          dueDate: '2024/10/02',
-          priority: 'Low',
-          tags: ['Documentation']
-        },
-        {
-          id: 4,
-          title: 'Meeting with design team',
-          description: 'Weekly sync with design team about new features',
-          completed: true,
-          dueDate: '2024/09/26',
-          priority: 'Medium',
-          tags: ['Meeting', 'Design']
-        },
-        {
-          id: 5,
-          title: 'Fix mobile responsive issues',
-          description: 'Address CSS issues on mobile devices',
-          completed: false,
-          dueDate: '2024/09/29',
-          priority: 'High',
-          tags: ['Frontend', 'CSS']
-        },
-        {
-          id: 6,
-          title: 'Setup CI/CD pipeline',
-          description: 'Configure continuous integration and deployment',
-          completed: true,
-          dueDate: '2024/09/25',
-          priority: 'Medium',
-          tags: ['DevOps', 'CI/CD']
-        }
-      ],
+
 
       priorityOptions: [
         { label: 'Low', value: 'Low' },
@@ -456,29 +402,28 @@ generalStore,
       this.showEditDialog = true
     },
 
-    saveTask () {
+   async saveTask () {
       if (!this.editTaskTitle.trim()) return
       if (this.editingTask) {
         const idx = this.tasks.findIndex(t => t.id === this.editingTask.id)
         if (idx !== -1) {
-          this.tasks[idx] = {
-            ...this.tasks[idx],
-            title: this.editTaskTitle.trim(),
+          return
+        }
+           try {
+         const result =await api.post('tasks/update/'+this.editingTask.id, {
+
+         title: this.editTaskTitle.trim(),
             description: this.editTaskDescription,
             dueDate: this.editDueDate,
             priority: this.editPriority
-          }
-        }
-      } else {
-        this.tasks.unshift({
-          id: Date.now(),
-          title: this.editTaskTitle.trim(),
-          description: this.editTaskDescription,
-          completed: false,
-          dueDate: this.editDueDate,
-          priority: this.editPriority,
-          tags: []
         })
+        this.q.notify({ message: result.data.message, color: 'green' })
+         this.generalStore.revalidate('tasks')
+
+      } catch (e) {
+        console.error(e)
+        this.q.notify({ message: e.message, color: 'red' })
+      }
       }
       this.closeEditDialog()
     },
