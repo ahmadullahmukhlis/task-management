@@ -18,7 +18,8 @@ class UserProjectResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=> $this->first_name . ' ' .$this->last_name ,
-            'image'=> asset(Storage::url($this->image))
+            'image'=> asset(Storage::url($this->image)),
+            'email'=> $this->email
         ];
     }
 }
