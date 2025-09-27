@@ -17,6 +17,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->string('type');
             $table->string('status');
+            $table->date('due_to')->nullable();
             $table->unsignedBigInteger('project_id');
             $table->timestamps();
         });
