@@ -18,30 +18,32 @@
           :label="translate('Enter User Name or Email')"
           v-model="search"
           debounce="300"
-        />
-
-        <ServerData
-          :url="url"
-          v-slot="{ data }"
-          :fetch-data="search  ?true : false"
-
+          @update:model-value="loadData"
         >
-          <div v-if="data?.length" class="my-5">
-            <q-item v-for="user in data" :key="user.id" clickable v-ripple>
-              <q-item-section side>
-                <q-avatar rounded size="48px">
-                  <img :src="user.image" />
-                </q-avatar>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ user.name }}</q-item-label>
-                <q-item-label caption>{{ user.email }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </div>
+          <template v-slot:append>
+            <q-spinner v-if="loading" size="sm" />
+          </template>
+        </q-input>
 
+        <div v-if="data?.length" class="my-5">
+          <q-item v-for="user in data" :key="user.id" clickable v-ripple>
+            <q-item-section side>
+              <q-avatar rounded size="48px">
+                <img :src="user.image" />
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ user.name }}</q-item-label>
+              <q-item-label caption>{{ user.email }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </div>
 
-        </ServerData>
+        <div v-else-if="!loading && search">
+          <p class="text-center text-gray-500">
+            {{ translate('No users found') }}
+          </p>
+        </div>
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -52,7 +54,7 @@ import { defineComponent } from 'vue'
 import { useQuasar } from 'quasar'
 import { useGeneralStore } from 'stores/generalStore'
 import { useLanguageStore } from 'stores/languageStore'
-import ServerData from 'src/components/ServerData.vue'
+import { api } from 'src/boot/axios'
 
 export default defineComponent({
   name: 'AddUserProjectDialog',
@@ -62,7 +64,6 @@ export default defineComponent({
     mutate: Function,
     project: Object
   },
-  components: { ServerData },
 
   setup () {
     const q = useQuasar()
@@ -78,13 +79,27 @@ export default defineComponent({
 
   data () {
     return {
-      search: null,
-      triggerSearch: false,
-      url: '/projects/add/user'+ `?search=${this.search}`
+      search: '',
+      data: null,
+      loading: false
     }
   },
-
-
-
+  methods: {
+    async loadData () {
+      if (!this.search) {
+        this.data = null
+        return
+      }
+      this.loading = true
+      try {
+        const result = await api.get(`projects/add/user?search=${this.search}`)
+        this.data = result.data?.data
+      } catch (e) {
+        console.error(e)
+      } finally {
+        this.loading = false
+      }
+    }
+  }
 })
 </script>
