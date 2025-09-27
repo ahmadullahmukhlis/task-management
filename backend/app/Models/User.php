@@ -94,4 +94,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserVerification::class);
     }
+    public function userProject() : HasMany
+    {
+        return $this->hasMany(UserProject::class ,'user_id');
+    }
 }
