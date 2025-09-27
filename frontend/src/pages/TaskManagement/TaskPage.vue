@@ -142,9 +142,7 @@
                                   <q-item-section>Delete</q-item-section>
                                 </q-item>
                                 <q-separator />
-                                <q-item clickable v-close-popup>
-                                  <q-item-section>Duplicate</q-item-section>
-                                </q-item>
+
                               </q-list>
                             </q-menu>
                           </q-btn>
