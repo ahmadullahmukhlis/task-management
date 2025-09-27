@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\UserProjectResource;
+use App\Models\User;
+
 class ProjectController extends Controller
 {
     /**
@@ -19,8 +22,14 @@ class ProjectController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function search(Request $request)
     {
+        $search = $request->input('search');
+        $users = User::where('email', $search)
+    ->orWhere('first_name', 'like', '%' . $search . '%')
+    ->orWhere('last_name', 'like', '%' . $search . '%')
+    ->get();
+    return UserProjectResource::collection($users);
         //
     }
 
