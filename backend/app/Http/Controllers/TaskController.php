@@ -49,7 +49,8 @@ class TaskController extends Controller
             'description'=>$request->description,
             'type'=>$request->type,
             'status'=>$request->status ? 'Complate' : 'Pending',
-            'due_to'=>$request->dueDate ?? now()
+            'due_to'=>$request->dueDate ?? now(),
+            'created_by'=>auth()->user()->id
         ]);
         return response()->json(
             [
