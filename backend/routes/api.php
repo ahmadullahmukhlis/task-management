@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -57,6 +59,11 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('add/user','search');
         Route::post('add/user/{id}','addUser');
         Route::get('user/{id}','loadUser');
+    });
+     Route::prefix('tasks')->controller(TaskController::class)->group(function() {
+        Route::get('/project/{id]','index');
+        Route::post('add','store');
+
     });
 
     Route::resource('notifications', \App\Http\Controllers\NotificationController::class);
