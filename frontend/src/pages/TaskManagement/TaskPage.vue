@@ -125,7 +125,7 @@
                         </div>
 
                         <!-- Task Actions -->
-                        <div class="col-auto">
+                        <div v-if="task.created_by">
                           <q-btn
                             flat
                             round

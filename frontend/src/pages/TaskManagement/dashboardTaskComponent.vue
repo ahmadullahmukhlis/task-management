@@ -148,7 +148,7 @@
               </div>
               </div>
 
-            <div >
+            <div v-if="project.created_by">
     <q-btn  icon="more_vert" flat
   dense  >
       <q-menu persistent auto-close>
