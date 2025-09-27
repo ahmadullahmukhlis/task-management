@@ -20,7 +20,6 @@ class TaskResource extends JsonResource
             'description' => $this->description,
             'completed' => (bool) $this->completed,
             'due_date' => $this->due_date->format('Y-m-d'),
-            'priority' => $this->priority,
             'tags' => $this->tags ,
         ];
     }
