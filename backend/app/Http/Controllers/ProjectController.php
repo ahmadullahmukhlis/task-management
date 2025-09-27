@@ -105,8 +105,12 @@ class ProjectController extends Controller
      */
     public function loadUser(string $id)
     {
-        $project = Project::find($id);
-        $user = User::whereRelation('userProject','project_id',$project->id);
-        return UserProjectResource::collection($user);
+
+      $project = Project::findOrFail($id);
+
+$users = User::whereRelation('userProject', 'project_id', $project->id)->get();
+
+return UserProjectResource::collection($users);
+
     }
 }
