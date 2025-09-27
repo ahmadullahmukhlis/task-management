@@ -156,7 +156,7 @@
           <q-item clickable>
             <q-item-section @click="openProject(project)">edit</q-item-section>
           </q-item>
-          <q-item clickable>
+          <q-item clickable @click="userModel = true">
            Add User
           </q-item>
 
@@ -204,16 +204,22 @@
         :handleModelClose="closeModel"
         :project="project"
         />
+          <AddUserToProject   v-if="userModel"
+        :handle-modal="userModel"
+        :handleModelClose="closeUserModel"
+        :project="project"
+        />
 </template>
 
 <script>
 import { ref } from 'vue'
 import ProjectFormModel from './ProjectFormModel.vue'
 import ServerData from 'src/components/ServerData.vue'
+import AddUserToProject from './project/AddUserToProject.vue'
 
 export default {
   name: 'dashboardTaskComponent',
-  components:{ProjectFormModel , ServerData},
+  components:{ProjectFormModel , ServerData ,AddUserToProject},
   setup() {
     const stats = ref([
       {
@@ -327,7 +333,9 @@ export default {
     return {
       projectModel :false ,
       open : false ,
-      project:null
+      project:null ,
+      userModel:false,
+
     }
   },
       methods: {
@@ -338,6 +346,9 @@ export default {
           this.projectModel = true;
           this.project =project
 
+        }
+        ,closeUserModel(){
+          this.userModel = false
         }
       }
 }
