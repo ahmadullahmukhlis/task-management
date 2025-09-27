@@ -6,19 +6,19 @@
             to="/"
             :active="generalStore.active_page === 'home'"
         />
-              <ServerData
+        <ServerData
             url="projects"
             v-slot="{ data }"
             id="project"
         >
-        <div v-for="item in data" :key="item.id" class="my-1">
-          <SidebarLink
-            :icon="item.icon"
-            :name="$translate(item.name)"
-            :to="`/projects/${url(this.item)}`"
-            :active="generalStore.active_page === url(this.id)"
-        />
-        </div>
+            <div v-for="item in data" :key="item.id" class="my-1">
+                   <SidebarLink
+                    :icon="item.icon"
+                    :name="$translate(item.name)"
+                    :to="`/projects/${item.id}`"
+                    :active="generalStore.active_page == item.id"
+                />
+            </div>
         </ServerData>
         <!-- <protected-component permission-key="user-management-access">
             <SidebarLink
@@ -38,6 +38,7 @@
         </protected-component> -->
     </q-list>
 </template>
+
 <script>
 import { defineComponent } from 'vue'
 import { useGeneralStore } from 'stores/generalStore'
@@ -47,20 +48,14 @@ import ServerData from './ServerData.vue'
 
 export default defineComponent({
     name: 'SidebarLinks',
-    components: {  SidebarLink ,ServerData},
+    components: { SidebarLink, ServerData },
     setup() {
         const generalStore = useGeneralStore()
 
-
         return {
             generalStore,
-
         }
     },
-    methods : {
-      url(link) {
-        return encodeURIComponent(LocalEncrypt(link));
-      }
-    }
+
 })
 </script>
