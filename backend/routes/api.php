@@ -56,6 +56,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::post('add','store');
         Route::get('add/user','search');
         Route::post('add/user/{id}','addUser');
+        Route::get('user/{id}','loadUser');
     });
 
     Route::resource('notifications', \App\Http\Controllers\NotificationController::class);
