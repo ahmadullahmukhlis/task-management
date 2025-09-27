@@ -106,8 +106,9 @@ export default defineComponent({
        const result = api.post(`projects/add/user/${this.project?.id}`,{
           user_id : UserID
         });
+
              this.q.notify({
-                        message: this.$translate(result.data.message),
+                        message: this.$translate("the user has been add tot ehe project"),
                         color: 'green',
                     })
       }catch(e) {

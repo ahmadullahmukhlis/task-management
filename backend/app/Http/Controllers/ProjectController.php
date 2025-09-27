@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\UserProjectResource;
 use App\Models\User;
+use App\Models\UserProject;
 
 class ProjectController extends Controller
 {
@@ -55,7 +56,21 @@ class ProjectController extends Controller
      */
     public function addUser(string $id , Request $request)
     {
-        //
+        $project = Project ::find($id);
+  UserProject::updateOrCreate(
+    [
+        'user_id' => $request->user_id,
+        'project_id' => $project->id,
+    ],
+    [
+        'updated_at' => now(),
+    ]
+);
+           return response()->json([
+                'result'=>true ,
+                'message'=>'the user has been add to the project',
+
+            ]);
     }
 
     /**
