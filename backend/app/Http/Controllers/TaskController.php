@@ -21,8 +21,12 @@ class TaskController extends Controller
                 'message'=>'the project is n ot assign to the user '
             ]);
         }
-        $task = Task::where('project_id',$project->id)->get();
-        return TaskResource::collection($task);
+        $pendingTask = Task::where('project_id',$project->id)->where('status', '!=','Complate')->get();
+        $complate = Task::where('project_id',$project->id)->where('status', 'Complate')->get();
+        return response()->json(['data'=>[
+            'complate'=>TaskResource::collection($complate),
+            'panding'=>TaskResource::collection($pendingTask)
+        ]]);
 
     }
 
@@ -58,9 +62,18 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function complate(string $id)
     {
-        //
+        $task = Task::find($id);
+        $task->update([
+            'status'=> $task->status =='Complate' ?   'Pending' :'Complate'
+        ]);
+             return response()->json(
+            [
+                'result'=>true ,
+                'message'=>'the task has been complated'
+            ]
+        );
     }
 
     /**

@@ -8,7 +8,7 @@
         <div class="items-center row q-mb-md">
           <div class="col">
             <div class="text-h4 text-weight-bold">Today's Tasks</div>
-            <div class="text-grey-6">{{ currentDate }} • {{ pendingTasks.length }} tasks</div>
+            <div class="text-grey-6"> 20 tasks</div>
           </div>
           <div class="col-auto">
             <q-btn-group rounded>
@@ -56,13 +56,14 @@
         </div>
 
         <!-- Task List -->
+
+          <server-data :url="`tasks/project/${this.route.params.id}`"  v-slot="{ data }" id="tasks" >
         <div class="q-mb-xl">
 
-          <server-data :url="`tasks/project/${this.route.params.id}`" v-slot="data" >
-           <div class="text-h6 q-mb-md">Pending List ({{ pendingTasks.length }})</div>
+           <div class="text-h6 q-mb-md">Pending List  {{ data.panding.length }}</div>
               <div class="task-list">
             <div
-              v-for="task in data"
+              v-for="task in data.panding"
               :key="task.id"
               class="q-mb-sm"
             >
@@ -155,17 +156,15 @@
               </q-card>
             </div>
           </div>
-          </server-data>
 
-        </div>
-
-        <!-- Completed Tasks Section -->
-        <div v-if="completedTasks.length > 0">
-          <div class="text-h6 q-mb-md">Completed ({{ completedTasks.length }})</div>
+          </div>
+                 <!-- Completed Tasks Section -->
+        <div v-if="data.complate.length > 0">
+          <div class="text-h6 q-mb-md">Completed ({{ data.length }})</div>
 
           <div class="task-list completed-tasks">
             <div
-              v-for="task in completedTasks"
+              v-for="task in data.complate"
               :key="task.id"
               class="q-mb-sm"
             >
@@ -193,6 +192,7 @@
             </div>
           </div>
         </div>
+          </server-data>
 
         <!-- Empty State -->
         <div v-if="tasks.length === 0" class="text-center q-pa-xl">
@@ -303,6 +303,7 @@ import { api } from 'src/boot/axios'
 import { useQuasar } from 'quasar'
 import ServerData from 'src/components/ServerData.vue';
 import { useRoute } from 'vue-router';
+import { useGeneralStore } from 'src/stores/generalStore';
 
 export default {
   name: 'TaskListApp',
@@ -313,6 +314,7 @@ export default {
   data () {
     const q = useQuasar();
     const route = useRoute();
+    const generalStore = useGeneralStore()
     return {
       leftDrawerOpen: true,
       newTaskTitle: '',
@@ -323,7 +325,7 @@ export default {
       selectedPriority: 'Medium',
       activeMenu: 'today',
       activeProject: 1,
-
+generalStore,
       editingTask: null,
       editTaskTitle: '',
       editTaskDescription: '',
@@ -398,12 +400,7 @@ export default {
   },
 
   computed: {
-    pendingTasks () {
-      return this.tasks.filter(t => !t.completed)
-    },
-    completedTasks () {
-      return this.tasks.filter(t => t.completed)
-    },
+
     currentDate () {
       return new Date().toLocaleDateString('en-US', {
         weekday: 'long',
@@ -427,6 +424,8 @@ export default {
           project_id: this.$route.params.id
         })
         this.q.notify({ message: result.data.message, color: 'green' })
+         this.generalStore.revalidate('tasks')
+
       } catch (e) {
         console.error(e)
         this.q.notify({ message: e.message, color: 'red' })
@@ -436,9 +435,16 @@ export default {
       this.selectedPriority = 'Medium'
     },
 
-    toggleTask (task) {
-      const idx = this.tasks.findIndex(t => t.id === task.id)
-      if (idx !== -1) this.tasks[idx].completed = !this.tasks[idx].completed
+   async toggleTask (task) {
+            try {
+         const result =await api.post('tasks/complate/'+task.id, {})
+        this.q.notify({ message: result.data.message, color: 'green' })
+         this.generalStore.revalidate('tasks')
+
+      } catch (e) {
+        console.error(e)
+        this.q.notify({ message: e.message, color: 'red' })
+      }
     },
 
     editTask (task) {
@@ -513,6 +519,10 @@ export default {
       }
       return colors[priority] || 'grey'
     }
+  },  mounted () {
+    const generalStore = useGeneralStore()
+    generalStore.setActivePage(this.route.params.id)
+    generalStore.setPageTitle('all tasks')
   }
 }
 </script>
