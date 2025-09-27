@@ -16,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::get();
+        $projects = Project::where('created_by',auth()->id())->orWhereRelation('userProject','user_id',auth()->id())->get();
         return ProjectResource::collection($projects);
     }
 
