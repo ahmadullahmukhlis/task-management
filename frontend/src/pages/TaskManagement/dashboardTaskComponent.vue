@@ -156,7 +156,7 @@
           <q-item clickable>
             <q-item-section @click="openProject(project)">edit</q-item-section>
           </q-item>
-          <q-item clickable @click="userModel = true">
+          <q-item clickable @click="opentUser(project)">
            Add User
           </q-item>
 
@@ -349,6 +349,10 @@ export default {
         }
         ,closeUserModel(){
           this.userModel = false
+        } ,
+        opentUser(project) {
+          this.userModel = true
+          this.project = project
         }
       }
 }

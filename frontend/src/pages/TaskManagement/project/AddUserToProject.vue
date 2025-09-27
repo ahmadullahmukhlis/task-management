@@ -26,7 +26,7 @@
         </q-input>
 
         <div v-if="data?.length" class="my-5">
-          <q-item v-for="user in data" :key="user.id" clickable v-ripple>
+          <q-item v-for="user in data" :key="user.id" clickable v-ripple @click="addUser(user.id)">
             <q-item-section side>
               <q-avatar rounded size="48px">
                 <img :src="user.image" />
@@ -98,6 +98,24 @@ export default defineComponent({
         console.error(e)
       } finally {
         this.loading = false
+      }
+    }
+    , addUser(UserID){
+      try {
+        console.log(this.project)
+       const result = api.post(`projects/add/user/${this.project?.id}`,{
+          user_id : UserID
+        });
+             this.q.notify({
+                        message: this.$translate(result.data.message),
+                        color: 'green',
+                    })
+      }catch(e) {
+        console.log(e)
+          this.q.notify({
+                        message: this.$translate(e.message),
+                        color: 'red',
+                    })
       }
     }
   }
