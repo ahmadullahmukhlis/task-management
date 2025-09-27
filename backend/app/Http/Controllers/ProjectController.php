@@ -103,8 +103,10 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function loadUser(string $id)
     {
-        //
+        $project = Project::find($id);
+        $user = User::whereRelation('userProject','project_id',$project->id);
+        return UserProjectResource::collection($user);
     }
 }
