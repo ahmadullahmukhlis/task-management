@@ -138,7 +138,7 @@
                                 <q-item clickable v-close-popup @click="editTask(task)">
                                   <q-item-section>Edit</q-item-section>
                                 </q-item>
-                                <q-item clickable v-close-popup @click="deleteTask(task)">
+                                <q-item clickable v-close-popup @click="assign(task)">
                                   <q-item-section>Delete</q-item-section>
                                 </q-item>
                                 <q-separator />
@@ -297,6 +297,12 @@
       </q-card>
     </q-dialog>
   </q-layout>
+    <AssignModel   v-if="assignModelvr"
+        :handle-modal="assignModelvr"
+        :handleModelClose="closeModel"
+        :project_id="this.route.params.id"
+        :task="currentTask"
+        />
 </template>
 
 <script>
@@ -305,11 +311,12 @@ import { useQuasar } from 'quasar'
 import ServerData from 'src/components/ServerData.vue';
 import { useRoute } from 'vue-router';
 import { useGeneralStore } from 'src/stores/generalStore';
+import AssignModel from './AssignModel.vue';
 
 export default {
   name: 'TaskListApp',
   components : {
-    ServerData
+    ServerData ,AssignModel
   },
 
   data () {
@@ -334,7 +341,8 @@ generalStore,
       editPriority: 'Medium',
       q,
       route,
-
+      assignModelvr : false ,
+      currentTask :null,
 
       priorityOptions: [
         { label: 'Low', value: 'Low' },
@@ -434,8 +442,14 @@ generalStore,
       this.editPriority = 'Medium'
     },
 
-    deleteTask (task) {
-      this.tasks = this.tasks.filter(t => t.id !== task.id)
+    assign (task) {
+      this. assignModelvr = true
+      this.currentTask  =task
+    },
+    closeModel(){
+      this. assignModelvr = false
+      this.currentTask  =null
+
     },
 
     setDueDate () {

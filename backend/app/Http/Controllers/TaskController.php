@@ -80,9 +80,17 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function assign(Request $request)
     {
-        //
+        UserTask::create([
+            'user_id'=>$request->user_id,
+            'task_id'=>$request->task_id
+        ]);
+         return response()->json(
+            [
+                'result'=>true ,
+                'message'=>'the user assign to the task'
+            ]);
     }
 
     /**
