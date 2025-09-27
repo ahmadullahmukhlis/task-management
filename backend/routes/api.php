@@ -65,6 +65,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::post('add','store');
         Route::post('complate/{id}','complate');
         Route::post('update/{id}','update');
+        Route::post('assign', 'assign');
 
 
     });
