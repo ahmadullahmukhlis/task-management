@@ -1,16 +1,22 @@
 <template>
   <q-dialog :model-value="true" persistent>
     <q-card class="md:min-w-[500px]">
-      <q-card-section>
-        <p class="font-semibold text-lg">
+      <q-card-section class="flex justify-between">
+        <p class="text-lg font-semibold">
           {{ translate('Create Project') }}
         </p>
+             <q-btn
+                    icon="close"
+                    flat
+                    size="sm"
+                    @click="handleModelClose()"
+                />
       </q-card-section>
       <q-card-section>
              <ServerData
             :url="`projects/${project?.id}`"
             v-slot="{ data }"
-            :fetchData="project??false"
+            :fetch-data="project ?? false"
             id="project"
         >
           <form-builder-component

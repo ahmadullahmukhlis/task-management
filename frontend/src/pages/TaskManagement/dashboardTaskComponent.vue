@@ -115,7 +115,7 @@
           color="purple"
           icon="add"
           no-caps
-          @click="openProject"
+          @click="openProject(null)"
         />
       </div>
 
