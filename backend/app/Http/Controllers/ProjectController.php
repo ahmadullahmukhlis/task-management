@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\UserProjectResource;
+use App\Models\Task;
 use App\Models\User;
 use App\Models\UserProject;
 
@@ -106,11 +107,22 @@ class ProjectController extends Controller
     public function loadUser(string $id)
     {
 
-      $project = Project::findOrFail($id);
+        $project = Project::findOrFail($id);
+        $users = User::whereRelation('userProject', 'project_id', $project->id)->get();
+        return UserProjectResource::collection($users);
 
-$users = User::whereRelation('userProject', 'project_id', $project->id)->get();
-
-return UserProjectResource::collection($users);
-
+    }
+    public function statistic() {
+        $query = Task::query();
+        $total = $query->whereRelation( 'taskAssign', 'user_id',auth()->id())->orWhere('created_by',auth()->id())->count();
+        $complate = $query->whereRelation( 'taskAssign', 'user_id',auth()->id())->whereRelation('taskAction','status','completed')->orWhere('created_by',auth()->id())->count();
+        $pending = $query->whereRelation( 'taskAssign', 'user_id',auth()->id())->whereRelation('taskAction','status','Pending')->orWhere('created_by',auth()->id())->count();
+        return response()->json([
+            'data'=>[
+                'pending'=>$pending,
+                'completed'=>$complate,
+                'total'=>$total
+            ]
+            ]);
     }
 }

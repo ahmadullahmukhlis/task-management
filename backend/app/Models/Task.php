@@ -36,5 +36,9 @@ class Task extends Model
     {
         return $this->hasMany(TaskAction::class ,'task_id');
     }
+    public function taskAssign() : HasMany
+    {
+        return $this->hasMany(UserTask::class,'task_id');
+    }
 
 }

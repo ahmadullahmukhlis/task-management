@@ -60,6 +60,12 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::post('add/user/{id}','addUser');
         Route::get('user/{id}','loadUser');
     });
+       Route::prefix('dashboard')->controller(ProjectController::class)->group(function() {
+        Route::get('/statistic','statistic');
+        Route::get('/my-task','myTask');
+        Route::get('/recent-activity','activity');
+
+    });
      Route::prefix('tasks')->controller(TaskController::class)->group(function() {
         Route::get('/project/{id}','index');
         Route::post('add','store');
