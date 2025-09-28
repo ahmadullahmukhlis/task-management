@@ -24,10 +24,10 @@ export const useAuthStore = defineStore('AuthStore', {
                 email,
 
             })
-        }, async verify(id,code) {
+        }, async verify(token,otp) {
             return await api.post('verify', {
-                id,
-                code
+                token,
+                otp
 
             })
         },

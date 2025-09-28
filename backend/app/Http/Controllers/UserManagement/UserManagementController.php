@@ -24,6 +24,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Spatie\Activitylog\Models\Activity;
+use Illuminate\Support\Facades\Crypt;
+use App\Models\UserVerification;
+
 
 class UserManagementController extends Controller
 {
@@ -104,6 +107,45 @@ class UserManagementController extends Controller
              $this->userService->verification($user, $request);
         return response()->json(['status' => true, 'message' => 'Successfully registered please check your email for activation']);
 
+    }
+    public function verify(Request $request) {
+         try {
+            $email = Crypt::decryptString($request->token);
+            $user = User::where('email', $email)->first();
+
+            if (! $user) {
+                return response()->json(['status' => false, 'message' => 'User not found.']);
+            }
+
+            $latestVerify = UserVerification::where('user_id', $user->id)
+                ->where('status', 'pending')
+                ->latest()
+                ->first();
+
+            if (! $latestVerify) {
+                return response()->json(['status' => false, 'message' => 'No OTP request found.']);
+            }
+
+            $expiresAt = now()->subHours(3);
+            if ($latestVerify->created_at < $expiresAt) {
+                return response()->json(['status' => false, 'message' => 'OTP has expired.']);
+            }
+
+            if ($latestVerify->otp === $request->otp) {
+                $latestVerify->update(['status' => 'verified']);
+                $user->update([
+                    'is_active' => true,
+                    'change_password' => false,
+                ]);
+
+                return response()->json(['status' => true, 'message' => 'OTP verified.']);
+            }
+
+            return response()->json(['status' => false, 'message' => 'Invalid OTP.']);
+        } catch (\Exception $e) {
+
+            return response()->json(['status' => false, 'message' => 'Something went wrong.']);
+        }
     }
 
     public function changePassword(){
