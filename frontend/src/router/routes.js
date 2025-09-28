@@ -20,10 +20,11 @@ const routes = [
 
         ],
     },
-    {
-        path: '/verify/:id',
-        component: () => import('pages/verifyPage.vue'),
-    },
+{
+    path: '/verify/:id',
+    component: () => import('pages/verifyPage.vue'),
+    meta: { auth: false }
+},
     {
         path: '/login',
         component: () => import('pages/LoginPage.vue'),
