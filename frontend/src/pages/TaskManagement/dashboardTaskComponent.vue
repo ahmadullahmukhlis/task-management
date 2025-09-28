@@ -236,45 +236,6 @@ export default {
   components:{ProjectFormModel , ServerData ,AddUserToProject},
   setup() {
 
-    const myTasks = ref([
-      {
-        id: 1,
-        title: 'Create dashboard mockup',
-        description: 'Design the main dashboard interface with Tailwind CSS',
-        statusText: 'In Progress',
-        statusColor: 'blue',
-        dueDate: 'Tomorrow',
-        assignee: 'You'
-      },
-      {
-        id: 2,
-        title: 'Implement user authentication',
-        description: 'Set up login and registration functionality',
-        statusText: 'To Do',
-        statusColor: 'grey-6',
-        dueDate: 'Sep 30',
-        assignee: 'Alex'
-      },
-      {
-        id: 3,
-        title: 'Fix mobile responsiveness',
-        description: 'Ensure the app works well on all screen sizes',
-        statusText: 'In Review',
-        statusColor: 'yellow',
-        dueDate: 'Today',
-        assignee: 'You'
-      },
-      {
-        id: 4,
-        title: 'Write API documentation',
-        description: 'Document all endpoints for the backend API',
-        statusText: 'Completed',
-        statusColor: 'green',
-        dueDate: 'Sep 25',
-        assignee: 'Sam'
-      }
-    ])
-
     const recentActivities = ref([
       {
         id: 1,
@@ -302,10 +263,7 @@ export default {
       }
     ])
 
-
     return {
-
-      myTasks,
       recentActivities,
 
     }
