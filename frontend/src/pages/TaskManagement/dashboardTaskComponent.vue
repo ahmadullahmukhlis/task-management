@@ -229,40 +229,6 @@ export default {
   name: 'dashboardTaskComponent',
   components:{ProjectFormModel , ServerData ,AddUserToProject},
   setup() {
-    const stats = ref([
-      {
-        title: 'Total Tasks',
-        value: '42',
-        icon: 'assignment',
-        color: 'blue',
-        trend: '+2 from last week',
-        trendColor: 'green'
-      },
-      {
-        title: 'Completed',
-        value: '18',
-        icon: 'check_circle',
-        color: 'green',
-        trend: '+5 from last week',
-        trendColor: 'green'
-      },
-      {
-        title: 'In Progress',
-        value: '12',
-        icon: 'autorenew',
-        color: 'yellow',
-        trend: '-3 from last week',
-        trendColor: 'red'
-      },
-      {
-        title: 'Overdue',
-        value: '4',
-        icon: 'warning',
-        color: 'red',
-        trend: '+1 from last week',
-        trendColor: 'red'
-      }
-    ])
 
     const myTasks = ref([
       {
@@ -332,7 +298,7 @@ export default {
 
 
     return {
-      stats,
+
       myTasks,
       recentActivities,
 
