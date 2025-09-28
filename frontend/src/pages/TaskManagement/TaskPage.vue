@@ -7,8 +7,8 @@
         <!-- Page Header -->
         <div class="items-center row q-mb-md">
           <div class="col">
-            <div class="text-h4 text-weight-bold">Today's Tasks</div>
-            <div class="text-grey-6"> 20 tasks</div>
+            <div class="text-h4 text-weight-bold">All  Tasks</div>
+            <div class="text-grey-6"> all pending and Completed tasks</div>
           </div>
           <div class="col-auto">
             <q-btn-group rounded>
@@ -86,7 +86,7 @@
                           <div
                             :class="['task-title', task.completed ? 'text-strike text-grey-6' : '']"
                           >
-                            {{ task.title }}
+                            {{ task.title  }}
                           </div>
                           <div v-if="task.description" class="task-description text-caption text-grey-6">
                             {{ task.description }}
@@ -354,7 +354,7 @@ generalStore,
       route,
       assignModelvr : false ,
       currentTask :null,
-
+      pendingTask:null,
       priorityOptions: [
         { label: 'Low', value: 'Low' },
         { label: 'Medium', value: 'Medium' },
