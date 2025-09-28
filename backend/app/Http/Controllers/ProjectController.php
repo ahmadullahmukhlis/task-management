@@ -112,47 +112,108 @@ class ProjectController extends Controller
         return UserProjectResource::collection($users);
 
     }
-    public function statistic() {
-        $query = Task::query();
-        $total = $query->whereRelation( 'taskAssign', 'user_id',auth()->id())->orWhere('created_by',auth()->id())->count();
-        $complate = $query->whereRelation( 'taskAssign', 'user_id',auth()->id())->whereRelation('taskAction','status','completed')->orWhere('created_by',auth()->id())->count();
-        $pending = $query->whereRelation( 'taskAssign', 'user_id',auth()->id())->whereRelation('taskAction','status','Pending')->orWhere('created_by',auth()->id())->count();
-        return response()->json([   'data'=>[
-              [
-        'title' => 'Total Tasks',
-        'value' => $total,
-        'icon' => 'assignment',
-        'color' => 'blue',
-        'trend' => '+2 from last week',
-        'trendColor' => 'green',
-    ],
-    [
-        'title' => 'Completed',
-        'value' => $complate,
-        'icon' => 'check_circle',
-        'color' => 'green',
-        'trend' => '+5 from last week',
-        'trendColor' => 'green',
-    ],
-    [
-        'title' => 'In Progress',
-        'value' => '12',
-        'icon' => 'autorenew',
-        'color' => 'yellow',
-        'trend' => '-3 from last week',
-        'trendColor' => 'red',
-    ],
-    [
-        'title' => 'Overdue',
-        'value' => $pending,
-        'icon' => 'warning',
-        'color' => 'red',
-        'trend' => '+1 from last week',
-        'trendColor' => 'red',
-    ],
+   public function statistic()
+{
+    $userId = auth()->id();
+
+    // total counts
+    $query = Task::query();
+    $total = $query
+        ->whereRelation('taskAssign', 'user_id', $userId)
+        ->orWhere('created_by', $userId)
+        ->count();
+
+    $complate = $query
+        ->whereRelation('taskAssign', 'user_id', $userId)
+        ->whereRelation('taskAction', 'status', 'completed')
+        ->orWhere('created_by', $userId)
+        ->count();
+
+    $pending = $query
+        ->whereRelation('taskAssign', 'user_id', $userId)
+        ->whereRelation('taskAction', 'status', 'Pending')
+        ->orWhere('created_by', $userId)
+        ->count();
+
+    // === New: weekly counts ===
+    $lastWeekStart = now()->subWeek()->startOfWeek();
+    $lastWeekEnd   = now()->subWeek()->endOfWeek();
+
+    $currentWeekStart = now()->startOfWeek();
+    $currentWeekEnd   = now()->endOfWeek();
+
+    $lastWeekTotal = Task::whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])
+        ->where(function ($q) use ($userId) {
+            $q->whereRelation('taskAssign', 'user_id', $userId)
+              ->orWhere('created_by', $userId);
+        })->count();
+$userId = auth()->id();
+
+$lastWeekComplete = Task::where(function ($q) use ($userId ,$lastWeekStart, $lastWeekEnd) {
+    $q->whereHas('taskAction', function ($q2) use ($userId ,$lastWeekStart, $lastWeekEnd) {
+        $q2->where('user_id', $userId)
+           ->where('status', 'completed')->whereBetween('updated_at', [$lastWeekStart, $lastWeekEnd]);
+    })
+    ->orWhere('created_by', $userId);
+})
+->count();
+
+$lastWeekPending = Task::where(function ($q) use ($userId ,$lastWeekStart, $lastWeekEnd) {
+    $q->whereHas('taskAction', function ($q2) use ($userId ,$lastWeekStart, $lastWeekEnd) {
+        $q2->where('user_id', $userId)
+           ->where('status', 'Pending')->whereBetween('updated_at', [$lastWeekStart, $lastWeekEnd]);
+    })
+    ->orWhere('created_by', $userId);
+})
+->count();
+
+
+    $currentWeekTotal = Task::whereBetween('created_at', [$currentWeekStart, $currentWeekEnd])
+        ->where(function ($q) use ($userId) {
+            $q->whereRelation('taskAssign', 'user_id', $userId)
+              ->orWhere('created_by', $userId);
+        })->count();
+
+    $trendTotal = $currentWeekTotal - $lastWeekTotal;
+    $trendColor = $trendTotal >= 0 ? 'green' : 'red';
+    $trendText  = ($trendTotal >= 0 ? '+' : '') . $trendTotal . ' from last week';
+
+    return response()->json([
+        'data' => [
+            [
+                'title' => 'Total Tasks',
+                'value' => $total,
+                'icon' => 'assignment',
+                'color' => 'blue',
+                'trend' => $trendText,      // changed to dynamic
+                'trendColor' => $trendColor // dynamic
+            ],
+            [
+                'title' => 'Completed',
+                'value' => $complate,
+                'icon' => 'check_circle',
+                'color' => 'green',
+                'trend' => '+'.$lastWeekComplete.' from last week',
+                'trendColor' => 'green',
+            ],
+            [
+                'title' => 'Pending',
+                'value' => $pending,
+                'icon' => 'autorenew',
+                'color' => 'yellow',
+                  'trend' => '+'.$lastWeekPending.' from last week',
+                'trendColor' => 'red',
+            ],
+            [
+                'title' => 'Overdue',
+                'value' => 5,
+                'icon' => 'warning',
+                'color' => 'red',
+                'trend' => '+2 from last week',
+                'trendColor' => 'red',
+            ],
         ]
+    ]);
+}
 
-
-            ]);
-    }
 }
