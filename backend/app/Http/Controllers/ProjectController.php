@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\UserProjectResource;
+use App\Http\Resources\DashboardTaskResource;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\UserProject;
@@ -215,5 +216,15 @@ $lastWeekPending = Task::where(function ($q) use ($userId ,$lastWeekStart, $last
         ]
     ]);
 }
+public function myTask()
+{
+    $tasks = Task::whereRelation('taskAssign', 'user_id', auth()->id())
+        ->orderBy('id', 'desc')
+        ->take(6)
+        ->get();
+
+    return DashboardTaskResource::collection($tasks);
+}
+
 
 }

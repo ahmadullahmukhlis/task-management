@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 class DashboardTaskResource extends JsonResource
 {
@@ -20,7 +21,9 @@ class DashboardTaskResource extends JsonResource
             'description' => $this->description,
             'statusText' => $this->status, // method in Task model
             'statusColor' => $this->getStatusColor($this->status), // dynamic color
-            'dueDate' => $this->due_to ? $this->due_to->format('M d') : 'Tomorrow',
+     'dueDate' => $this->due_to
+    ? Carbon::parse($this->due_to)->format('M d')
+    : 'Tomorrow',
             'assignee' => auth()->id() == $this->created_by? 'You'  : $this->user?->first_name.' ' . $this->user?->last_name,
 
         ];
