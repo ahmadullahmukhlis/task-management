@@ -139,7 +139,7 @@
                                   <q-item-section>Edit</q-item-section>
                                 </q-item>
                                 <q-item clickable v-close-popup @click="assign(task)">
-                                  <q-item-section>Delete</q-item-section>
+                                  <q-item-section>Assign User</q-item-section>
                                 </q-item>
                                 <q-separator />
 
