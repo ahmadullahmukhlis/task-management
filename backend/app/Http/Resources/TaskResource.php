@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +23,12 @@ class TaskResource extends JsonResource
             'dueDate' => $this->due_to,
             'priority' => $this->type ,
             'project_id'=>$this->project_id ,
-            'created_by'=>$this->created_by == auth()->id() ? true :false
+            'created_by'=>$this->created_by == auth()->id() ? true :false ,
+            'assign'=>  $this->userLoad($this->id),
         ];
+    }
+    private function userLoad($id) {
+     $users=   User::whereRelation('taskUser','task_id',$id)->get();
+     return UserProjectResource::collection($users);
     }
 }

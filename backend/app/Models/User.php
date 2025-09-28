@@ -98,4 +98,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserProject::class ,'user_id');
     }
+    public function taskUser() : HasMany
+    {
+        return $this->hasMany(UserTask::class,'user_id');
+    }
 }
