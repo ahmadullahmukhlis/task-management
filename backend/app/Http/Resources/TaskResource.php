@@ -23,7 +23,7 @@ class TaskResource extends JsonResource
             'dueDate' => $this->due_to,
             'priority' => $this->type ,
             'project_id'=>$this->project_id ,
-            'created_by'=>$this->created_by == auth()->id() ? true :false ,
+            'created_by'=>$this->created_by == auth()->id() ? true : false ,
             'assign'=>  $this->userLoad($this->id),
         ];
     }

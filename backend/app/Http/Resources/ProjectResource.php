@@ -93,14 +93,10 @@ private function color(?int $id = null): string
     ];
 
     if ($id === null) {
-        // no id passed → random colour
         return $colors[array_rand($colors)];
     }
 
-    // id passed → pick by index (wrap if bigger than array)
-    // ensure non-negative integer
     $index = abs($id) % count($colors);
-
     return $colors[$index];
 }
 private function icon(int $id): string

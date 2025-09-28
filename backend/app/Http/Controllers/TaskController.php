@@ -30,7 +30,6 @@ class TaskController extends Controller
             $q2->where('user_id', auth()->id())
                ->where('status', '!=', 'completed');
         })
-
         ->orWhereDoesntHave('taskAction', function ($q2) {
             $q2->where('user_id', auth()->id());
         });
