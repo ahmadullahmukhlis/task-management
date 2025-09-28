@@ -136,11 +136,11 @@
                     </p>
 @php
     $token = urlencode(Crypt::encryptString($user->email));
-    $url = rtrim(env('WEBSITE_URL'), '/') . "/#/verify/" . $token;
+    $url = env('WEBSITE_URL') . $token;
 @endphp
 
 <a href="{{ $url }}" style="background-color:#365a5d;color:#ffffff;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;font-weight:600;margin:15px 0;">
-    Verify Your Account
+    Verify Your Account :: {{$url}}
 </a>
 
 
