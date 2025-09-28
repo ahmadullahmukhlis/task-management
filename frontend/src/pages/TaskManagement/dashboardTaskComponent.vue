@@ -5,11 +5,16 @@
       <h1 class="mb-2 text-2xl font-bold text-gray-800">Dashboard</h1>
       <p class="text-gray-600">Overview of your tasks and projects</p>
     </div>
-
+               <ServerData
+            url="dashboard/statistic"
+            v-slot="{ data }"
+            id="project"
+        >
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 gap-4 mb-8 md:grid-cols-2 lg:grid-cols-4">
-      <div
-        v-for="stat in stats"
+
+           <div
+        v-for="stat in data"
         :key="stat.title"
         class="p-4 bg-white border-l-4 rounded-lg shadow-sm"
         :class="`border-${stat.color}-500`"
@@ -26,6 +31,9 @@
         <p class="mt-2 text-xs" :class="`text-${stat.trendColor}-500`">{{ stat.trend }}</p>
       </div>
     </div>
+
+      </ServerData>
+
 
     <!-- Task Lists -->
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">

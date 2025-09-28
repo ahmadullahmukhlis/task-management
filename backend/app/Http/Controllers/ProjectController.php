@@ -117,12 +117,42 @@ class ProjectController extends Controller
         $total = $query->whereRelation( 'taskAssign', 'user_id',auth()->id())->orWhere('created_by',auth()->id())->count();
         $complate = $query->whereRelation( 'taskAssign', 'user_id',auth()->id())->whereRelation('taskAction','status','completed')->orWhere('created_by',auth()->id())->count();
         $pending = $query->whereRelation( 'taskAssign', 'user_id',auth()->id())->whereRelation('taskAction','status','Pending')->orWhere('created_by',auth()->id())->count();
-        return response()->json([
-            'data'=>[
-                'pending'=>$pending,
-                'completed'=>$complate,
-                'total'=>$total
-            ]
+        return response()->json([   'data'=>[
+              [
+        'title' => 'Total Tasks',
+        'value' => $total,
+        'icon' => 'assignment',
+        'color' => 'blue',
+        'trend' => '+2 from last week',
+        'trendColor' => 'green',
+    ],
+    [
+        'title' => 'Completed',
+        'value' => $complate,
+        'icon' => 'check_circle',
+        'color' => 'green',
+        'trend' => '+5 from last week',
+        'trendColor' => 'green',
+    ],
+    [
+        'title' => 'In Progress',
+        'value' => '12',
+        'icon' => 'autorenew',
+        'color' => 'yellow',
+        'trend' => '-3 from last week',
+        'trendColor' => 'red',
+    ],
+    [
+        'title' => 'Overdue',
+        'value' => $pending,
+        'icon' => 'warning',
+        'color' => 'red',
+        'trend' => '+1 from last week',
+        'trendColor' => 'red',
+    ],
+        ]
+
+
             ]);
     }
 }
