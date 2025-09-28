@@ -24,7 +24,7 @@ class TaskController extends Controller
                 'message'=>'the project is n ot assign to the user '
             ]);
         }
-       $pendingTask = Task::where('project_id', $project->id)
+       $pendingTask = Task::where('project_id', $project->id)->orderBy('id', 'desc')
     ->where(function ($q) {
 
         $q->whereHas('taskAction', function ($q2) {
@@ -36,7 +36,8 @@ class TaskController extends Controller
         });
     })
     ->get();
-        $complate = Task::where('project_id',$project->id) ->where(function ($q) {
+        $complate = Task::where('project_id',$project->id)->orderBy('id', 'desc')
+        ->where(function ($q) {
 
         $q->whereHas('taskAction', function ($q2) {
             $q2->where('user_id', auth()->id())
