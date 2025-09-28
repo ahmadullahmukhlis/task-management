@@ -16,7 +16,8 @@ class TaskController extends Controller
      */
     public function index($id)
     {
-        $project= Project::where('id',$id)->whereRelation('userProject','user_id',auth()->user()->id)->orWhere('created_by',auth()->user()->id)->first();
+        $userId  = Auth()->id();
+        $project= Project::where('id',$id)->whereRelation('userProject','user_id',$userId)->orWhere('created_by',$userId)->first();
         if(!$project){
             return response()->json([
                 'result'=>false ,
