@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\TaskResource;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\TaskAction;
 use App\Models\UserTask;
 use Illuminate\Http\Request;
 
@@ -22,8 +23,8 @@ class TaskController extends Controller
                 'message'=>'the project is n ot assign to the user '
             ]);
         }
-        $pendingTask = Task::where('project_id',$project->id)->where('status', '!=','Complate')->get();
-        $complate = Task::where('project_id',$project->id)->where('status', 'Complate')->get();
+        $pendingTask = Task::where('project_id',$project->id)->where('status', '!=','completed')->get();
+        $complate = Task::where('project_id',$project->id)->where('status', 'completed')->get();
         return response()->json(['data'=>[
             'complate'=>TaskResource::collection($complate),
             'panding'=>TaskResource::collection($pendingTask)
@@ -44,12 +45,12 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        Task::create([
+       Task::create([
             'project_id'=>$request->project_id,
             'title'=>$request->title,
             'description'=>$request->description,
             'type'=>$request->type,
-            'status'=>$request->status ? 'Complate' : 'Pending',
+            'status'=>$request->status ? 'completed' : 'Pending',
             'due_to'=>$request->dueDate ?? now(),
             'created_by'=>auth()->user()->id
         ]);
@@ -68,12 +69,22 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
         $task->update([
-            'status'=> $task->status =='Complate' ?   'Pending' :'Complate'
+            'status'=> $task->status =='completed' ?   'Pending' :'completed'
         ]);
+         TaskAction::updateOrCreate(
+    [
+        'user_id' => auth()->id(),
+        'task_id' => $task->id,
+    ],
+    [
+        'status' => $task->status === 'completed' ? 'Pending' : 'completed',
+    ]
+);
+
              return response()->json(
             [
                 'result'=>true ,
-                'message'=>'the task has been complated'
+                'message'=>'the task has been completed'
             ]
         );
     }
