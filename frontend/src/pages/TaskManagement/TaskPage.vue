@@ -91,18 +91,7 @@
                           <div v-if="task.description" class="task-description text-caption text-grey-6">
                             {{ task.description }}
                           </div>
-                          <div class="flex -space-x-2">
-                <q-avatar
-                  v-for="member in task.assign"
-                  :key="member.id"
-                  size="24px"
-                  class="border-2 border-white"
-                  :color="member.color"
-                  text-color="white"
-                >
-                  {{ member.initials }}
-                </q-avatar>
-              </div>
+
                           <!-- Task Meta -->
                           <div class="items-center row q-mt-xs">
                             <div class="col-auto" v-if="task.dueDate">
@@ -132,7 +121,20 @@
                                 {{ tag }}
                               </q-badge>
                             </div>
+
                           </div>
+                <div class="flex -space-x-2">
+                <q-avatar
+                  v-for="member in task.assign"
+                  :key="member.id"
+                  size="28px"
+                  class="border-2 border-white"
+                  :color="member.color"
+                  text-color="white"
+                >
+                  {{ member.initials }}
+                </q-avatar>
+              </div>
                         </div>
 
                         <!-- Task Actions -->
