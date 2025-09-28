@@ -134,7 +134,7 @@
                     <p class="otp-code">
                         {{ $otp }}
                     </p>
-                    <a href="{{ env('WEBSITE_URL') }}/verification?token={{ urlencode(Illuminate\Support\Facades\Crypt::encryptString($user->email)) }}"
+                    <a href="{{ env('FRONTEND_URL') }}/verify/{{ urlencode(Illuminate\Support\Facades\Crypt::encryptString($user->email)) }}"
                         class="button">
                         Verify Your Account
                     </a>
@@ -147,7 +147,7 @@
                     ahmadullahmukhlis2019@gmail.com
                 </a>
                 or visit our
-                <a href="{{ env('WEBSITE_URL') }}" target="_blank" style="color: #499fb6; text-decoration: none;">
+                <a href="{{ env('FRONTEND_URL') }}" target="_blank" style="color: #499fb6; text-decoration: none;">
                     {{ config('app.name') }}
                 </a>
             </p>
