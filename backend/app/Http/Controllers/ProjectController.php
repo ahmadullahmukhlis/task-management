@@ -218,7 +218,7 @@ $lastWeekPending = Task::where(function ($q) use ($userId ,$lastWeekStart, $last
 }
 public function myTask()
 {
-    $tasks = Task::whereRelation('taskAssign', 'user_id', auth()->id())
+    $tasks = Task::whereRelation('taskAssign', 'user_id', auth()->id())->orWhere('created_by',auth()->id())
         ->orderBy('id', 'desc')
         ->take(6)
         ->get();
