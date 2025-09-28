@@ -192,7 +192,7 @@
 
                         <!-- Social Login Section -->
                         <div class="mt-8">
-                            <div class="relative flex items-center mb-4">
+                            <!-- <div class="relative flex items-center mb-4">
                                 <div class="flex-grow border-t border-gray-200"></div>
                                 <span class="flex-shrink mx-4 text-sm font-medium text-gray-500">Or continue with</span>
                                 <div class="flex-grow border-t border-gray-200"></div>
@@ -215,7 +215,7 @@
                                     no-caps
                                     @click="socialLogin('github')"
                                 />
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -415,8 +415,8 @@
                         </ValidationForm>
 
                         <!-- Social Signup Section -->
-                        <div class="mt-3">
-                            <div class="relative flex items-center mb-4">
+                        <div class="mt-8">
+                            <!-- <div class="relative flex items-center mb-4">
                                 <div class="flex-grow border-t border-gray-200"></div>
                                 <span class="flex-shrink mx-4 text-sm font-medium text-gray-500">Or sign up with</span>
                                 <div class="flex-grow border-t border-gray-200"></div>
@@ -439,7 +439,7 @@
                                     no-caps
                                     @click="socialSignup('github')"
                                 />
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
