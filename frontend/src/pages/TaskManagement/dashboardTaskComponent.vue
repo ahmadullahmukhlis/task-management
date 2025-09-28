@@ -39,7 +39,7 @@
             v-slot="{ data }"
             id="project"
         >
-            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-">
       <!-- My Tasks -->
       <div class="overflow-hidden bg-white rounded-lg shadow-sm">
         <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200">
@@ -83,38 +83,7 @@
         </div>
       </div>
 
-      <!-- Recent Activity -->
-      <div class="overflow-hidden bg-white rounded-lg shadow-sm">
-        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-          <h3 class="font-semibold text-gray-800">Recent Activity</h3>
-          <q-btn
-            flat
-            label="View All"
-            color="purple"
-            size="sm"
-            no-caps
-          />
-        </div>
-        <div class="divide-y divide-gray-100">
-          <div
-            v-for="activity in recentActivities"
-            :key="activity.id"
-            class="p-4 hover:bg-gray-50"
-          >
-            <div class="flex items-start">
-              <div class="flex items-center justify-center w-8 h-8 mt-1 mr-3 text-blue-600 bg-blue-100 rounded-full">
-                <q-icon name="person" size="16px" />
-              </div>
-              <div>
-                <p class="text-sm text-gray-800">
-                  <span class="font-medium">{{ activity.user }}</span> {{ activity.action }}
-                </p>
-                <p class="mt-1 text-xs text-gray-500">{{ activity.time }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
     </div>
         </ServerData>
     <!-- Task Lists -->
@@ -236,37 +205,8 @@ export default {
   components:{ProjectFormModel , ServerData ,AddUserToProject},
   setup() {
 
-    const recentActivities = ref([
-      {
-        id: 1,
-        user: 'Alex Johnson',
-        action: 'completed the task "Update user profile page"',
-        time: '2 hours ago'
-      },
-      {
-        id: 2,
-        user: 'You',
-        action: 'commented on "Dashboard design discussion"',
-        time: '4 hours ago'
-      },
-      {
-        id: 3,
-        user: 'Sam Wilson',
-        action: 'assigned you a task "Fix mobile responsiveness"',
-        time: 'Yesterday'
-      },
-      {
-        id: 4,
-        user: 'Taylor Smith',
-        action: 'created a new space "Marketing Campaigns"',
-        time: '2 days ago'
-      }
-    ])
 
-    return {
-      recentActivities,
 
-    }
   },data(){
     return {
       projectModel :false ,
