@@ -32,8 +32,5 @@ class TaskAction extends Model
         if(!$ss) return $value;
         return Carbon::parse($value)->format(cache()->get('software-settings')->date_format.' h:i:s A');
     }
-    public function taskAction() : HasMany
-    {
-        return $this->hasMany(TaskAction::class ,'task_id');
-    }
+
 }

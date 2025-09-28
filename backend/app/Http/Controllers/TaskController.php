@@ -23,8 +23,26 @@ class TaskController extends Controller
                 'message'=>'the project is n ot assign to the user '
             ]);
         }
-        $pendingTask = Task::where('project_id',$project->id)->where('status', '!=','completed')->get();
-        $complate = Task::where('project_id',$project->id)->where('status', 'completed')->get();
+       $pendingTask = Task::where('project_id', $project->id)
+    ->where(function ($q) {
+
+        $q->whereHas('taskAction', function ($q2) {
+            $q2->where('user_id', auth()->id())
+               ->where('status', '!=', 'completed');
+        })
+
+        ->orWhereDoesntHave('taskAction', function ($q2) {
+            $q2->where('user_id', auth()->id());
+        });
+    })
+    ->get();
+        $complate = Task::where('project_id',$project->id) ->where(function ($q) {
+
+        $q->whereHas('taskAction', function ($q2) {
+            $q2->where('user_id', auth()->id())
+               ->where('status','completed');
+        });
+    })->get();
         return response()->json(['data'=>[
             'complate'=>TaskResource::collection($complate),
             'panding'=>TaskResource::collection($pendingTask)
