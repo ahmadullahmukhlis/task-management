@@ -25,6 +25,9 @@ const routes = [
         path: '/login',
         component: () => import('pages/LoginPage.vue'),
     },    {
+        path: '/verify/:id',
+        component: () => import('pages/verifyPage.vue'),
+    },     {
         path: '/message/:email',
         component: () => import('pages/messagePage.vue'),
     },
