@@ -30,11 +30,11 @@ class UserProjectResource extends JsonResource
     $initials = '';
 
     if (!empty($parts)) {
-        $initials .= strtoupper($parts[0][0]); // first letter of first word
+        $initials .= strtoupper($parts[0][0]);
     }
 
     if (count($parts) > 1) {
-        $initials .= strtoupper($parts[1][0]); // first letter of second word
+        $initials .= strtoupper($parts[1][0]);
     }
 
     return $initials;
