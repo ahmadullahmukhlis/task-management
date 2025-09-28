@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -21,8 +22,8 @@ class ProjectResource extends JsonResource
             'description'=>$this->comment,
             'initials'=>$this->charecktor($this->name),
             'color'=>'bg-'.$this->color($this->id),
-            'tasks'=>25 + $this->id,
-            'progress'=>$this->id + 41,
+            'tasks'=>Task::where('project_id',$this->id)->count(),
+            'progress'=> $this->percentage($this->id),
             'progressColor'=>$this->color($this->id),
             'icon'=>$this->icon($this->id),
             'members'=> $this->userLoad($this->id),
@@ -50,24 +51,6 @@ private function charecktor(string $name): string
     return $initials;
 }
 
-    private   function dynamicBgColor(): string
-    {
-
- $colors = [
-            'bg-blue-600',
-            'bg-pink-600',
-            'bg-purple-600',
-            'bg-green-600',
-            'bg-yellow-600',
-            'bg-red-600',
-            'bg-indigo-600',
-            'bg-teal-600',
-            'bg-orange-600',
-            'bg-gray-600',
-        ];
-
-        return $colors[array_rand($colors)];
-    }
 private function color(?int $id = null): string
 {
     $colors = [
@@ -150,6 +133,13 @@ private function icon(int $id): string
 
     return $icons[$index];
 }
+public function percentage($id) {
+    $query = Task::query();
+    $total = $query->where('project_id',$id)->count();
+    $complete = $query->where('project_id',$id)->where('status','completed')->count();
+    return $total > 0 ? (int) round(($complete / $total) * 100) : 0;
+}
+
 
 
 }
