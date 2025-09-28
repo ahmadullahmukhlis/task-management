@@ -86,15 +86,27 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
         $task->update([
-            'status'=> $task->status =='completed' ?   'Pending' :'completed'
+            'status'=>  TaskAction::where('task_id',$task->id)->where('status','Pending')->first() ?   'Pending' :'completed'
         ]);
-         TaskAction::updateOrCreate(
+$taskAction = TaskAction::where('user_id', auth()->id())
+    ->where('task_id', $task->id)
+    ->first();
+
+$status = 'completed'; // default
+
+if ($taskAction && $taskAction->status === 'completed') {
+    // if already completed, toggle back to pending
+    $status = 'Pending';
+}
+
+// now create or update with the decided status
+TaskAction::updateOrCreate(
     [
         'user_id' => auth()->id(),
         'task_id' => $task->id,
     ],
     [
-        'status' => $task->status === 'completed' ? 'Pending' : 'completed',
+        'status' => $status,
     ]
 );
 
