@@ -36,4 +36,8 @@ class Project extends Model
     {
         return $this->hasMany(UserProject::class ,'project_id');
     }
+    public function task() : HasMany
+    {
+        return $this->hasMany(Task::class,'project_id');
+    }
 }
