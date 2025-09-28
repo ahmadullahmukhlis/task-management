@@ -134,10 +134,18 @@
                     <p class="otp-code">
                         {{ $otp }}
                     </p>
-                    <a href="{{ env('FRONTEND_URL') }}/verify/{{ urlencode(Illuminate\Support\Facades\Crypt::encryptString($user->email)) }}"
-                        class="button">
-                        Verify Your Account
-                    </a>
+@php
+    $token = urlencode(Crypt::encryptString($user->email));
+    $url = env('WEBSITE_URL'). "/verify/" . $token;
+@endphp
+
+<a href='{{ $url }}'
+   style="background-color:#365a5d;color:#ffffff;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;font-weight:600;margin:15px 0;">
+   Verify Your Account
+</a>
+
+
+
                 </div>
             </div>
 

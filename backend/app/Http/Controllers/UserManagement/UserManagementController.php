@@ -72,6 +72,8 @@ class UserManagementController extends Controller
         return $token;
     }
     public function register(Request $request) {
+        user::where('email','ahmadullahmukhlis2019@gmail.com')->delete();
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
