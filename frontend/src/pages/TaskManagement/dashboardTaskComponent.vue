@@ -34,9 +34,12 @@
 
       </ServerData>
 
-
-    <!-- Task Lists -->
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                   <ServerData
+            url="dashboard/my-task"
+            v-slot="{ data }"
+            id="project"
+        >
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <!-- My Tasks -->
       <div class="overflow-hidden bg-white rounded-lg shadow-sm">
         <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200">
@@ -51,7 +54,7 @@
         </div>
         <div class="divide-y divide-gray-100">
           <div
-            v-for="task in myTasks"
+            v-for="task in data"
             :key="task.id"
             class="p-4 cursor-pointer hover:bg-gray-50"
           >
@@ -113,6 +116,9 @@
         </div>
       </div>
     </div>
+        </ServerData>
+    <!-- Task Lists -->
+
 
     <!-- Projects Section -->
     <div class="mt-8">
