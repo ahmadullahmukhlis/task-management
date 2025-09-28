@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,24 +25,14 @@ class ProjectResource extends JsonResource
             'progress'=>$this->id + 41,
             'progressColor'=>$this->color($this->id),
             'icon'=>$this->icon($this->id),
-            'members'=>[
-                [
-                    'initials'=>'AJ',
-                    'color'=> $this->color()
-                ],        [
-                    'initials'=>'AJ',
-                    'color'=> $this->color()
-                ]    ,    [
-                    'initials'=>'AJ',
-                    'color'=> $this->color()
-                ]   ,     [
-                    'initials'=>'AJ',
-                    'color'=> $this->color()
-                ]
-                ],
-                'created_by'=> $this->created_by == auth()->user()->id ? true : false
+            'members'=> $this->userLoad($this->id),
+            'created_by'=> $this->created_by == auth()->user()->id ? true : false
 
         ];
+    }
+       private function userLoad($id) {
+     $users=   User::whereRelation('userProject','project_id',$id)->get();
+     return UserProjectResource::collection($users);
     }
 private function charecktor(string $name): string
 {
