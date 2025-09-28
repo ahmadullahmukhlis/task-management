@@ -39,7 +39,7 @@
                   type="text"
                   required
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
-                  placeholder="xxxxx"
+                  placeholder="xxxxxx"
                 >
               </div>
 
@@ -62,7 +62,6 @@
             </div>
           </div>
         </div>
-
         <!-- Footer -->
         <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
           <p class="text-center text-sm text-gray-500">
@@ -75,20 +74,54 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
+import { useRouter ,useRoute} from 'vue-router'
+import { useAuthStore } from 'src/stores/UserManagementStores/AuthStore'
 
 export default {
   name: 'VerifyEmailPage',
   data () {
     const router = useRouter();
+    const authStore = useAuthStore()
+    const route = useRoute()
+
     return {
       code: '',
-      router
+      router ,
+      authStore,
+      route
     }
   },
   methods : {
     login() {
       this.router.push('/login')
+    },
+ async   verify() {
+
+           try {
+                await this.authStore.getToken()
+                const result = await this.authStore.verify(
+                    this.route.params.id,
+                    this.code,
+
+                )
+                this.loading = false
+                this.authStore.token = result.data
+                localStorage.setItem('token', result.data)
+                this.$q.notify({
+                    message: 'Logged in successfully',
+                    color: 'green',
+                })
+                await this.router.push('/')
+                window.location.reload()
+            } catch (e) {
+                this.loading = false
+                this.$q.notify({
+                    message: 'Something went wrong',
+                    color: 'red',
+                })
+                console.log(e)
+                errorHandler(e, actions.setErrors)
+            }
     }
   }
 }
