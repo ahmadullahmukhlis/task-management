@@ -74,7 +74,7 @@
                     <div class="col-auto q-px-sm">
                       <q-checkbox
                         :model-value="task.completed"
-                        @update:model-value="toggleTask(task)"
+                        @update:model-value="toggleTask(task ,'Complete')"
                         color="primary"
                       />
                     </div>
@@ -185,7 +185,7 @@
                     <div class="col-auto q-px-sm">
                       <q-checkbox
                         :model-value="task.completed"
-                        @update:model-value="toggleTask(task)"
+                        @update:model-value="toggleTask(task ,'Pending')"
                         color="green"
                       />
                     </div>
@@ -323,7 +323,7 @@ import ServerData from 'src/components/ServerData.vue';
 import { useRoute } from 'vue-router';
 import { useGeneralStore } from 'src/stores/generalStore';
 import AssignModel from './AssignModel.vue';
-
+import { Dialog, Notify } from 'quasar'
 export default {
   name: 'TaskListApp',
   components : {
@@ -400,17 +400,32 @@ generalStore,
       this.selectedPriority = 'Medium'
     },
 
-   async toggleTask (task) {
-            try {
-         const result =await api.post('tasks/complate/'+task.id, {})
-        this.q.notify({ message: result.data.message, color: 'green' })
-         this.generalStore.revalidate('tasks')
-
-      } catch (e) {
-        console.error(e)
-        this.q.notify({ message: e.message, color: 'red' })
-      }
+async toggleTask(task ,status) {
+  // show confirm dialog first
+  Dialog.create({
+    title: 'Task Confirmation',
+    message: `Do you want to ` + status,
+    cancel: true,
+    persistent: true,
+    ok: {
+      label: 'Yes',
+      color: 'primary'
     },
+    cancel: {
+      label: 'No'
+    }
+  }).onOk(async () => {
+    // user confirmed
+    try {
+      const result = await api.post('tasks/complate/' + task.id, {})
+      Notify.create({ message: result.data.message, color: 'green' })
+      this.generalStore.revalidate('tasks')
+    } catch (e) {
+      console.error(e)
+      Notify.create({ message: e.message, color: 'red' })
+    }
+  })
+},
 
     editTask (task) {
       this.editingTask = task
