@@ -23,43 +23,8 @@ export const userManagementRoutes = {
                 },
             ],
         },
-        {
-            path: 'customers',
-            children: [
-                {
-                    path: '',
-                    component: () =>
-                        import(
-                            'pages/UserManagement/Customers/CustomerPage.vue'
-                        ),
-                },
-            ],
-        },
-        {
-            path: 'suppliers',
-            children: [
-                {
-                    path: '',
-                    component: () =>
-                        import(
-                            'pages/UserManagement/Suppliers/SupplierPage.vue'
-                        ),
-                    meta: {
-                        active: '',
-                        breadcrumb: [
-                            {
-                                text: 'User Management',
-                                link: '/user-management',
-                            },
-                            {
-                                text: 'Suppliers',
-                                link: '',
-                            },
-                        ],
-                    },
-                },
-            ],
-        },
+
+
         {
             path: 'activity-log',
             component: () =>
