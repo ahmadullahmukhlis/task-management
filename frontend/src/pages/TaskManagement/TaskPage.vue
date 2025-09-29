@@ -138,7 +138,7 @@
                         </div>
 
                         <!-- Task Actions -->
-                        <div v-if="task.created_by">
+                        <div >
                           <q-btn
                             flat
                             round
@@ -147,7 +147,12 @@
                             size="sm"
                           >
                             <q-menu>
-                              <q-list style="min-width: 150px">
+                              <q-list>
+                                <q-item clickable v-close-popup @click="openDetail(task)">
+                                  <q-item-section>view</q-item-section>
+                                </q-item>
+                              </q-list>
+                              <q-list style="min-width: 150px" v-if="task.created_by">
                                 <q-item clickable v-close-popup @click="editTask(task)">
                                   <q-item-section>Edit</q-item-section>
                                 </q-item>
@@ -314,6 +319,12 @@
         :project_id="this.route.params.id"
         :task="currentTask"
         />
+            <TaskDetails   v-if="taskDetailModel"
+        :handle-modal="taskDetailModel"
+        :handleModelClose="closeDetail"
+
+        :task="taskinfo"
+        />
 </template>
 
 <script>
@@ -324,10 +335,11 @@ import { useRoute } from 'vue-router';
 import { useGeneralStore } from 'src/stores/generalStore';
 import AssignModel from './AssignModel.vue';
 import { Dialog, Notify } from 'quasar'
+import TaskDetails from './TaskDetails.vue';
 export default {
   name: 'TaskListApp',
   components : {
-    ServerData ,AssignModel
+    ServerData ,AssignModel ,TaskDetails
   },
 
   data () {
@@ -360,7 +372,9 @@ generalStore,
         { label: 'Medium', value: 'Medium' },
         { label: 'High', value: 'High' },
         { label: 'Urgent', value: 'Urgent' }
-      ]
+      ],
+      taskDetailModel : false ,
+      taskinfo : null
     }
   },
 
@@ -490,8 +504,14 @@ async toggleTask(task ,status) {
       if (!dateString) return ''
       const d = new Date(dateString)
       return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    },openDetail(task) {
+      this.taskDetailModel = true;
+      this.taskinfo = task
     },
-
+    closeDetail(task) {
+      this.taskDetailModel = false;
+      this.taskinfo = null
+    },
     getPriorityColor (priority) {
       const colors = {
         Low: 'green',

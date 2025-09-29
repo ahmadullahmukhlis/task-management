@@ -113,10 +113,10 @@
           v-for="project in data"
           :key="project.id"
           class="transition-shadow bg-white rounded-lg shadow-sm cursor-pointer hover:shadow-md"
-          @click="projectredirect(project.id)"
+
         >
           <q-card-section class="p-4">
-            <div class="flex justify-between mb-3">
+            <div class="flex justify-between mb-3" >
               <div>
                         <div
                 class="flex items-center justify-center w-10 h-10 mr-3 font-bold text-white rounded-md"
@@ -152,7 +152,7 @@
 
             <p class="mb-4 text-sm text-gray-600" v-html="project.description"></p>
 
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between"    @click="projectredirect(project.id)">
               <div class="flex -space-x-2">
                 <q-avatar
                   v-for="member in project.members"
