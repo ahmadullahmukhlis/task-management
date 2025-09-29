@@ -19,8 +19,9 @@
                     :active="generalStore.active_page == item.id"
                 />
             </div>
+
         </ServerData>
-        <!-- <protected-component permission-key="user-management-access">
+        <protected-component permission-key="user-management-access">
             <SidebarLink
                 icon="people"
                 :name="$translate('User management')"
@@ -35,7 +36,7 @@
                 to="/configurations"
                 :active="generalStore.active_page === 'configurations'"
             />
-        </protected-component> -->
+        </protected-component>
     </q-list>
 </template>
 
