@@ -46,10 +46,11 @@ import { useGeneralStore } from 'stores/generalStore'
 import SidebarLink from 'components/SidebarLink.vue'
 import { LocalEncrypt } from 'src/lib/crypto'
 import ServerData from './ServerData.vue'
+import ProtectedComponent from './ProtectedComponent.vue'
 
 export default defineComponent({
     name: 'SidebarLinks',
-    components: { SidebarLink, ServerData },
+    components: { SidebarLink, ServerData ,ProtectedComponent },
     setup() {
         const generalStore = useGeneralStore()
 
