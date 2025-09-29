@@ -11,11 +11,11 @@
             <div class="text-grey-6"> all pending and Completed tasks</div>
           </div>
           <div class="col-auto">
-            <q-btn-group rounded>
+            <!-- <q-btn-group rounded>
               <q-btn color="primary" icon="view_list" label="List" />
               <q-btn color="grey-4" text-color="black" icon="calendar_today" label="Calendar" />
               <q-btn color="grey-4" text-color="black" icon="dashboard" label="Board" />
-            </q-btn-group>
+            </q-btn-group> -->
           </div>
         </div>
 
