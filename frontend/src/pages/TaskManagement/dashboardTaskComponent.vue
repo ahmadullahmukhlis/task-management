@@ -113,6 +113,7 @@
           v-for="project in data"
           :key="project.id"
           class="transition-shadow bg-white rounded-lg shadow-sm cursor-pointer hover:shadow-md"
+          @click="projectredirect(project.id)"
         >
           <q-card-section class="p-4">
             <div class="flex justify-between mb-3">
@@ -199,13 +200,16 @@ import { ref } from 'vue'
 import ProjectFormModel from './ProjectFormModel.vue'
 import ServerData from 'src/components/ServerData.vue'
 import AddUserToProject from './project/AddUserToProject.vue'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'dashboardTaskComponent',
   components:{ProjectFormModel , ServerData ,AddUserToProject},
   setup() {
-
-
+    const router = useRouter();
+    return {
+      router
+    }
 
   },data(){
     return {
@@ -231,6 +235,8 @@ export default {
         opentUser(project) {
           this.userModel = true
           this.project = project
+        },projectredirect(id) {
+          this.router.push('/projects/'+id)
         }
       }
 }
