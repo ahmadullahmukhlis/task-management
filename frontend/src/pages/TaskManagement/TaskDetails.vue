@@ -77,55 +77,68 @@
         </div>
 
         <!-- Assigned Section -->
-        <div class="p-4 transition-all bg-white border border-gray-100 rounded-lg shadow-sm hover:shadow-md">
-          <p class="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">{{ translate('Assigned To') }}</p>
-          <div class="space-y-3">
-            <div
-              v-for="user in task.assign"
-              :key="user.id"
-              class="flex items-center p-3 space-x-3 transition-colors duration-200 rounded-lg bg-gray-50 hover:bg-gray-100"
-            >
-              <!-- User Avatar -->
-              <div class="flex-shrink-0">
-                <div
-                  v-if="user.image && user.image !== 'http://localhost:8000/storage'"
-                  class="w-10 h-10 bg-center bg-cover border-2 border-white rounded-full shadow-sm"
-                  :style="{ backgroundImage: `url(${user.image})` }"
-                ></div>
-                <div
-                  v-else
-                  class="flex items-center justify-center w-10 h-10 text-sm font-semibold text-white rounded-full shadow-sm"
-                  :class="getUserColorClass(user.color)"
-                >
-                  {{ user.initials }}
-                </div>
-              </div>
-
-              <!-- User Info -->
-              <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-gray-900 truncate">{{ user.name }}</p>
-                <p class="text-xs text-gray-500 truncate">{{ user.email }}</p>
-              </div>
-
-              <!-- Created By Badge -->
-              <div
-
-                class="px-2 py-1 text-xs font-medium text-green-800 bg-green-100 border border-green-200 rounded-full"
-              >
-                {{ translate('Assign') }}
-              </div>
-            </div>
-
-            <!-- Empty State -->
-            <div
-              v-if="!task.assign || task.assign.length === 0"
-              class="py-4 text-center text-gray-500"
-            >
-              <q-icon name="person_off" class="mb-2 text-2xl text-gray-400" />
-              <p class="text-sm">{{ translate('No one assigned') }}</p>
-            </div>
-          </div>
+     <!-- Assigned Section -->
+<div class="p-4 transition-all bg-white border border-gray-100 rounded-lg shadow-sm hover:shadow-md">
+  <p class="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">{{ translate('Assigned To') }}</p>
+  <div class="space-y-3">
+    <div
+      v-for="user in task.assign"
+      :key="user.id"
+      class="flex items-center p-3 space-x-3 transition-colors duration-200 rounded-lg bg-gray-50 hover:bg-gray-100"
+    >
+      <!-- User Avatar -->
+      <div class="flex-shrink-0">
+        <div
+          v-if="user.image && user.image !== 'http://localhost:8000/storage'"
+          class="w-10 h-10 bg-center bg-cover border-2 border-white rounded-full shadow-sm"
+          :style="{ backgroundImage: `url(${user.image})` }"
+        ></div>
+        <div
+          v-else
+          class="flex items-center justify-center w-10 h-10 text-sm font-semibold text-white rounded-full shadow-sm"
+          :class="getUserColorClass(user.color)"
+        >
+          {{ user.initials }}
         </div>
+      </div>
+
+      <!-- User Info -->
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-medium text-gray-900 truncate">{{ user.name }}</p>
+        <p class="text-xs text-gray-500 truncate">{{ user.email }}</p>
+      </div>
+
+      <!-- Remove User Button -->
+      <q-btn
+        flat
+        round
+        dense
+        size="sm"
+        icon="close"
+        color="red"
+        @click="removeUser(task.id, user.id)"
+        class="hover:bg-red-50"
+      />
+
+      <!-- Created By Badge -->
+      <div
+        class="px-2 py-1 text-xs font-medium text-green-800 bg-green-100 border border-green-200 rounded-full"
+      >
+        {{ translate('Assign') }}
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div
+      v-if="!task.assign || task.assign.length === 0"
+      class="py-4 text-center text-gray-500"
+    >
+      <q-icon name="person_off" class="mb-2 text-2xl text-gray-400" />
+      <p class="text-sm">{{ translate('No one assigned') }}</p>
+    </div>
+  </div>
+</div>
+
       </q-card-section>
 
       <!-- Footer -->
@@ -143,9 +156,10 @@
 
 <script>
 import { defineComponent, computed } from 'vue'
-import { useQuasar } from 'quasar'
+import { useQuasar, Dialog, Notify } from 'quasar'
 import { useGeneralStore } from 'stores/generalStore'
 import { useLanguageStore } from 'stores/languageStore'
+import { api } from 'src/boot/axios' // <-- import axios instance
 
 export default defineComponent({
   name: 'TaskDetails',
@@ -212,7 +226,6 @@ export default defineComponent({
       }
     })
 
-    // Methods
     const formatDate = (dateString) => {
       if (!dateString) return 'No due date'
       const date = new Date(dateString)
@@ -237,6 +250,31 @@ export default defineComponent({
       return colorMap[color] || 'bg-blue-500'
     }
 
+    // --- REMOVE USER ---
+    const removeUser = (taskId, userId) => {
+      Dialog.create({
+        title: 'Remove Confirmation',
+        message: 'Do you want to remove this user from this task?',
+        cancel: true,
+        persistent: true,
+        ok: { label: 'Yes', color: 'primary' },
+        cancel: { label: 'No' }
+      }).onOk(async () => {
+        try {
+          const result = await api.post('tasks/cremove-user', {
+            user_id: userId,
+            task_id: taskId
+          })
+          Notify.create({ message: result.data.message, color: 'green' })
+     props.handleModelClose();
+          generalStore.revalidate('tasks')
+        } catch (e) {
+          console.error(e)
+          Notify.create({ message: e.message, color: 'red' })
+        }
+      })
+    }
+
     return {
       q,
       generalStore,
@@ -248,8 +286,10 @@ export default defineComponent({
       priorityIconClass,
       priorityIconColor,
       formatDate,
-      getUserColorClass
+      getUserColorClass,
+      removeUser
     }
   }
 })
 </script>
+
