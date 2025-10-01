@@ -11,7 +11,7 @@
             v-slot="{ data }"
             id="project"
         >
-            <div v-for="item in data" :key="item.id" class="my-1">
+            <div v-for="item in data" :key="item.id" class="my-1" @click="projectUrl(item.id)">
                    <SidebarLink
                     :icon="item.icon"
                     :name="$translate(item.name)"
@@ -47,17 +47,29 @@ import SidebarLink from 'components/SidebarLink.vue'
 import { LocalEncrypt } from 'src/lib/crypto'
 import ServerData from './ServerData.vue'
 import ProtectedComponent from './ProtectedComponent.vue'
-
+import { useRoute ,useRouter } from 'vue-router';
 export default defineComponent({
     name: 'SidebarLinks',
     components: { SidebarLink, ServerData ,ProtectedComponent },
     setup() {
         const generalStore = useGeneralStore()
+        const route = useRoute();
+                const router = useRouter();
 
         return {
-            generalStore,
+            generalStore,route,router
         }
     },
+    methods:{
+projectUrl(id) {
+  if (this.route.path.startsWith('/projects/')) {
+    this.router.push('/all-task/' + id);
+  } else {
+    this.router.push('/projects/' + id);
+  }
+}
+
+    }
 
 })
 </script>

@@ -17,6 +17,7 @@ const routes = [
                 },
             },
             { path: 'projects/:id', component: () => import('pages/TaskManagement/TaskPage.vue') },
+            { path: 'all-task/:id', component: () => import('pages/TaskManagement/allTaskPage.vue') },
 
         ],
     },
