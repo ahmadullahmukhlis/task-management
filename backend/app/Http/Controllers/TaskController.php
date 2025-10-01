@@ -63,7 +63,7 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-       Task::create([
+      $task = Task::create([
             'project_id'=>$request->project_id,
             'title'=>$request->title,
             'description'=>$request->description,
@@ -72,6 +72,16 @@ class TaskController extends Controller
             'due_to'=>$request->dueDate ?? now(),
             'created_by'=>auth()->user()->id
         ]);
+        if($request->has('assign')) {
+            foreach ($request->assign as $item) {
+        UserTask::create(
+        [
+            'user_id' => $item,
+            'task_id' => $task->id
+        ]
+    );
+            }
+        }
         return response()->json(
             [
                 'result'=>true ,
@@ -122,18 +132,21 @@ TaskAction::updateOrCreate(
     /**
      * Show the form for editing the specified resource.
      */
-    public function assign(Request $request)
-    {
-        UserTask::create([
-            'user_id'=>$request->user_id,
-            'task_id'=>$request->task_id
-        ]);
-         return response()->json(
-            [
-                'result'=>true ,
-                'message'=>'the user assign to the task'
-            ]);
-    }
+public function assign(Request $request)
+{
+    UserTask::updateOrCreate(
+        [
+            'user_id' => $request->user_id,
+            'task_id' => $request->task_id
+        ]
+    );
+
+    return response()->json([
+        'result' => true,
+        'message' => 'The user is assigned to the task'
+    ]);
+}
+
 
     /**
      * Update the specified resource in storage.
