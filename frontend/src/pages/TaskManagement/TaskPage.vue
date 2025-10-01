@@ -91,9 +91,10 @@
                                 v-for="member in task.assign || []"
                                 :key="member.id"
                                 size="28px"
-                                class="border-2 border-white"
+                                class="border-2 border-white cursor-pointer"
                                 :color="member.color"
                                 text-color="white"
+                                @click="removeUser(task.id,member.id)"
                               >
                                 {{ member.initials }}
                               </q-avatar>
@@ -433,6 +434,27 @@ export default {
         this.assignPeople = this.peopleSelected;
         this.addAssignModel = false;
       }
+    },removeUser(taskId , userId) {
+        Dialog.create({
+        title: 'Remove Confirmation',
+        message: `Do you want to Remove this user From this task`,
+        cancel: true,
+        persistent: true,
+        ok: { label: 'Yes', color: 'primary' },
+        cancel: { label: 'No' }
+      }).onOk(async () => {
+        try {
+          const result = await api.post('tasks/cremove-user/', {
+            user_id:userId,
+            task_id:taskId
+          });
+          Notify.create({ message: result.data.message, color: 'green' });
+          this.generalStore.revalidate('tasks');
+        } catch (e) {
+          console.error(e);
+          Notify.create({ message: e.message, color: 'red' });
+        }
+      });
     },
     async loadUser() {
       try {

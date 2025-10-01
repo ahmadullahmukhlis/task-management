@@ -173,8 +173,16 @@ public function assign(Request $request)
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
+public function remove(Request $request)
+{
+    UserTask::where('user_id', $request->user_id)
+        ->where('task_id', $request->task_id)
+        ->delete(); // delete the matching record
+
+    return response()->json([
+        'result' => true,
+        'message' => 'The user has been removed from the task'
+    ]);
+}
+
 }
