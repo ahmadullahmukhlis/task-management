@@ -1,5 +1,5 @@
 FROM ubuntu:22.04
-LABEL maintainer="Ahmad Edris Malia"
+LABEL maintainer="Ahmad Ullah Mukhlis"
 WORKDIR /var/www
 RUN apt-get -y update
 ENV DEBIAN_FRONTEND noninteractive
