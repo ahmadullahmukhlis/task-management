@@ -1,6 +1,6 @@
 databases:
   - name: laravel-db
-    plan: free  # free tier DB (Postgres)
+    plan: free
     databaseName: laravel
     user: laravel
 
@@ -9,20 +9,18 @@ services:
     name: laravel-backend
     env: docker
     rootDir: backend
-    plan: free
     dockerfilePath: Dockerfile
+    plan: free
     autoDeploy: true
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_KEY
-        sync: false   # set manually after first deploy (php artisan key:generate --show)
+        sync: false   # set after first deploy
       - key: APP_DEBUG
         value: false
       - key: APP_URL
         value: https://laravel-backend.onrender.com
-
-      # Database settings (Render will inject values from DB above)
       - key: DB_CONNECTION
         value: postgres
       - key: DB_HOST
@@ -47,11 +45,11 @@ services:
           property: password
 
   - type: web
-    name: frontend
+    name: quasar-frontend
     env: docker
     rootDir: frontend
-    plan: free
     dockerfilePath: Dockerfile
+    plan: free
     autoDeploy: true
     envVars:
       - key: VITE_API_URL
