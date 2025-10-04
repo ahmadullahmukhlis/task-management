@@ -4,32 +4,30 @@ import Pusher from 'pusher-js'
 import { urlFinder } from 'src/lib/helpers'
 
 export default boot(({ app }) => {
-    const localStore = localStorage.getItem('token')
-    const useCurrentRoute = process.env.USE_CURRENT_HOST
-    let host = ''
-    if (typeof useCurrentRoute !== 'undefined') {
-        host = window.location.hostname
-    } else {
-        host = process.env.VITE_PUSHER_HOST
-    }
+  const useCurrentRoute = import.meta.env.VITE_USE_CURRENT_HOST
+  let host = ''
 
-    app.config.globalProperties.Pusher = Pusher
-    app.config.globalProperties.$echo = new Echo({
-        auth: {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('token'),
-            },
-        },
-        authEndpoint: `${urlFinder(true)}broadcasting/auth`,
-        broadcaster: 'pusher',
-        key: process.env.VITE_PUSHER_APP_KEY,
-        wsHost: host,
-        wsPort: process.env.VITE_PUSHER_PORT ?? 80,
-        wssPort: process.env.VITE_PUSHER_PORT ?? 443,
-        forceTLS: false,
-        enabledTransports: ['ws', 'wss'],
-        cluster: process.env.VITE_PUSHER_APP_CLUSTER,
-        disableStats: true,
-        encrypted: true,
-    })
+  if (typeof useCurrentRoute !== 'undefined') {
+    host = window.location.hostname
+  } else {
+    host = import.meta.env.VITE_REVERB_HOST
+  }
+
+  window.Pusher = Pusher
+
+  app.config.globalProperties.$echo = new Echo({
+    broadcaster: 'reverb',
+    key: import.meta.env.VITE_REVERB_APP_KEY,
+    wsHost: host,
+    wsPort: import.meta.env.VITE_REVERB_PORT ?? 8080,
+    wssPort: import.meta.env.VITE_REVERB_PORT ?? 8080,
+    forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'http') === 'https',
+    enabledTransports: ['ws', 'wss'],
+    authEndpoint: `${urlFinder(true)}broadcasting/auth`,
+    auth: {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  })
 })

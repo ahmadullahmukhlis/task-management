@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TaskEvent;
 use App\Http\Resources\TaskResource;
 use App\Models\Project;
 use App\Models\Task;
@@ -72,6 +73,7 @@ class TaskController extends Controller
             'due_to'=>$request->dueDate ?? now(),
             'created_by'=>auth()->user()->id
         ]);
+        event(New TaskEvent($task));
         if($request->has('assign')) {
             foreach ($request->assign as $item) {
         UserTask::create(
