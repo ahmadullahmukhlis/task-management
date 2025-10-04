@@ -23,3 +23,7 @@ Broadcast::channel('testChannel', function ($user) {
 Broadcast::channel('applicationChannel', function ($user) {
     return true;
 });
+
+Broadcast::channel('add-task',function ($user){
+    return true;
+});
