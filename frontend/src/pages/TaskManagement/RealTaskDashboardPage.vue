@@ -83,11 +83,8 @@
                       <q-btn flat round icon="more_vert" size="sm" color="gray-6">
                         <q-menu>
                           <q-list style="min-width: 100px">
-                            <q-item clickable v-close-popup>
-                              <q-item-section>Edit</q-item-section>
-                            </q-item>
-                            <q-item clickable v-close-popup>
-                              <q-item-section>Delete</q-item-section>
+                            <q-item clickable v-close-popup @click="openDetail(task)">
+                              <q-item-section >view</q-item-section>
                             </q-item>
                           </q-list>
                         </q-menu>
@@ -109,19 +106,27 @@
       </div>
     </server-data>
   </div>
+      <TaskDetails
+      v-if="taskDetailModel"
+      :handle-modal="taskDetailModel"
+      :handleModelClose="closeDetail"
+      :task="taskinfo"
+    />
 </template>
 
 <script>
 import ServerData from 'src/components/ServerData.vue';
 import { useGeneralStore } from 'src/stores/generalStore';
+import TaskDetails from './TaskDetails.vue';
 
 export default {
   name: "RealTaskDashboardPage",
-  components: { ServerData },
+  components: { ServerData ,TaskDetails },
   data (){
      const generalStore = useGeneralStore()
     return {
-      generalStore
+      generalStore,
+       taskDetailModel: false,taskinfo:null
     }
   },
   mounted() {
@@ -172,7 +177,14 @@ export default {
       }
       const color = `hsl(${hash % 360}, 70%, 50%)`;
       return color;
-    }
+    },    openDetail(task) {
+      this.taskDetailModel = true;
+      this.taskinfo = task;
+    },
+    closeDetail() {
+      this.taskDetailModel = false;
+      this.taskinfo = null;
+    },
   }
 };
 </script>

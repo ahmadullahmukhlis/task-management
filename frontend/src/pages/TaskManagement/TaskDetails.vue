@@ -71,14 +71,14 @@
               class="font-medium capitalize border"
               :class="priorityChipClass"
             >
-              {{ task.priority }}
+              {{ task.priority ?? task.type }}
             </q-chip>
           </div>
         </div>
 
         <!-- Assigned Section -->
      <!-- Assigned Section -->
-<div class="p-4 transition-all bg-white border border-gray-100 rounded-lg shadow-sm hover:shadow-md">
+<div class="p-4 transition-all bg-white border border-gray-100 rounded-lg shadow-sm hover:shadow-md" v-if="task?.assign">
   <p class="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">{{ translate('Assigned To') }}</p>
   <div class="space-y-3">
     <div
