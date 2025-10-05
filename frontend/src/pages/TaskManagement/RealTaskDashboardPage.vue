@@ -42,9 +42,24 @@
                     <div class="flex-1 text-lg font-semibold">{{ task.title }}</div>
                     <div>
                       <q-badge
-                        :color="getStatusColor(task.status)"
-                        :label="formatStatus(task.status)"
+                        color="green"
+                        :label="task.project"
                       />
+                    </div>
+                  </div>
+                       <div class="flex items-center mb-2">
+                    <div class="flex-1 text-lg font-semibold">
+                        <q-badge
+                        color="info"
+                        :label="task.status"
+                      />
+                    </div>
+                    <div>
+                <q-badge :color="getPriorityMeta(task.type)" class="flex items-center">
+  <q-icon :name="getIcon(task.type)" size="16px" class="mr-1" />
+  {{ task.type }}
+</q-badge>
+
                     </div>
                   </div>
                   <div class="mb-3 text-sm text-gray-600 line-clamp-3">
@@ -118,8 +133,35 @@ export default {
         'completed': 'Completed'
       };
       return statusMap[status] || status;
+    },getIcon(priority) {
+    switch (priority) {
+      case 'Low':
+        return 'sentiment_satisfied'; // green / relaxed icon
+      case 'Medium':
+        return 'warning'; // yellow / alert icon
+      case 'High':
+        return 'priority_high'; // orange / important icon
+      case 'Urgent':
+        return 'error'; // red / urgent icon
+      default:
+        return 'help_outline'; // fallback icon
+    }
+  }, getPriorityMeta(priority) {
+    switch (priority) {
+      case 'Low':
+        return   'green' ;
+      case 'Medium':
+        return 'yellow' ;
+      case 'High':
+        return 'orange'
+      case 'Urgent':
+        return 'red'
+      default:
+        return 'grey'
     }
   }
+  }
+  ,
 }
 </script>
 
