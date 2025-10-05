@@ -113,13 +113,20 @@
 
 <script>
 import ServerData from 'src/components/ServerData.vue';
+import { useGeneralStore } from 'src/stores/generalStore';
 
 export default {
   name: "RealTaskDashboardPage",
   components: { ServerData },
+  data (){
+     const generalStore = useGeneralStore()
+    return {
+      generalStore
+    }
+  },
   mounted() {
     this.$echo.channel('add-task').listen('.TaskEvent', e => {
-      console.log('Got TaskEvent:', e);
+       this.generalStore.revalidate('tasks');
     });
   },
   methods: {
