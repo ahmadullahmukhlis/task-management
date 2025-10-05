@@ -44,7 +44,10 @@ class RealtimeUSerTaskResource extends JsonResource
         $initials .= strtoupper($parts[0][0]);
     }
 
-    if (count($parts) > 1) {
+    if (count($parts) > 2) {
+        $initials .= strtoupper($parts[2][0]);
+    }
+        if (count($parts) > 1) {
         $initials .= strtoupper($parts[1][0]);
     }
 
