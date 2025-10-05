@@ -35,7 +35,7 @@ private function getComparisonDateAttribute($created_at, $dueTo)
     $dueDate   = Carbon::parse($dueTo);
 
     return $createdAt->isSameDay($dueDate)
-        ? $dueDate
+        ? $dueDate->format('Y-m-d')
         : $createdAt->diffForHumans($dueDate, [
             'syntax' => Carbon::DIFF_RELATIVE_TO_NOW
         ]);
