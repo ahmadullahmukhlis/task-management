@@ -73,7 +73,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::post('update/{id}','update');
         Route::post('assign', 'assign');
         Route::post('cremove-user','remove');
-
+        Route::get('load-real-time','realTimeData');
     });
 
     Route::resource('notifications', \App\Http\Controllers\NotificationController::class);

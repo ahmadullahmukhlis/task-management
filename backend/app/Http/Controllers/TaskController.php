@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Events\TaskEvent;
+use App\Http\Resources\RealtimeUSerTaskResource;
 use App\Http\Resources\TaskResource;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskAction;
+use App\Models\User;
 use App\Models\UserTask;
 use Illuminate\Http\Request;
 
@@ -185,6 +187,10 @@ public function remove(Request $request)
         'result' => true,
         'message' => 'The user has been removed from the task'
     ]);
+}
+public function realTimeData() {
+    $user = User::whereHas('taskUser')->get();
+    return RealtimeUSerTaskResource::collection($user);
 }
 
 }

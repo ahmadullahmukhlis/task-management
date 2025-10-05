@@ -45,5 +45,9 @@ class Task extends Model
     {
         return $this->belongsTo(user::class,'created_by');
     }
+    public function project() : BelongsTo
+    {
+        return $this->belongsTo(Project::class,'project');
+    }
 
 }
