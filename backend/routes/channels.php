@@ -20,10 +20,10 @@ Broadcast::channel('testChannel', function ($user) {
     return true;
 });
 
-Broadcast::channel('applicationChannel', function ($user) {
+Broadcast::channel('applicationChannel', function () {
     return true;
 });
 
-Broadcast::channel('add-task',function ($user){
+Broadcast::channel('add-task',function (){
     return true;
 });

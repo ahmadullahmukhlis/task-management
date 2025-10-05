@@ -18,7 +18,7 @@ class TestEvent implements ShouldBroadcast
     {
         $this->message = $message;
     }
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
         return [
             new PrivateChannel('testChannel'),

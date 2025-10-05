@@ -17,15 +17,13 @@ export default {
     }
   },
   mounted() {
-    this.$echo.channel('add-task')
-      .listen('.TaskEvent', (event) => {
-        alert(event.id)
-        console.log('New task event:', event)
-        this.lastEvent = event
-      })
+
+this.$echo
+  .channel('add-task')              // ✅ matches Channel('add-task')
+  .listen('.TaskEvent', e => {      // ✅ matches broadcastAs() = TaskEvent
+    console.log('Got TaskEvent:', e);
+  });
+
   },
-  beforeUnmount() {
-    this.$echo.leave('add-task')
-  }
 }
 </script>
