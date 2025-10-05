@@ -24,7 +24,8 @@ class RealtimeUSerTaskResource extends JsonResource
             'position'=>'development',
             'department'=>'IT Department',
             'taskCount'=>$this->total($this->id),
-            'tasks'=> $this->loadAllTask($this->id)
+            'tasks'=> $this->loadAllTask($this->id),
+            'icon'=> $this->charecktor($this->first_name . ' ' . $this->last_name),
         ];
     }
     private function loadAllTask($user_id ,) {
@@ -34,4 +35,19 @@ class RealtimeUSerTaskResource extends JsonResource
         private function total($user_id ,) {
         return Task::whereRelation('taskAssign','user_id',$user_id)->whereStatus('Pending')->count();
     }
+        private function charecktor(string $name): string
+{
+    $parts = array_values(array_filter(explode(' ', trim($name))));
+    $initials = '';
+
+    if (!empty($parts)) {
+        $initials .= strtoupper($parts[0][0]);
+    }
+
+    if (count($parts) > 1) {
+        $initials .= strtoupper($parts[1][0]);
+    }
+
+    return $initials;
+}
 }
