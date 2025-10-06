@@ -211,5 +211,16 @@ public function uploadDocument(Request $request) {
         'data'=> $document
     ]);
 }
+public function deleteDocument($id){
+    $document = Document::find($id);
+    if (Storage::disk('public')->exists($document->document)) {
+     Storage::delete($document->document);
+}
+$document->delete();
+  return response()->json([
+        'result' => true,
+        'message' => 'The document has been removed from the task'
+    ]);
+}
 
 }
