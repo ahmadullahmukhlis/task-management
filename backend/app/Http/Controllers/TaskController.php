@@ -141,12 +141,14 @@ TaskAction::updateOrCreate(
      */
 public function assign(Request $request)
 {
+    $task = Task::find($request->task_id);
     UserTask::updateOrCreate(
         [
             'user_id' => $request->user_id,
             'task_id' => $request->task_id
         ]
     );
+        event(New TaskEvent($task));
 
     return response()->json([
         'result' => true,
