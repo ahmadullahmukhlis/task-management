@@ -74,6 +74,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::post('assign', 'assign');
         Route::post('cremove-user','remove');
         Route::get('load-real-time','realTimeData');
+        Route::post('upload','uploadDocument');
     });
 
     Route::resource('notifications', \App\Http\Controllers\NotificationController::class);
