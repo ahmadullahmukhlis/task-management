@@ -138,7 +138,7 @@
 
 
 
-            <div v-if="!task.assign || task.assign.length === 0" class="py-4 text-center text-gray-500">
+            <div v-if="!data.assign || data.assign.length === 0" class="py-4 text-center text-gray-500">
               <q-icon name="person_off" class="mb-2 text-2xl text-gray-400" />
               <p class="text-sm">{{ translate('No one assigned') }}</p>
             </div>
