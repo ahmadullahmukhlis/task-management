@@ -181,7 +181,9 @@
                 size="sm"
                 icon="download"
                 color="green"
-                @click="removedoc(doc.id)"
+                 :href="doc.document"
+  target="_blank"
+  download
               />
 
             </div>
