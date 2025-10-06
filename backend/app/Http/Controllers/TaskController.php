@@ -115,6 +115,7 @@ if ($taskAction && $taskAction->status === 'completed') {
     // if already completed, toggle back to pending
     $status = 'Pending';
 }
+        event(New TaskEvent($task));
 
 // now create or update with the decided status
 TaskAction::updateOrCreate(
