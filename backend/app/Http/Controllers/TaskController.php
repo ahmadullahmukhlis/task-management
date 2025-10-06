@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Events\TaskEvent;
 use App\Http\Resources\RealtimeUSerTaskResource;
 use App\Http\Resources\TaskResource;
+use App\Models\Document;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskAction;
 use App\Models\User;
 use App\Models\UserTask;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
@@ -191,6 +193,23 @@ public function remove(Request $request)
 public function realTimeData() {
     $user = User::whereHas('taskUser')->get();
     return RealtimeUSerTaskResource::collection($user);
+}
+public function uploadDocument(Request $request) {
+    $task = Task::find($request->task_id);
+    $document = null;
+    if($request->hasFile('document')){
+        $document = Storage::put('public', $request->file('document'));
+    }
+  $document =  Document::create([
+        'task_id'=>$task->id,
+        'title'=>$request->title,
+        'document'=>$document ?? $request->document
+    ]);
+        return response()->json([
+        'result' => true,
+        'message' => 'The  Document Has Been Uploaded',
+        'data'=> $document
+    ]);
 }
 
 }
