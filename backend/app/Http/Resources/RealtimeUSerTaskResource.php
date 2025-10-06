@@ -29,7 +29,7 @@ class RealtimeUSerTaskResource extends JsonResource
         ];
     }
     private function loadAllTask($user_id ,) {
-        $tasks = Task::whereRelation('taskAssign','user_id',$user_id)->whereStatus('Pending')->get();
+        $tasks = Task::whereRelation('taskAssign','user_id',$user_id)->orderByRaw("FIELD(type, 'Urgent','High', 'Medium', 'Low')")->whereStatus('Pending')->get();
         return PedingTaskResource::collection($tasks);
     }
         private function total($user_id ,) {
