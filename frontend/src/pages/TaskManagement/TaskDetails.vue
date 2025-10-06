@@ -122,6 +122,7 @@
 
               <!-- Remove -->
               <q-btn
+              v-if="data.created_by"
                 flat
                 round
                 dense
@@ -165,6 +166,7 @@
 
               <!-- Remove -->
               <q-btn
+              v-if="data.created_by"
                 flat
                 round
                 dense
@@ -200,7 +202,8 @@
 
       <!-- Footer -->
       <q-card-actions align="right" class="px-6 py-4 border-t bg-gray-50">
-          <q-btn label="upload" color="primary" outline @click="documentModel = true" />
+
+          <q-btn label="upload" color="primary" outline @click="documentModel = true" v-if="data.created_by" flat />
         <q-btn
           flat
           :label="translate('Close')"
