@@ -222,5 +222,9 @@ $document->delete();
         'message' => 'The document has been removed from the task'
     ]);
 }
+public function loadTask($id) {
+    $task = Task::find($id);
+    return new TaskResource($task);
+}
 
 }

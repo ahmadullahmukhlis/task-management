@@ -76,6 +76,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('load-real-time','realTimeData');
         Route::post('upload','uploadDocument');
         Route::delete('cremove-document/{id}','deleteDocument');
+        Route::get('/{id]','loadTask');
     });
 
     Route::resource('notifications', \App\Http\Controllers\NotificationController::class);
