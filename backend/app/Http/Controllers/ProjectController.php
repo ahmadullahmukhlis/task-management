@@ -117,64 +117,54 @@ class ProjectController extends Controller
 {
     $userId = auth()->id();
 
-    // total counts
-    $query = Task::query();
-    $total = $query
-        ->whereRelation('taskAssign', 'user_id', $userId)
-        ->orWhere('created_by', $userId)
+    // === Base conditions ===
+    $baseCondition = function ($q) use ($userId) {
+        $q->whereRelation('taskAssign', 'user_id', $userId)
+          ->orWhere('created_by', $userId);
+    };
+
+    // === Total ===
+    $total = Task::where($baseCondition)->count();
+
+    // === Completed ===
+    $completed = Task::where($baseCondition)
+        ->whereHas('taskAction', fn($q) => $q->where('status', 'completed'))
         ->count();
 
-    $complate = $query
-        ->whereRelation('taskAssign', 'user_id', $userId)
-        ->whereRelation('taskAction', 'status', 'completed')
-        ->orWhere('created_by', $userId)
+    // === Pending ===
+    $pending = Task::where($baseCondition)
+        ->whereHas('taskAction', fn($q) => $q->where('status', 'Pending'))
         ->count();
 
-    $pending = $query
-        ->whereRelation('taskAssign', 'user_id', $userId)
-        ->whereRelation('taskAction', 'status', 'Pending')
-        ->orWhere('created_by', $userId)
+    // === Overdue ===
+    $overdue = Task::where($baseCondition)
+       ->whereHas('taskAction', fn($q) => $q->where('status', 'Pending'))
+        ->whereDate('due_to', '<', now())
         ->count();
 
-    // === New: weekly counts ===
-    $lastWeekStart = now()->subWeek()->startOfWeek();
-    $lastWeekEnd   = now()->subWeek()->endOfWeek();
-
+    // === Weekly stats ===
+    $lastWeekStart    = now()->subWeek()->startOfWeek();
+    $lastWeekEnd      = now()->subWeek()->endOfWeek();
     $currentWeekStart = now()->startOfWeek();
     $currentWeekEnd   = now()->endOfWeek();
 
     $lastWeekTotal = Task::whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])
-        ->where(function ($q) use ($userId) {
-            $q->whereRelation('taskAssign', 'user_id', $userId)
-              ->orWhere('created_by', $userId);
-        })->count();
-$userId = auth()->id();
-
-$lastWeekComplete = Task::where(function ($q) use ($userId ,$lastWeekStart, $lastWeekEnd) {
-    $q->whereHas('taskAction', function ($q2) use ($userId ,$lastWeekStart, $lastWeekEnd) {
-        $q2->where('user_id', $userId)
-           ->where('status', 'completed')->whereBetween('updated_at', [$lastWeekStart, $lastWeekEnd]);
-    })
-    ->orWhere('created_by', $userId);
-})
-->count();
-
-$lastWeekPending = Task::where(function ($q) use ($userId ,$lastWeekStart, $lastWeekEnd) {
-    $q->whereHas('taskAction', function ($q2) use ($userId ,$lastWeekStart, $lastWeekEnd) {
-        $q2->where('user_id', $userId)
-           ->where('status', 'Pending')->whereBetween('updated_at', [$lastWeekStart, $lastWeekEnd]);
-    })
-    ->orWhere('created_by', $userId);
-})
-->count();
-
+        ->where($baseCondition)->count();
 
     $currentWeekTotal = Task::whereBetween('created_at', [$currentWeekStart, $currentWeekEnd])
-        ->where(function ($q) use ($userId) {
-            $q->whereRelation('taskAssign', 'user_id', $userId)
-              ->orWhere('created_by', $userId);
-        })->count();
+        ->where($baseCondition)->count();
 
+    $lastWeekCompleted = Task::whereBetween('updated_at', [$lastWeekStart, $lastWeekEnd])
+        ->where($baseCondition)
+        ->whereHas('taskAction', fn($q) => $q->where('status', 'completed'))
+        ->count();
+
+    $lastWeekPending = Task::whereBetween('updated_at', [$lastWeekStart, $lastWeekEnd])
+        ->where($baseCondition)
+        ->whereHas('taskAction', fn($q) => $q->where('status', 'Pending'))
+        ->count();
+
+    // === Trend ===
     $trendTotal = $currentWeekTotal - $lastWeekTotal;
     $trendColor = $trendTotal >= 0 ? 'green' : 'red';
     $trendText  = ($trendTotal >= 0 ? '+' : '') . $trendTotal . ' from last week';
@@ -182,40 +172,41 @@ $lastWeekPending = Task::where(function ($q) use ($userId ,$lastWeekStart, $last
     return response()->json([
         'data' => [
             [
-                'title' => 'Total Tasks',
-                'value' => $total,
-                'icon' => 'assignment',
-                'color' => 'blue',
-                'trend' => $trendText,      // changed to dynamic
-                'trendColor' => $trendColor // dynamic
+                'title'      => 'Total Tasks',
+                'value'      => $total,
+                'icon'       => 'assignment',
+                'color'      => 'blue',
+                'trend'      => $trendText,
+                'trendColor' => $trendColor,
             ],
             [
-                'title' => 'Completed',
-                'value' => $complate,
-                'icon' => 'check_circle',
-                'color' => 'green',
-                'trend' => '+'.$lastWeekComplete.' from last week',
+                'title'      => 'Completed',
+                'value'      => $completed,
+                'icon'       => 'check_circle',
+                'color'      => 'green',
+                'trend'      => '+' . $lastWeekCompleted . ' from last week',
                 'trendColor' => 'green',
             ],
             [
-                'title' => 'Pending',
-                'value' => $pending,
-                'icon' => 'autorenew',
-                'color' => 'yellow',
-                  'trend' => '+'.$lastWeekPending.' from last week',
+                'title'      => 'Pending',
+                'value'      => $pending,
+                'icon'       => 'autorenew',
+                'color'      => 'yellow',
+                'trend'      => '+' . $lastWeekPending . ' from last week',
                 'trendColor' => 'red',
             ],
             [
-                'title' => 'Overdue',
-                'value' => 5,
-                'icon' => 'warning',
-                'color' => 'red',
-                'trend' => '+2 from last week',
+                'title'      => 'Overdue',
+                'value'      => $overdue,
+                'icon'       => 'warning',
+                'color'      => 'red',
+                'trend'      => '+2 from last week', // you can make this dynamic if needed
                 'trendColor' => 'red',
             ],
         ]
     ]);
 }
+
 public function myTask()
 {
     $tasks = Task::whereRelation('taskAssign', 'user_id', auth()->id())->orWhere('created_by',auth()->id())
