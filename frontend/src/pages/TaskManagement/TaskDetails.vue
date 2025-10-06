@@ -86,7 +86,7 @@
         </div>
 
         <!-- Assigned -->
-        <div v-if="task?.assign" class="p-4 bg-white border rounded-lg shadow-sm">
+        <div v-if="task?.documents" class="p-4 bg-white border rounded-lg shadow-sm">
           <p class="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">
             {{ translate('Assigned To') }}
           </p>
@@ -132,6 +132,56 @@
               <div class="px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full">
                 {{ translate('Assign') }}
               </div>
+            </div>
+
+
+
+            <div v-if="!task.assign || task.assign.length === 0" class="py-4 text-center text-gray-500">
+              <q-icon name="person_off" class="mb-2 text-2xl text-gray-400" />
+              <p class="text-sm">{{ translate('No one assigned') }}</p>
+            </div>
+          </div>
+        </div>
+             <div v-if="task?.assign" class="p-4 bg-white border rounded-lg shadow-sm">
+          <p class="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">
+            {{ translate('Documents') }}
+          </p>
+          <div class="space-y-3">
+            <div
+              v-for="doc in task.documents"
+              :key="doc.id"
+              class="flex items-center p-3 space-x-3 rounded-lg bg-gray-50 hover:bg-gray-100"
+            >
+              <!-- Avatar -->
+
+
+              <!-- Info -->
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate">{{ doc.title }}</p>
+
+              </div>
+
+              <!-- Remove -->
+              <q-btn
+                flat
+                round
+                dense
+                size="sm"
+                icon="close"
+                color="red"
+                @click="removedoc(doc.id)"
+              />
+
+                     <q-btn
+                flat
+                round
+                dense
+                size="sm"
+                icon="download"
+                color="green"
+                @click="removedoc(doc.id)"
+              />
+
             </div>
 
 
@@ -265,6 +315,24 @@ export default defineComponent({
             user_id: userId,
             task_id: taskId
           })
+          Notify.create({ message: result.data.message, color: 'green' })
+          this.handleModelClose()
+          useGeneralStore().revalidate('tasks')
+        } catch (e) {
+          Notify.create({ message: e.message, color: 'red' })
+        }
+      })
+    },removedoc(id) {
+          Dialog.create({
+        title: 'Delete Confirmation',
+        message: 'Do you want to Delete this Document?',
+        cancel: true,
+        persistent: true,
+        ok: { label: 'Yes', color: 'primary' },
+        cancel: { label: 'No' }
+      }).onOk(async () => {
+        try {
+          const result = await api.delete('tasks/cremove-document/'+id)
           Notify.create({ message: result.data.message, color: 'green' })
           this.handleModelClose()
           useGeneralStore().revalidate('tasks')
