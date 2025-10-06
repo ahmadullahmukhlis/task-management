@@ -25,6 +25,7 @@
               })
               handleModelClose()
               generalStore.revalidate('tasks')
+              generalStore.revalidate('task')
             }
           "
           :hiddenFields ="[

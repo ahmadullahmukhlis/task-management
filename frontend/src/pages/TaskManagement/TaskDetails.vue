@@ -1,6 +1,8 @@
 <template>
   <q-dialog :model-value="true" persistent>
-    <q-card class="md:min-w-[500px] max-w-2xl bg-white shadow-xl rounded-xl overflow-hidden">
+
+          <q-card class="md:min-w-[500px] max-w-2xl bg-white shadow-xl rounded-xl overflow-hidden">
+            <server-data :url="`tasks/task/load/${task.id}`" v-slot="{ data }" id="task">
       <!-- Header -->
       <q-card-section
         class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50"
@@ -27,16 +29,16 @@
           <p class="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">
             {{ translate('Title') }}
           </p>
-          <p class="text-lg font-semibold leading-relaxed text-gray-900">{{ task.title }}</p>
+          <p class="text-lg font-semibold leading-relaxed text-gray-900">{{ data.title }}</p>
         </div>
 
         <!-- Description -->
-        <div v-if="task.description" class="p-4 bg-white border rounded-lg shadow-sm">
+        <div v-if="data.description" class="p-4 bg-white border rounded-lg shadow-sm">
           <p class="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">
             {{ translate('Description') }}
           </p>
           <p class="text-base leading-relaxed text-gray-700 whitespace-pre-wrap">
-            {{ task.description }}
+            {{ data.description }}
           </p>
         </div>
 
@@ -50,7 +52,7 @@
               <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-lg">
                 <q-icon name="event" class="text-sm text-blue-600" />
               </div>
-              <p class="text-base font-medium text-gray-900">{{ task.dueDate }}</p>
+              <p class="text-base font-medium text-gray-900">{{ data.dueDate }}</p>
             </div>
           </div>
 
@@ -80,19 +82,19 @@
               <q-icon name="flag" class="text-sm" :class="priorityIconColor" />
             </div>
             <q-chip size="sm" class="font-medium capitalize border" :class="priorityChipClass">
-              {{ task.priority ?? task.type }}
+              {{ data.priority  }}
             </q-chip>
           </div>
         </div>
 
         <!-- Assigned -->
-        <div v-if="task?.documents" class="p-4 bg-white border rounded-lg shadow-sm">
+        <div v-if="data?.assign" class="p-4 bg-white border rounded-lg shadow-sm">
           <p class="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">
             {{ translate('Assigned To') }}
           </p>
           <div class="space-y-3">
             <div
-              v-for="user in task.assign"
+              v-for="user in data.assign"
               :key="user.id"
               class="flex items-center p-3 space-x-3 rounded-lg bg-gray-50 hover:bg-gray-100"
             >
@@ -126,7 +128,7 @@
                 size="sm"
                 icon="close"
                 color="red"
-                @click="removeUser(task.id, user.id)"
+                @click="removeUser(data.id, user.id)"
               />
 
               <div class="px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full">
@@ -142,13 +144,13 @@
             </div>
           </div>
         </div>
-             <div v-if="task?.assign" class="p-4 bg-white border rounded-lg shadow-sm">
+             <div v-if="task?.documents" class="p-4 bg-white border rounded-lg shadow-sm">
           <p class="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">
             {{ translate('Documents') }}
           </p>
           <div class="space-y-3">
             <div
-              v-for="doc in task.documents"
+              v-for="doc in data.documents"
               :key="doc.id"
               class="flex items-center p-3 space-x-3 rounded-lg bg-gray-50 hover:bg-gray-100"
             >
@@ -186,9 +188,9 @@
 
 
 
-            <div v-if="!task.assign || task.assign.length === 0" class="py-4 text-center text-gray-500">
+            <div v-if="!data.documents || data.documents.length === 0" class="py-4 text-center text-gray-500">
               <q-icon name="person_off" class="mb-2 text-2xl text-gray-400" />
-              <p class="text-sm">{{ translate('No one assigned') }}</p>
+              <p class="text-sm">{{ translate('No Document ') }}</p>
             </div>
           </div>
         </div>
@@ -203,7 +205,10 @@
           @click="handleModelClose()"
         />
       </q-card-actions>
+     </server-data>
+
     </q-card>
+
   </q-dialog>
 
   <!-- Upload Document -->
@@ -222,11 +227,12 @@ import { useGeneralStore } from 'stores/generalStore'
 import { useLanguageStore } from 'stores/languageStore'
 import { api } from 'src/boot/axios'
 import UploadDocumentModel from './uploadDocument.Model.vue'
+import ServerData from 'src/components/ServerData.vue'
 
 export default defineComponent({
   name: 'TaskDetails',
   props: ['model', 'handleModelClose', 'mutate', 'task'],
-  components: { UploadDocumentModel },
+  components: { UploadDocumentModel ,ServerData },
   data() {
     return {
       documentModel: false
@@ -316,8 +322,8 @@ export default defineComponent({
             task_id: taskId
           })
           Notify.create({ message: result.data.message, color: 'green' })
-          this.handleModelClose()
-          useGeneralStore().revalidate('tasks')
+
+          useGeneralStore().revalidate('task')
         } catch (e) {
           Notify.create({ message: e.message, color: 'red' })
         }
@@ -334,8 +340,8 @@ export default defineComponent({
         try {
           const result = await api.delete('tasks/cremove-document/'+id)
           Notify.create({ message: result.data.message, color: 'green' })
-          this.handleModelClose()
-          useGeneralStore().revalidate('tasks')
+
+          useGeneralStore().revalidate('task')
         } catch (e) {
           Notify.create({ message: e.message, color: 'red' })
         }
