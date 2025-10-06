@@ -106,7 +106,7 @@ export default defineComponent({
        const result = api.post(`projects/add/user/${this.project?.id}`,{
           user_id : UserID
         });
-
+        this.generalStore.revalidate('project')
              this.q.notify({
                         message: this.$translate("the user has been add tot ehe project"),
                         color: 'green',
