@@ -65,3 +65,15 @@ export const objectToQueryParams = obj => {
     }
     return params.toString()
 }
+export const base64ToFile = (base64, filename) => {
+    const base64String = base64
+    const mimeType = base64String.match(
+        /data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/,
+    )[1]
+    const base64Data = base64String.split(',')[1]
+    const blob = base64ToBlob(base64Data, 'image/png')
+    return new File([blob], filename, { type: 'image/png' })
+}
+export const mbToBit = mb => {
+    return mb * 1024 * 1024
+}
