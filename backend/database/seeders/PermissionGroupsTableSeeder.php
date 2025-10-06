@@ -119,6 +119,26 @@ class PermissionGroupsTableSeeder extends Seeder
                 'created_at' => '2024-11-17 16:06:02',
                 'updated_at' => '2024-11-17 16:06:10',
             ),
+            10 => 
+            array (
+                'id' => 11,
+                'name' => 'Project',
+                'icon' => 'assignment',
+                'permission_group_id' => 0,
+                'sort' => 2,
+                'created_at' => '2025-10-06 14:02:55',
+                'updated_at' => '2025-10-06 14:02:55',
+            ),
+            11 => 
+            array (
+                'id' => 12,
+                'name' => 'Task',
+                'icon' => 'task',
+                'permission_group_id' => 0,
+                'sort' => 3,
+                'created_at' => '2025-10-06 14:50:32',
+                'updated_at' => '2025-10-06 14:50:32',
+            ),
         ));
         
         

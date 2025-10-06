@@ -271,6 +271,24 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2024-11-17 16:06:28',
                 'updated_at' => '2024-11-17 16:06:28',
             ),
+            28 => 
+            array (
+                'id' => 29,
+                'name' => 'project  Create',
+                'key' => 'project-project-create',
+                'permission_group_id' => 11,
+                'created_at' => '2025-10-06 14:03:58',
+                'updated_at' => '2025-10-06 14:03:58',
+            ),
+            29 => 
+            array (
+                'id' => 30,
+                'name' => 'Create Task',
+                'key' => 'task-create-task',
+                'permission_group_id' => 12,
+                'created_at' => '2025-10-06 14:50:45',
+                'updated_at' => '2025-10-06 14:50:45',
+            ),
         ));
         
         

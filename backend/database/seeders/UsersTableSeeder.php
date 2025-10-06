@@ -51,6 +51,22 @@ class UsersTableSeeder extends Seeder
                 'created_at' => '2023-09-11 18:55:34',
                 'updated_at' => '2024-04-17 01:19:44',
             ),
+            2 => 
+            array (
+                'id' => 14,
+                'image' => NULL,
+                'first_name' => 'مخلص',
+                'last_name' => '',
+                'email' => 'ahmadullahmukhlis2019@gmail.com',
+                'email_verified_at' => NULL,
+                'password' => '$2y$10$9j0myp1XbSvuNhShy2IoJO5NF0y9sBbjNTWvoDZHVsnTI3ybkji9K',
+                'is_active' => 0,
+                'is_verified' => 1,
+                'change_password' => 1,
+                'remember_token' => NULL,
+                'created_at' => '2025-10-06 16:16:49',
+                'updated_at' => '2025-10-06 16:16:49',
+            ),
         ));
         
         
