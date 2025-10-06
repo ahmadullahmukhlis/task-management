@@ -158,6 +158,11 @@ class ProjectController extends Controller
         ->where($baseCondition)
         ->whereHas('taskAction', fn($q) => $q->where('status', 'completed'))
         ->count();
+         $lastWeekOveritPending = Task::whereBetween('updated_at', [$lastWeekStart, $lastWeekEnd])
+        ->where($baseCondition)
+        ->whereHas('taskAction', fn($q) => $q->where('status', 'Pending'))
+           ->whereDate('due_to', '<', now())
+        ->count();
 
     $lastWeekPending = Task::whereBetween('updated_at', [$lastWeekStart, $lastWeekEnd])
         ->where($baseCondition)
@@ -200,7 +205,7 @@ class ProjectController extends Controller
                 'value'      => $overdue,
                 'icon'       => 'warning',
                 'color'      => 'red',
-                'trend'      => '+2 from last week', // you can make this dynamic if needed
+                'trend'      =>  $lastWeekCompleted.' from last week', // you can make this dynamic if needed
                 'trendColor' => 'red',
             ],
         ]
