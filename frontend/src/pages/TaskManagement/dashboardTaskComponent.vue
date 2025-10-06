@@ -93,13 +93,16 @@
     <div class="mt-8">
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-xl font-bold text-gray-800">Projects</h2>
-        <q-btn
+        <ProtectedComponent permission-key="project-project-create">
+                  <q-btn
           label="New Project"
           color="purple"
           icon="add"
           no-caps
           @click="openProject(null)"
         />
+        </ProtectedComponent>
+
       </div>
 
           <ServerData
@@ -201,10 +204,11 @@ import ProjectFormModel from './ProjectFormModel.vue'
 import ServerData from 'src/components/ServerData.vue'
 import AddUserToProject from './project/AddUserToProject.vue'
 import { useRouter } from 'vue-router'
+import ProtectedComponent from 'src/components/ProtectedComponent.vue'
 
 export default {
   name: 'dashboardTaskComponent',
-  components:{ProjectFormModel , ServerData ,AddUserToProject},
+  components:{ProjectFormModel , ServerData ,AddUserToProject ,ProtectedComponent},
   setup() {
     const router = useRouter();
     return {
