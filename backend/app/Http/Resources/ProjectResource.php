@@ -27,13 +27,20 @@ class ProjectResource extends JsonResource
             'progressColor'=>$this->color($this->id),
             'icon'=>$this->icon($this->id),
             'members'=> $this->userLoad($this->id),
-            'created_by'=> $this->created_by == auth()->user()->id ? true : false
+            'created_by'=> $this->created_by == auth()->user()->id ? true : false ,
+            'member'=> $this->meenbership($this->id),
 
         ];
     }
        private function userLoad($id) {
      $users=   User::whereRelation('userProject','project_id',$id)->get();
      return UserProjectResource::collection($users);
+    }
+    private function meenbership($id) {
+          $users=   User::whereRelation('userProject', function ($q) use ($id){
+            $q ->where('project_id',$id)->where('user_id',auth()->id());
+          })->count();
+          return $users > 0 ? true : false;
     }
 private function charecktor(string $name): string
 {

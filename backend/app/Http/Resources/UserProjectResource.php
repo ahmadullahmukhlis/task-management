@@ -21,7 +21,8 @@ class UserProjectResource extends JsonResource
             'image'=> asset(Storage::url($this->image)),
             'email'=> $this->email ,
             'initials'=>$this->charecktor($this->first_name . ' '. $this->last_name),
-            'color'=> $this->color($this->id)
+            'color'=> $this->color($this->id) ,
+
         ];
     }
     private function charecktor(string $name): string
