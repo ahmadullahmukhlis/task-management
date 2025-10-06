@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Document;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -25,10 +26,15 @@ class TaskResource extends JsonResource
             'project_id'=>$this->project_id ,
             'created_by'=>$this->created_by == auth()->id() ? true : false ,
             'assign'=>  $this->userLoad($this->id),
+            'documents'=>$this->loadDocument($this->id)
         ];
     }
     private function userLoad($id) {
      $users=   User::whereRelation('taskUser','task_id',$id)->get();
      return UserProjectResource::collection($users);
+    }
+    private function loadDocument($task_id) {
+        $document = Document::where('task_id',$task_id)->get();
+        return DocumentResource::collection($document);
     }
 }
