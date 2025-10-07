@@ -77,7 +77,7 @@ class TaskController extends Controller
             'due_to'=>$request->dueDate ?? now(),
             'created_by'=>auth()->user()->id
         ]);
-        event(New TaskEvent($task));
+
         if($request->has('assign')) {
             foreach ($request->assign as $item) {
         UserTask::create(
@@ -86,7 +86,7 @@ class TaskController extends Controller
             'task_id' => $task->id
         ]
     );
-            }
+           event(New TaskEvent($task));  }
         }
         return response()->json(
             [
