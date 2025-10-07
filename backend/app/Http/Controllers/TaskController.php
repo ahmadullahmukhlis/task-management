@@ -101,7 +101,7 @@ class TaskController extends Controller
      */
     public function complate(string $id)
     {
-        $task = Task::find($id);
+        $task = Task::with('taskAssign')->find($id);
         $task->update([
             'status'=>  TaskAction::where('task_id',$task->id)->where('status','Pending')->first() ?   'Pending' :'completed'
         ]);
@@ -115,7 +115,10 @@ if ($taskAction && $taskAction->status === 'completed') {
     // if already completed, toggle back to pending
     $status = 'Pending';
 }
-        event(New TaskEvent($task));
+    if ($task->taskAssign()->exists()) {
+         event(New TaskEvent($task));
+    }
+
 
 // now create or update with the decided status
 TaskAction::updateOrCreate(

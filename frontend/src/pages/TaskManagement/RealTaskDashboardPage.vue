@@ -131,6 +131,8 @@ export default {
   },
   mounted() {
     this.$echo.channel('add-task').listen('.TaskEvent', e => {
+      const audio = new Audio('/notification.wav');
+audio.play();
        this.generalStore.revalidate('tasks');
     });
   },
