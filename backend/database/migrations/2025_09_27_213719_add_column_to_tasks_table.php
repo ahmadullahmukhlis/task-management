@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tasks', function (Blueprint $table) {
-        Schema::dropIfExists('created_by');
+            Schema::dropIfExists('created_by');
 
         });
     }

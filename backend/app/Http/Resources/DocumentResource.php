@@ -16,9 +16,9 @@ class DocumentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->id ,
-            'title'=>$this->title,
-            'document'=> asset(Storage::url($this->document)),
+            'id' => $this->id,
+            'title' => $this->title,
+            'document' => asset(Storage::url($this->document)),
         ];
-}
+    }
 }

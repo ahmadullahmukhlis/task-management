@@ -17,136 +17,145 @@ class ProjectResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->id,
-            'name'=>$this->name,
-            'description'=>$this->comment,
-            'initials'=>$this->charecktor($this->name),
-            'color'=>'bg-'.$this->color($this->id),
-            'tasks'=>Task::where('project_id',$this->id)->count(),
-            'progress'=> $this->percentage($this->id),
-            'progressColor'=>$this->color($this->id),
-            'icon'=>$this->icon($this->id),
-            'members'=> $this->userLoad($this->id),
-            'created_by'=> $this->created_by == auth()->user()->id ? true : false ,
-            'member'=> $this->meenbership($this->id),
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->comment,
+            'initials' => $this->charecktor($this->name),
+            'color' => 'bg-'.$this->color($this->id),
+            'tasks' => Task::where('project_id', $this->id)->count(),
+            'progress' => $this->percentage($this->id),
+            'progressColor' => $this->color($this->id),
+            'icon' => $this->icon($this->id),
+            'members' => $this->userLoad($this->id),
+            'created_by' => $this->created_by == auth()->user()->id ? true : false,
+            'member' => $this->meenbership($this->id),
 
         ];
     }
-       private function userLoad($id) {
-     $users=   User::whereRelation('userProject','project_id',$id)->get();
-     return UserProjectResource::collection($users);
-    }
-    private function meenbership($id) {
-          $users=   User::whereRelation('userProject', function ($q) use ($id){
-            $q ->where('project_id',$id)->where('user_id',auth()->id());
-          })->count();
-          return $users > 0 ? true : false;
-    }
-private function charecktor(string $name): string
-{
-    $parts = array_values(array_filter(explode(' ', trim($name))));
-    $initials = '';
 
-    if (!empty($parts)) {
-        $initials .= strtoupper($parts[0][0]); // first letter of first word
+    private function userLoad($id)
+    {
+        $users = User::whereRelation('userProject', 'project_id', $id)->get();
+
+        return UserProjectResource::collection($users);
     }
 
-    if (count($parts) > 1) {
-        $initials .= strtoupper($parts[1][0]); // first letter of second word
+    private function meenbership($id)
+    {
+        $users = User::whereRelation('userProject', function ($q) use ($id) {
+            $q->where('project_id', $id)->where('user_id', auth()->id());
+        })->count();
+
+        return $users > 0 ? true : false;
     }
 
-    return $initials;
-}
+    private function charecktor(string $name): string
+    {
+        $parts = array_values(array_filter(explode(' ', trim($name))));
+        $initials = '';
 
-private function color(?int $id = null): string
-{
-    $colors = [
-        'blue',
-        'pink',
-        'purple',
-        'green',
-        'yellow',
-        'red',
-        'indigo',
-        'teal',
-        'orange',
-        'gray',
-    ];
+        if (! empty($parts)) {
+            $initials .= strtoupper($parts[0][0]); // first letter of first word
+        }
 
-    if ($id === null) {
-        return $colors[array_rand($colors)];
+        if (count($parts) > 1) {
+            $initials .= strtoupper($parts[1][0]); // first letter of second word
+        }
+
+        return $initials;
     }
 
-    $index = abs($id) % count($colors);
-    return $colors[$index];
-}
-private function icon(int $id): string
-{
-    // 100 Material icon names that are relevant to apps / dashboards / tasks
-    $icons = [
-             // Tasks / projects / workflow
-        'assignment', 'assignment_turned_in', 'assignment_late', 'fact_check', 'checklist',
-        'event_note', 'pending_actions', 'rule', 'track_changes', 'flag',
-        // Navigation / UI
-        'home', 'dashboard', 'menu', 'more_vert', 'expand_more',
-        'expand_less', 'arrow_back', 'arrow_forward', 'keyboard_arrow_up', 'keyboard_arrow_down',
-        // People / users / roles
-        'person', 'people', 'group', 'person_add', 'supervisor_account',
-        'manage_accounts', 'admin_panel_settings', 'badge', 'account_circle', 'contacts',
+    private function color(?int $id = null): string
+    {
+        $colors = [
+            'blue',
+            'pink',
+            'purple',
+            'green',
+            'yellow',
+            'red',
+            'indigo',
+            'teal',
+            'orange',
+            'gray',
+        ];
 
-        // Tasks / projects / workflow
-        'assignment', 'assignment_turned_in', 'assignment_late', 'fact_check', 'checklist',
-        'event_note', 'pending_actions', 'rule', 'track_changes', 'flag',
+        if ($id === null) {
+            return $colors[array_rand($colors)];
+        }
 
-        // Communication
-        'chat', 'forum', 'email', 'alternate_email', 'phone',
-        'notifications', 'notifications_active', 'sms', 'mark_email_unread', 'support_agent',
+        $index = abs($id) % count($colors);
 
-        // Files / docs / storage
-        'folder', 'folder_open', 'drive_file_move', 'file_present', 'upload_file',
-        'download', 'download_done', 'cloud', 'cloud_upload', 'cloud_download',
+        return $colors[$index];
+    }
 
-        // Finance / payments
-        'attach_money', 'credit_card', 'account_balance', 'request_quote', 'price_change',
-        'price_check', 'monetization_on', 'shopping_cart', 'point_of_sale', 'receipt_long',
+    private function icon(int $id): string
+    {
+        // 100 Material icon names that are relevant to apps / dashboards / tasks
+        $icons = [
+            // Tasks / projects / workflow
+            'assignment', 'assignment_turned_in', 'assignment_late', 'fact_check', 'checklist',
+            'event_note', 'pending_actions', 'rule', 'track_changes', 'flag',
+            // Navigation / UI
+            'home', 'dashboard', 'menu', 'more_vert', 'expand_more',
+            'expand_less', 'arrow_back', 'arrow_forward', 'keyboard_arrow_up', 'keyboard_arrow_down',
+            // People / users / roles
+            'person', 'people', 'group', 'person_add', 'supervisor_account',
+            'manage_accounts', 'admin_panel_settings', 'badge', 'account_circle', 'contacts',
 
-        // Actions / controls
-        'add', 'edit', 'delete', 'save', 'send',
-        'share', 'visibility', 'visibility_off', 'lock', 'lock_open',
+            // Tasks / projects / workflow
+            'assignment', 'assignment_turned_in', 'assignment_late', 'fact_check', 'checklist',
+            'event_note', 'pending_actions', 'rule', 'track_changes', 'flag',
 
-        // Navigation / UI
-        'home', 'dashboard', 'menu', 'more_vert', 'expand_more',
-        'expand_less', 'arrow_back', 'arrow_forward', 'keyboard_arrow_up', 'keyboard_arrow_down',
+            // Communication
+            'chat', 'forum', 'email', 'alternate_email', 'phone',
+            'notifications', 'notifications_active', 'sms', 'mark_email_unread', 'support_agent',
 
-        // Analytics / reports
-        'insights', 'analytics', 'trending_up', 'query_stats', 'bar_chart',
-        'stacked_bar_chart', 'leaderboard', 'timeline', 'donut_large', 'pie_chart',
+            // Files / docs / storage
+            'folder', 'folder_open', 'drive_file_move', 'file_present', 'upload_file',
+            'download', 'download_done', 'cloud', 'cloud_upload', 'cloud_download',
 
-        // Settings / system
-        'settings', 'tune', 'build', 'bug_report', 'system_update_alt',
-        'security', 'verified_user', 'autorenew', 'update', 'language',
+            // Finance / payments
+            'attach_money', 'credit_card', 'account_balance', 'request_quote', 'price_change',
+            'price_check', 'monetization_on', 'shopping_cart', 'point_of_sale', 'receipt_long',
 
-        // Locations / logistics
-        'location_on', 'location_off', 'map', 'directions', 'local_shipping',
-        'directions_car', 'directions_bus', 'store', 'warehouse', 'inventory',
+            // Actions / controls
+            'add', 'edit', 'delete', 'save', 'send',
+            'share', 'visibility', 'visibility_off', 'lock', 'lock_open',
 
-        // Miscellaneous project-related
-        'work', 'school', 'calendar_today', 'date_range', 'history',
-        'access_time', 'hourglass_empty', 'book', 'library_books', 'emoji_objects'
-    ];
+            // Navigation / UI
+            'home', 'dashboard', 'menu', 'more_vert', 'expand_more',
+            'expand_less', 'arrow_back', 'arrow_forward', 'keyboard_arrow_up', 'keyboard_arrow_down',
 
-    // wrap index if it exceeds array length
-    $index = abs($id) % count($icons);
+            // Analytics / reports
+            'insights', 'analytics', 'trending_up', 'query_stats', 'bar_chart',
+            'stacked_bar_chart', 'leaderboard', 'timeline', 'donut_large', 'pie_chart',
 
-    return $icons[$index];
-}
-public function percentage($id) {
-    $query = Task::query();
-    $total = $query->where('project_id',$id)->count();
-    $complete = $query->where('project_id',$id)->where('status','completed')->count();
-    return $total > 0 ? (int) round(($complete / $total) * 100) : 0;
-}
+            // Settings / system
+            'settings', 'tune', 'build', 'bug_report', 'system_update_alt',
+            'security', 'verified_user', 'autorenew', 'update', 'language',
 
+            // Locations / logistics
+            'location_on', 'location_off', 'map', 'directions', 'local_shipping',
+            'directions_car', 'directions_bus', 'store', 'warehouse', 'inventory',
 
+            // Miscellaneous project-related
+            'work', 'school', 'calendar_today', 'date_range', 'history',
+            'access_time', 'hourglass_empty', 'book', 'library_books', 'emoji_objects',
+        ];
 
+        // wrap index if it exceeds array length
+        $index = abs($id) % count($icons);
+
+        return $icons[$index];
+    }
+
+    public function percentage($id)
+    {
+        $query = Task::query();
+        $total = $query->where('project_id', $id)->count();
+        $complete = $query->where('project_id', $id)->where('status', 'completed')->count();
+
+        return $total > 0 ? (int) round(($complete / $total) * 100) : 0;
+    }
 }

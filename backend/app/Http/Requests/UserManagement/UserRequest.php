@@ -35,7 +35,7 @@ class UserRequest extends FormRequest
             $rules['password'] = ['required', Password::default()];
             $rules['confirm_password'] = ['required', 'same:password'];
             $rules['image'] = ['required', 'file', 'image', 'max:5000'];
-            $rules['email'] =  ['unique:users,email'];
+            $rules['email'] = ['unique:users,email'];
         }
 
         if ($this->isMethod('put') || $this->isMethod('patch')) {
@@ -43,7 +43,7 @@ class UserRequest extends FormRequest
                 $rules['password'] = ['nullable', Password::default()];
                 $rules['confirm_password'] = ['nullable', 'same:password'];
             }
-            if($this->has('image')){
+            if ($this->has('image')) {
                 $rules['image'] = ['nullable', 'file', 'image', 'max:5000'];
             }
             $rules['email'] = Rule::unique('users')->ignore($this->user);
@@ -52,15 +52,17 @@ class UserRequest extends FormRequest
 
         return $rules;
     }
+
     public function validated($key = null, $default = null)
     {
         $data = [
             ...$this->all(),
-            'roles' => collect(json_decode($this->roles))->map(fn($data)=>$data->id),
-            'image' => $this->image?asset('storage/'.$this->file('image')->store('users-profile', 'public')):$this->user->iamge,
+            'roles' => collect(json_decode($this->roles))->map(fn ($data) => $data->id),
+            'image' => $this->image ? asset('storage/'.$this->file('image')->store('users-profile', 'public')) : $this->user->iamge,
         ];
         unset($data['confirm_password']);
         unset($data['_method']);
+
         return $data;
     }
 }

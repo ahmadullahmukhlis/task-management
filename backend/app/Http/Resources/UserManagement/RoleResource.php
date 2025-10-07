@@ -19,10 +19,10 @@ class RoleResource extends JsonResource
             'name' => $this->name,
             'value' => $this->id,
             'label' => $this->name,
-            'role_permissions' => $this->whenLoaded('permission_ids', fn()=>$this->permission_ids->pluck('permission_id')->toArray()),
-            'permissions' => $this->whenLoaded('permission_ids', fn()=>$this->permission_ids->load(['permission'])),
-            'updated_by_user' => $this->whenLoaded('updated_by_user', fn()=>$this->updated_by_user),
-            'created_by_user' => $this->whenLoaded('created_by_user', fn()=>$this->created_by_user),
+            'role_permissions' => $this->whenLoaded('permission_ids', fn () => $this->permission_ids->pluck('permission_id')->toArray()),
+            'permissions' => $this->whenLoaded('permission_ids', fn () => $this->permission_ids->load(['permission'])),
+            'updated_by_user' => $this->whenLoaded('updated_by_user', fn () => $this->updated_by_user),
+            'created_by_user' => $this->whenLoaded('created_by_user', fn () => $this->created_by_user),
         ];
     }
 }

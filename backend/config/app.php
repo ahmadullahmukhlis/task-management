@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\ServiceProvider;
 
 return [
 
@@ -157,8 +156,6 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
-
-
 
     /*
     |--------------------------------------------------------------------------

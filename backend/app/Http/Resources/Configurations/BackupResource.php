@@ -18,7 +18,7 @@ class BackupResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'user' => $this->user?$this->user->first_name.' '.$this->user->last_name:'By system',
+            'user' => $this->user ? $this->user->first_name.' '.$this->user->last_name : 'By system',
             'path' => $this->path,
             'size' => Helpers::formatFileSize($this->size),
             'created_at' => $this->created_at->format(cache()->get('software-settings')?->date_format.' h:i:s A'),

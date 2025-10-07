@@ -11,19 +11,18 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class PermissionGroup extends Model
 {
-    use HasFactory, LogsActivity, CausesActivity;
+    use CausesActivity, HasFactory, LogsActivity;
 
     protected $guarded = [];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-                        ->logOnlyDirty()
-                        ->logOnly(['*'])
-                        ->useLogName('PermissionGroup')
-                        ->dontSubmitEmptyLogs()
-                        ->dontLogIfAttributesChangedOnly(['updated_at'])
-                        ;
+            ->logOnlyDirty()
+            ->logOnly(['*'])
+            ->useLogName('PermissionGroup')
+            ->dontSubmitEmptyLogs()
+            ->dontLogIfAttributesChangedOnly(['updated_at']);
     }
 
     public function groups(): HasMany

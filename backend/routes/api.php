@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,23 +15,23 @@ use App\Http\Controllers\TaskController;
 |lang
 */
 
-Route::middleware(['auth:sanctum'])->group(function(){
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'user']);
     Route::post('/change-password', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'changePassword']);
 
-    Route::group(['prefix' => 'user-management'], function (){
+    Route::group(['prefix' => 'user-management'], function () {
         Route::resource('users', \App\Http\Controllers\UserManagement\UserManagementController::class);
         Route::resource('customers', \App\Http\Controllers\UserManagement\CustomersController::class);
         Route::resource('suppliers', \App\Http\Controllers\UserManagement\SupplierController::class);
         Route::resource('roles', \App\Http\Controllers\UserManagement\RoleController::class);
 
-        Route::middleware(['isSuperAdmin'])->group(function(){
+        Route::middleware(['isSuperAdmin'])->group(function () {
             Route::resource('permission-groups', \App\Http\Controllers\UserManagement\PermissionGroupController::class);
             Route::post('permission-groups/update-order', [\App\Http\Controllers\UserManagement\PermissionGroupController::class, 'updatePermissionSort']);
             Route::resource('permission', \App\Http\Controllers\UserManagement\PermissionController::class);
         });
 
-        Route::group(['prefix' => 'activity-log'], function (){
+        Route::group(['prefix' => 'activity-log'], function () {
             Route::get('', [\App\Http\Controllers\UserManagement\ActivityLogController::class, 'index']);
             Route::get('user-log/{user}', [\App\Http\Controllers\UserManagement\ActivityLogController::class, 'getUserLog']);
             Route::get('{log}', [\App\Http\Controllers\UserManagement\ActivityLogController::class, 'getActivityLog']);
@@ -41,7 +41,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('login-log', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'loginLog']);
     });
 
-    Route::group(['prefix' => 'configurations'], function(){
+    Route::group(['prefix' => 'configurations'], function () {
 
         Route::resource('languages', \App\Http\Controllers\Configurations\LanguagesController::class);
         Route::resource('language/words', \App\Http\Controllers\Configurations\LanguageWordController::class);
@@ -51,32 +51,32 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::delete('backup/delete/{db}', [\App\Http\Controllers\Configurations\BackupController::class, 'delete']);
         Route::resource('backup', \App\Http\Controllers\Configurations\BackupController::class);
     });
-    Route::prefix('projects')->controller(ProjectController::class)->group(function() {
-        Route::get('/','index');
-        Route::get('/{id}','edit');
-        Route::put('/{id}','update');
-        Route::post('add','store');
-        Route::get('add/user','search');
-        Route::post('add/user/{id}','addUser');
-        Route::get('user/{id}','loadUser');
+    Route::prefix('projects')->controller(ProjectController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/{id}', 'edit');
+        Route::put('/{id}', 'update');
+        Route::post('add', 'store');
+        Route::get('add/user', 'search');
+        Route::post('add/user/{id}', 'addUser');
+        Route::get('user/{id}', 'loadUser');
     });
-       Route::prefix('dashboard')->controller(ProjectController::class)->group(function() {
-        Route::get('/statistic','statistic');
-        Route::get('/my-task','myTask');
-        Route::get('/recent-activity','activity');
+    Route::prefix('dashboard')->controller(ProjectController::class)->group(function () {
+        Route::get('/statistic', 'statistic');
+        Route::get('/my-task', 'myTask');
+        Route::get('/recent-activity', 'activity');
 
     });
-     Route::prefix('tasks')->controller(TaskController::class)->group(function() {
-        Route::get('/project/{id}','index');
-        Route::post('add','store');
-        Route::post('complate/{id}','complate');
-        Route::post('update/{id}','update');
+    Route::prefix('tasks')->controller(TaskController::class)->group(function () {
+        Route::get('/project/{id}', 'index');
+        Route::post('add', 'store');
+        Route::post('complate/{id}', 'complate');
+        Route::post('update/{id}', 'update');
         Route::post('assign', 'assign');
-        Route::post('cremove-user','remove');
-        Route::get('load-real-time','realTimeData');
-        Route::post('upload','uploadDocument');
-        Route::delete('cremove-document/{id}','deleteDocument');
-        Route::get('task/load/{id}','loadTask');
+        Route::post('cremove-user', 'remove');
+        Route::get('load-real-time', 'realTimeData');
+        Route::post('upload', 'uploadDocument');
+        Route::delete('cremove-document/{id}', 'deleteDocument');
+        Route::get('task/load/{id}', 'loadTask');
     });
 
     Route::resource('notifications', \App\Http\Controllers\NotificationController::class);
@@ -89,5 +89,4 @@ Route::post('/login', [\App\Http\Controllers\UserManagement\UserManagementContro
 Route::post('/register', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'register']);
 Route::post('/resend', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'resend']);
 Route::post('/verify', [\App\Http\Controllers\UserManagement\UserManagementController::class, 'verify']);
-Route::any('general/{what}', [\App\Http\Controllers\GeneralController::class, "what"]);
-
+Route::any('general/{what}', [\App\Http\Controllers\GeneralController::class, 'what']);

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class LoginLogsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,13 +13,11 @@ class LoginLogsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('login_logs')->delete();
-        
-        \DB::table('login_logs')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('login_logs')->insert([
+            0 => [
                 'id' => 1,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '127.0.0.1',
@@ -29,9 +26,8 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-09-24 14:04:24',
                 'updated_at' => '2025-09-24 14:04:24',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '127.0.0.1',
@@ -40,9 +36,8 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-09-24 15:04:03',
                 'updated_at' => '2025-09-24 15:04:03',
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'id' => 3,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '127.0.0.1',
@@ -51,9 +46,8 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-09-24 15:18:06',
                 'updated_at' => '2025-09-24 15:18:06',
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'id' => 4,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '127.0.0.1',
@@ -62,31 +56,28 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-09-25 09:50:19',
                 'updated_at' => '2025-09-25 09:50:19',
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'id' => 5,
                 'email' => 'ahmadullahmukhlis2019@gmail.com',
                 'ip_address' => '127.0.0.1',
                 'login_succeed' => 0,
-                'login_token' => NULL,
+                'login_token' => null,
                 'message' => 'User is inactive.',
                 'created_at' => '2025-09-28 14:15:41',
                 'updated_at' => '2025-09-28 14:15:41',
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'id' => 6,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '127.0.0.1',
                 'login_succeed' => 0,
-                'login_token' => NULL,
+                'login_token' => null,
                 'message' => 'The provided credentials are incorrect.',
                 'created_at' => '2025-09-28 14:15:58',
                 'updated_at' => '2025-09-28 14:15:58',
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'id' => 7,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '127.0.0.1',
@@ -95,9 +86,8 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-09-28 14:16:26',
                 'updated_at' => '2025-09-28 14:16:26',
-            ),
-            7 => 
-            array (
+            ],
+            7 => [
                 'id' => 8,
                 'email' => 'ahmadullahmukhlis2019@gmail.com',
                 'ip_address' => '127.0.0.1',
@@ -106,20 +96,18 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-09-29 09:22:44',
                 'updated_at' => '2025-09-29 09:22:44',
-            ),
-            8 => 
-            array (
+            ],
+            8 => [
                 'id' => 9,
                 'email' => 'ahmadullahmukhlis2019@gmail.com',
                 'ip_address' => '127.0.0.1',
                 'login_succeed' => 0,
-                'login_token' => NULL,
+                'login_token' => null,
                 'message' => 'User is inactive.',
                 'created_at' => '2025-10-04 13:44:41',
                 'updated_at' => '2025-10-04 13:44:41',
-            ),
-            9 => 
-            array (
+            ],
+            9 => [
                 'id' => 10,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '127.0.0.1',
@@ -128,53 +116,48 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-10-04 13:47:20',
                 'updated_at' => '2025-10-04 13:47:20',
-            ),
-            10 => 
-            array (
+            ],
+            10 => [
                 'id' => 11,
                 'email' => 'ahmadullahmukhlis2019@gmail.com',
                 'ip_address' => '127.0.0.1',
                 'login_succeed' => 0,
-                'login_token' => NULL,
+                'login_token' => null,
                 'message' => 'User is inactive.',
                 'created_at' => '2025-10-06 15:56:21',
                 'updated_at' => '2025-10-06 15:56:21',
-            ),
-            11 => 
-            array (
+            ],
+            11 => [
                 'id' => 12,
                 'email' => 'saidshah.hamid@dab.gov.af',
                 'ip_address' => '10.0.5.71',
                 'login_succeed' => 0,
-                'login_token' => NULL,
+                'login_token' => null,
                 'message' => 'The provided credentials are incorrect.',
                 'created_at' => '2025-10-06 16:29:47',
                 'updated_at' => '2025-10-06 16:29:47',
-            ),
-            12 => 
-            array (
+            ],
+            12 => [
                 'id' => 13,
                 'email' => 'adrismalya@gmail.com',
                 'ip_address' => '10.0.5.71',
                 'login_succeed' => 0,
-                'login_token' => NULL,
+                'login_token' => null,
                 'message' => 'The provided credentials are incorrect.',
                 'created_at' => '2025-10-06 16:30:18',
                 'updated_at' => '2025-10-06 16:30:18',
-            ),
-            13 => 
-            array (
+            ],
+            13 => [
                 'id' => 14,
                 'email' => 'adrismalya@gmail.com',
                 'ip_address' => '10.0.5.71',
                 'login_succeed' => 0,
-                'login_token' => NULL,
+                'login_token' => null,
                 'message' => 'The provided credentials are incorrect.',
                 'created_at' => '2025-10-06 16:30:26',
                 'updated_at' => '2025-10-06 16:30:26',
-            ),
-            14 => 
-            array (
+            ],
+            14 => [
                 'id' => 15,
                 'email' => 'adrismalya@gmail.com',
                 'ip_address' => '10.0.5.71',
@@ -183,20 +166,18 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-10-06 16:30:30',
                 'updated_at' => '2025-10-06 16:30:30',
-            ),
-            15 => 
-            array (
+            ],
+            15 => [
                 'id' => 16,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '10.0.5.71',
                 'login_succeed' => 0,
-                'login_token' => NULL,
+                'login_token' => null,
                 'message' => 'The provided credentials are incorrect.',
                 'created_at' => '2025-10-06 16:32:08',
                 'updated_at' => '2025-10-06 16:32:08',
-            ),
-            16 => 
-            array (
+            ],
+            16 => [
                 'id' => 17,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '10.0.5.71',
@@ -205,9 +186,8 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-10-06 16:32:19',
                 'updated_at' => '2025-10-06 16:32:19',
-            ),
-            17 => 
-            array (
+            ],
+            17 => [
                 'id' => 18,
                 'email' => 'adrismalya@gmail.com',
                 'ip_address' => '10.0.5.71',
@@ -216,9 +196,8 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-10-06 16:32:56',
                 'updated_at' => '2025-10-06 16:32:56',
-            ),
-            18 => 
-            array (
+            ],
+            18 => [
                 'id' => 19,
                 'email' => 'adrismalya@gmail.com',
                 'ip_address' => '10.0.5.71',
@@ -227,31 +206,28 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-10-06 16:35:36',
                 'updated_at' => '2025-10-06 16:35:36',
-            ),
-            19 => 
-            array (
+            ],
+            19 => [
                 'id' => 20,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '10.0.5.71',
                 'login_succeed' => 0,
-                'login_token' => NULL,
+                'login_token' => null,
                 'message' => 'The provided credentials are incorrect.',
                 'created_at' => '2025-10-06 16:35:56',
                 'updated_at' => '2025-10-06 16:35:56',
-            ),
-            20 => 
-            array (
+            ],
+            20 => [
                 'id' => 21,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '10.0.5.71',
                 'login_succeed' => 0,
-                'login_token' => NULL,
+                'login_token' => null,
                 'message' => 'The provided credentials are incorrect.',
                 'created_at' => '2025-10-06 16:35:58',
                 'updated_at' => '2025-10-06 16:35:58',
-            ),
-            21 => 
-            array (
+            ],
+            21 => [
                 'id' => 22,
                 'email' => 'edris.malya@dab.gov.af',
                 'ip_address' => '10.0.5.71',
@@ -260,9 +236,8 @@ class LoginLogsTableSeeder extends Seeder
                 'message' => 'Logged in successfully.',
                 'created_at' => '2025-10-06 16:36:02',
                 'updated_at' => '2025-10-06 16:36:02',
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

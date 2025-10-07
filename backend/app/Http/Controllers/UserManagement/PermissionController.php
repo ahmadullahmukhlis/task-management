@@ -11,30 +11,34 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
-    public function store(PermissionRequest $request ){
+    public function store(PermissionRequest $request)
+    {
         $this->allowed('');
         $data = $request->validated();
         Permission::query()->create($data);
         FetcherSeedFilesJob::dispatch();
+
         return response()->json([
             'result' => true,
-            'message' => 'Permission created successfully'
+            'message' => 'Permission created successfully',
         ]);
     }
 
-    public function destroy(Permission $permission, Request $request ){
+    public function destroy(Permission $permission, Request $request)
+    {
         $this->allowed('');
-        if(RolePermission::query()->where('permission_id', $permission->id)->count() > 0){
+        if (RolePermission::query()->where('permission_id', $permission->id)->count() > 0) {
             return response()->json([
                 'result' => false,
-                'message' => 'Permission cannot be deleted'
+                'message' => 'Permission cannot be deleted',
             ]);
         }
         $permission->delete();
         FetcherSeedFilesJob::dispatch();
+
         return response()->json([
             'result' => true,
-            'message' => 'Permission deleted successfully'
+            'message' => 'Permission deleted successfully',
         ]);
     }
 }

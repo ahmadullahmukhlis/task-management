@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class FailedJobsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,19 +13,17 @@ class FailedJobsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('failed_jobs')->delete();
-        
-        \DB::table('failed_jobs')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('failed_jobs')->insert([
+            0 => [
                 'id' => 1,
                 'uuid' => '41916e22-0f84-411d-8259-5b9638831734',
                 'connection' => 'database',
                 'queue' => 'default',
                 'payload' => '{"uuid":"41916e22-0f84-411d-8259-5b9638831734","displayName":"App\\\\Mail\\\\OtpLoginMail","job":"Illuminate\\\\Queue\\\\CallQueuedHandler@call","maxTries":null,"maxExceptions":null,"failOnTimeout":false,"backoff":null,"timeout":null,"retryUntil":null,"data":{"commandName":"Illuminate\\\\Mail\\\\SendQueuedMailable","command":"O:34:\\"Illuminate\\\\Mail\\\\SendQueuedMailable\\":15:{s:8:\\"mailable\\";O:21:\\"App\\\\Mail\\\\OtpLoginMail\\":4:{s:3:\\"otp\\";i:8614619827;s:4:\\"user\\";O:45:\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\":5:{s:5:\\"class\\";s:15:\\"App\\\\Models\\\\User\\";s:2:\\"id\\";i:3;s:9:\\"relations\\";a:0:{}s:10:\\"connection\\";s:5:\\"mysql\\";s:15:\\"collectionClass\\";N;}s:2:\\"to\\";a:1:{i:0;a:2:{s:4:\\"name\\";N;s:7:\\"address\\";s:31:\\"ahmadullahmukhlis2019@gmail.com\\";}}s:6:\\"mailer\\";s:4:\\"smtp\\";}s:5:\\"tries\\";N;s:7:\\"timeout\\";N;s:13:\\"maxExceptions\\";N;s:17:\\"shouldBeEncrypted\\";b:0;s:10:\\"connection\\";N;s:5:\\"queue\\";N;s:5:\\"delay\\";N;s:11:\\"afterCommit\\";N;s:10:\\"middleware\\";a:0:{}s:7:\\"chained\\";a:0:{}s:15:\\"chainConnection\\";N;s:10:\\"chainQueue\\";N;s:19:\\"chainCatchCallbacks\\";N;s:3:\\"job\\";N;}"}}',
-            'exception' => 'Symfony\\Component\\Mailer\\Exception\\TransportException: Connection could not be established with host "mailpit:1025": stream_socket_client(): php_network_getaddresses: getaddrinfo for mailpit failed: No such host is known in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\symfony\\mailer\\Transport\\Smtp\\Stream\\SocketStream.php:154
+                'exception' => 'Symfony\\Component\\Mailer\\Exception\\TransportException: Connection could not be established with host "mailpit:1025": stream_socket_client(): php_network_getaddresses: getaddrinfo for mailpit failed: No such host is known in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\symfony\\mailer\\Transport\\Smtp\\Stream\\SocketStream.php:154
 Stack trace:
 #0 [internal function]: Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\SocketStream->{closure:Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\SocketStream::initialize():153}(2, \'stream_socket_c...\', \'C:\\\\Users\\\\ahmad\\\\...\', 157)
 #1 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\symfony\\mailer\\Transport\\Smtp\\Stream\\SocketStream.php(157): stream_socket_client(\'mailpit:1025\', 0, \'\', 60.0, 4, Resource id #1130)
@@ -75,15 +72,14 @@ Stack trace:
 #44 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #45 {main}',
                 'failed_at' => '2025-09-25 09:09:22',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'uuid' => 'fc479809-7c8f-4ecf-a8d5-c5e97fc4d680',
                 'connection' => 'database',
                 'queue' => 'default',
                 'payload' => '{"uuid":"fc479809-7c8f-4ecf-a8d5-c5e97fc4d680","displayName":"App\\\\Events\\\\TaskEvent","job":"Illuminate\\\\Queue\\\\CallQueuedHandler@call","maxTries":null,"maxExceptions":null,"failOnTimeout":false,"backoff":null,"timeout":null,"retryUntil":null,"data":{"commandName":"Illuminate\\\\Broadcasting\\\\BroadcastEvent","command":"O:38:\\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\\":14:{s:5:\\"event\\";O:20:\\"App\\\\Events\\\\TaskEvent\\":1:{s:4:\\"task\\";O:45:\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\":5:{s:5:\\"class\\";s:15:\\"App\\\\Models\\\\Task\\";s:2:\\"id\\";i:8;s:9:\\"relations\\";a:0:{}s:10:\\"connection\\";s:5:\\"mysql\\";s:15:\\"collectionClass\\";N;}}s:5:\\"tries\\";N;s:7:\\"timeout\\";N;s:7:\\"backoff\\";N;s:13:\\"maxExceptions\\";N;s:10:\\"connection\\";N;s:5:\\"queue\\";N;s:5:\\"delay\\";N;s:11:\\"afterCommit\\";N;s:10:\\"middleware\\";a:0:{}s:7:\\"chained\\";a:0:{}s:15:\\"chainConnection\\";N;s:10:\\"chainQueue\\";N;s:19:\\"chainCatchCallbacks\\";N;}"}}',
-            'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2244 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637558&auth_version=1.0&body_md5=2784c2dbc553299746277b05d4968642&auth_signature=bbcf09d3f623fc8ec53b91b6f5f47b3fb49f5f8235eb275c8c4e0a9d01f6557f. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
+                'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2244 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637558&auth_version=1.0&body_md5=2784c2dbc553299746277b05d4968642&auth_signature=bbcf09d3f623fc8ec53b91b6f5f47b3fb49f5f8235eb275c8c4e0a9d01f6557f. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
 Stack trace:
 #0 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\BroadcastEvent.php(93): Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster->broadcast(Object(Illuminate\\Support\\Collection), \'TaskEvent\', Array)
 #1 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Broadcasting\\BroadcastEvent->handle(Object(Illuminate\\Broadcasting\\BroadcastManager))
@@ -121,15 +117,14 @@ Stack trace:
 #33 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #34 {main}',
                 'failed_at' => '2025-10-05 08:42:40',
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'id' => 3,
                 'uuid' => '6e1cd815-07de-4701-8a74-2034e9cd4e97',
                 'connection' => 'database',
                 'queue' => 'default',
                 'payload' => '{"uuid":"6e1cd815-07de-4701-8a74-2034e9cd4e97","displayName":"App\\\\Events\\\\TaskEvent","job":"Illuminate\\\\Queue\\\\CallQueuedHandler@call","maxTries":null,"maxExceptions":null,"failOnTimeout":false,"backoff":null,"timeout":null,"retryUntil":null,"data":{"commandName":"Illuminate\\\\Broadcasting\\\\BroadcastEvent","command":"O:38:\\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\\":14:{s:5:\\"event\\";O:20:\\"App\\\\Events\\\\TaskEvent\\":1:{s:4:\\"task\\";O:45:\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\":5:{s:5:\\"class\\";s:15:\\"App\\\\Models\\\\Task\\";s:2:\\"id\\";i:9;s:9:\\"relations\\";a:0:{}s:10:\\"connection\\";s:5:\\"mysql\\";s:15:\\"collectionClass\\";N;}}s:5:\\"tries\\";N;s:7:\\"timeout\\";N;s:7:\\"backoff\\";N;s:13:\\"maxExceptions\\";N;s:10:\\"connection\\";N;s:5:\\"queue\\";N;s:5:\\"delay\\";N;s:11:\\"afterCommit\\";N;s:10:\\"middleware\\";a:0:{}s:7:\\"chained\\";a:0:{}s:15:\\"chainConnection\\";N;s:10:\\"chainQueue\\";N;s:19:\\"chainCatchCallbacks\\";N;}"}}',
-            'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2240 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637560&auth_version=1.0&body_md5=d32e42b05d547db27dcd9826f6db7807&auth_signature=c3c42466bdf12a70929c0c7a7794fab6182800e2a54b61de9a78fcab79db2a4b. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
+                'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2240 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637560&auth_version=1.0&body_md5=d32e42b05d547db27dcd9826f6db7807&auth_signature=c3c42466bdf12a70929c0c7a7794fab6182800e2a54b61de9a78fcab79db2a4b. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
 Stack trace:
 #0 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\BroadcastEvent.php(93): Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster->broadcast(Object(Illuminate\\Support\\Collection), \'TaskEvent\', Array)
 #1 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Broadcasting\\BroadcastEvent->handle(Object(Illuminate\\Broadcasting\\BroadcastManager))
@@ -167,15 +162,14 @@ Stack trace:
 #33 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #34 {main}',
                 'failed_at' => '2025-10-05 08:42:43',
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'id' => 4,
                 'uuid' => '7b7e0a15-b969-4cf8-a31b-2d5e340a67b5',
                 'connection' => 'database',
                 'queue' => 'default',
                 'payload' => '{"uuid":"7b7e0a15-b969-4cf8-a31b-2d5e340a67b5","displayName":"App\\\\Events\\\\TaskEvent","job":"Illuminate\\\\Queue\\\\CallQueuedHandler@call","maxTries":null,"maxExceptions":null,"failOnTimeout":false,"backoff":null,"timeout":null,"retryUntil":null,"data":{"commandName":"Illuminate\\\\Broadcasting\\\\BroadcastEvent","command":"O:38:\\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\\":14:{s:5:\\"event\\";O:20:\\"App\\\\Events\\\\TaskEvent\\":1:{s:4:\\"task\\";O:45:\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\":5:{s:5:\\"class\\";s:15:\\"App\\\\Models\\\\Task\\";s:2:\\"id\\";i:10;s:9:\\"relations\\";a:0:{}s:10:\\"connection\\";s:5:\\"mysql\\";s:15:\\"collectionClass\\";N;}}s:5:\\"tries\\";N;s:7:\\"timeout\\";N;s:7:\\"backoff\\";N;s:13:\\"maxExceptions\\";N;s:10:\\"connection\\";N;s:5:\\"queue\\";N;s:5:\\"delay\\";N;s:11:\\"afterCommit\\";N;s:10:\\"middleware\\";a:0:{}s:7:\\"chained\\";a:0:{}s:15:\\"chainConnection\\";N;s:10:\\"chainQueue\\";N;s:19:\\"chainCatchCallbacks\\";N;}"}}',
-            'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2229 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637563&auth_version=1.0&body_md5=61b659b87561f6926e599640b10b2733&auth_signature=b4782847c0cd395fab86ba5ae89a94218864dbbf174e1652280bdb76b9cba5d1. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
+                'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2229 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637563&auth_version=1.0&body_md5=61b659b87561f6926e599640b10b2733&auth_signature=b4782847c0cd395fab86ba5ae89a94218864dbbf174e1652280bdb76b9cba5d1. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
 Stack trace:
 #0 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\BroadcastEvent.php(93): Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster->broadcast(Object(Illuminate\\Support\\Collection), \'TaskEvent\', Array)
 #1 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Broadcasting\\BroadcastEvent->handle(Object(Illuminate\\Broadcasting\\BroadcastManager))
@@ -213,15 +207,14 @@ Stack trace:
 #33 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #34 {main}',
                 'failed_at' => '2025-10-05 08:42:45',
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'id' => 5,
                 'uuid' => 'd7ef68c6-29dc-4620-b8b1-dacfc3dd7e58',
                 'connection' => 'database',
                 'queue' => 'default',
                 'payload' => '{"uuid":"d7ef68c6-29dc-4620-b8b1-dacfc3dd7e58","displayName":"App\\\\Events\\\\TaskEvent","job":"Illuminate\\\\Queue\\\\CallQueuedHandler@call","maxTries":null,"maxExceptions":null,"failOnTimeout":false,"backoff":null,"timeout":null,"retryUntil":null,"data":{"commandName":"Illuminate\\\\Broadcasting\\\\BroadcastEvent","command":"O:38:\\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\\":14:{s:5:\\"event\\";O:20:\\"App\\\\Events\\\\TaskEvent\\":1:{s:4:\\"task\\";O:45:\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\":5:{s:5:\\"class\\";s:15:\\"App\\\\Models\\\\Task\\";s:2:\\"id\\";i:11;s:9:\\"relations\\";a:0:{}s:10:\\"connection\\";s:5:\\"mysql\\";s:15:\\"collectionClass\\";N;}}s:5:\\"tries\\";N;s:7:\\"timeout\\";N;s:7:\\"backoff\\";N;s:13:\\"maxExceptions\\";N;s:10:\\"connection\\";N;s:5:\\"queue\\";N;s:5:\\"delay\\";N;s:11:\\"afterCommit\\";N;s:10:\\"middleware\\";a:0:{}s:7:\\"chained\\";a:0:{}s:15:\\"chainConnection\\";N;s:10:\\"chainQueue\\";N;s:19:\\"chainCatchCallbacks\\";N;}"}}',
-            'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2229 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637566&auth_version=1.0&body_md5=9f5febf28685bc2ed3b1ec0ad49a0007&auth_signature=5b4223643cdfb3d7af4cd0126ba5ba535d4ec31f0d6605897a82913351a52848. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
+                'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2229 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637566&auth_version=1.0&body_md5=9f5febf28685bc2ed3b1ec0ad49a0007&auth_signature=5b4223643cdfb3d7af4cd0126ba5ba535d4ec31f0d6605897a82913351a52848. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
 Stack trace:
 #0 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\BroadcastEvent.php(93): Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster->broadcast(Object(Illuminate\\Support\\Collection), \'TaskEvent\', Array)
 #1 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Broadcasting\\BroadcastEvent->handle(Object(Illuminate\\Broadcasting\\BroadcastManager))
@@ -259,15 +252,14 @@ Stack trace:
 #33 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #34 {main}',
                 'failed_at' => '2025-10-05 08:42:48',
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'id' => 6,
                 'uuid' => 'fc543cb0-4bbb-41ed-a825-a6839f8586b2',
                 'connection' => 'database',
                 'queue' => 'default',
                 'payload' => '{"uuid":"fc543cb0-4bbb-41ed-a825-a6839f8586b2","displayName":"App\\\\Events\\\\TaskEvent","job":"Illuminate\\\\Queue\\\\CallQueuedHandler@call","maxTries":null,"maxExceptions":null,"failOnTimeout":false,"backoff":null,"timeout":null,"retryUntil":null,"data":{"commandName":"Illuminate\\\\Broadcasting\\\\BroadcastEvent","command":"O:38:\\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\\":14:{s:5:\\"event\\";O:20:\\"App\\\\Events\\\\TaskEvent\\":1:{s:4:\\"task\\";O:45:\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\":5:{s:5:\\"class\\";s:15:\\"App\\\\Models\\\\Task\\";s:2:\\"id\\";i:12;s:9:\\"relations\\";a:0:{}s:10:\\"connection\\";s:5:\\"mysql\\";s:15:\\"collectionClass\\";N;}}s:5:\\"tries\\";N;s:7:\\"timeout\\";N;s:7:\\"backoff\\";N;s:13:\\"maxExceptions\\";N;s:10:\\"connection\\";N;s:5:\\"queue\\";N;s:5:\\"delay\\";N;s:11:\\"afterCommit\\";N;s:10:\\"middleware\\";a:0:{}s:7:\\"chained\\";a:0:{}s:15:\\"chainConnection\\";N;s:10:\\"chainQueue\\";N;s:19:\\"chainCatchCallbacks\\";N;}"}}',
-            'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2227 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637568&auth_version=1.0&body_md5=e6dbfdf068b2193ac1038ed65fb73640&auth_signature=8dd08a9f833111db0e9c9dfdc0d9f13eadcb3d64e257a5ef66b342e32c231b52. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
+                'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2227 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637568&auth_version=1.0&body_md5=e6dbfdf068b2193ac1038ed65fb73640&auth_signature=8dd08a9f833111db0e9c9dfdc0d9f13eadcb3d64e257a5ef66b342e32c231b52. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
 Stack trace:
 #0 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\BroadcastEvent.php(93): Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster->broadcast(Object(Illuminate\\Support\\Collection), \'TaskEvent\', Array)
 #1 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Broadcasting\\BroadcastEvent->handle(Object(Illuminate\\Broadcasting\\BroadcastManager))
@@ -305,15 +297,14 @@ Stack trace:
 #33 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #34 {main}',
                 'failed_at' => '2025-10-05 08:42:51',
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'id' => 7,
                 'uuid' => '45ac660b-43c5-4c1f-9ade-66e74f420819',
                 'connection' => 'database',
                 'queue' => 'default',
                 'payload' => '{"uuid":"45ac660b-43c5-4c1f-9ade-66e74f420819","displayName":"App\\\\Events\\\\TaskEvent","job":"Illuminate\\\\Queue\\\\CallQueuedHandler@call","maxTries":null,"maxExceptions":null,"failOnTimeout":false,"backoff":null,"timeout":null,"retryUntil":null,"data":{"commandName":"Illuminate\\\\Broadcasting\\\\BroadcastEvent","command":"O:38:\\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\\":14:{s:5:\\"event\\";O:20:\\"App\\\\Events\\\\TaskEvent\\":1:{s:4:\\"task\\";O:45:\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\":5:{s:5:\\"class\\";s:15:\\"App\\\\Models\\\\Task\\";s:2:\\"id\\";i:13;s:9:\\"relations\\";a:0:{}s:10:\\"connection\\";s:5:\\"mysql\\";s:15:\\"collectionClass\\";N;}}s:5:\\"tries\\";N;s:7:\\"timeout\\";N;s:7:\\"backoff\\";N;s:13:\\"maxExceptions\\";N;s:10:\\"connection\\";N;s:5:\\"queue\\";N;s:5:\\"delay\\";N;s:11:\\"afterCommit\\";N;s:10:\\"middleware\\";a:0:{}s:7:\\"chained\\";a:0:{}s:15:\\"chainConnection\\";N;s:10:\\"chainQueue\\";N;s:19:\\"chainCatchCallbacks\\";N;}"}}',
-            'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2233 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637571&auth_version=1.0&body_md5=2e2fb77cb54f7e1820ff54239a71c288&auth_signature=b28c42390859067b14c392ec2e56acad36a7180cb7a5f4c589879917e71c0cad. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
+                'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2233 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759637571&auth_version=1.0&body_md5=2e2fb77cb54f7e1820ff54239a71c288&auth_signature=b28c42390859067b14c392ec2e56acad36a7180cb7a5f4c589879917e71c0cad. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
 Stack trace:
 #0 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\BroadcastEvent.php(93): Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster->broadcast(Object(Illuminate\\Support\\Collection), \'TaskEvent\', Array)
 #1 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Broadcasting\\BroadcastEvent->handle(Object(Illuminate\\Broadcasting\\BroadcastManager))
@@ -351,15 +342,14 @@ Stack trace:
 #33 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #34 {main}',
                 'failed_at' => '2025-10-05 08:42:53',
-            ),
-            7 => 
-            array (
+            ],
+            7 => [
                 'id' => 8,
                 'uuid' => 'a2c11a92-ee15-4c47-9614-6790b8b0a3d9',
                 'connection' => 'database',
                 'queue' => 'default',
                 'payload' => '{"uuid":"a2c11a92-ee15-4c47-9614-6790b8b0a3d9","displayName":"App\\\\Events\\\\TestEvent","job":"Illuminate\\\\Queue\\\\CallQueuedHandler@call","maxTries":null,"maxExceptions":null,"failOnTimeout":false,"backoff":null,"timeout":null,"retryUntil":null,"data":{"commandName":"Illuminate\\\\Broadcasting\\\\BroadcastEvent","command":"O:38:\\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\\":14:{s:5:\\"event\\";O:20:\\"App\\\\Events\\\\TestEvent\\":1:{s:7:\\"message\\";s:8:\\"Test@123\\";}s:5:\\"tries\\";N;s:7:\\"timeout\\";N;s:7:\\"backoff\\";N;s:13:\\"maxExceptions\\";N;s:10:\\"connection\\";N;s:5:\\"queue\\";N;s:5:\\"delay\\";N;s:11:\\"afterCommit\\";N;s:10:\\"middleware\\";a:0:{}s:7:\\"chained\\";a:0:{}s:15:\\"chainConnection\\";N;s:10:\\"chainQueue\\";N;s:19:\\"chainCatchCallbacks\\";N;}"}}',
-            'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2243 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759649675&auth_version=1.0&body_md5=0cfa5e50a9010835f7618fcd9c9d7e13&auth_signature=89fef1c38020a08005684cd7b10217f1ae6d242d93dc826040f5705ccb7d4592. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
+                'exception' => 'Illuminate\\Broadcasting\\BroadcastException: Pusher error: cURL error 7: Failed to connect to localhost port 8080 after 2243 ms: Could not connect to server (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for http://localhost:8080/apps/107876/events?auth_key=z0qhwyopf3pso4vt1crf&auth_timestamp=1759649675&auth_version=1.0&body_md5=0cfa5e50a9010835f7618fcd9c9d7e13&auth_signature=89fef1c38020a08005684cd7b10217f1ae6d242d93dc826040f5705ccb7d4592. in C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster.php:164
 Stack trace:
 #0 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Broadcasting\\BroadcastEvent.php(93): Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster->broadcast(Object(Illuminate\\Support\\Collection), \'App\\\\Events\\\\Test...\', Array)
 #1 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Broadcasting\\BroadcastEvent->handle(Object(Illuminate\\Broadcasting\\BroadcastManager))
@@ -397,9 +387,8 @@ Stack trace:
 #33 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #34 {main}',
                 'failed_at' => '2025-10-05 12:04:37',
-            ),
-            8 => 
-            array (
+            ],
+            8 => [
                 'id' => 9,
                 'uuid' => '1a741a7e-f705-4682-8b02-cae278d518a6',
                 'connection' => 'database',
@@ -429,9 +418,8 @@ Stack trace:
 #19 C:\\Users\\ahmad\\OneDrive\\Desktop\\task-management\\backend\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #20 {main}',
                 'failed_at' => '2025-10-06 16:40:14',
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

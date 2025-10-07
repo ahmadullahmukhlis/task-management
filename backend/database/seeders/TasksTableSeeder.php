@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class TasksTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,16 +13,14 @@ class TasksTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('tasks')->delete();
-        
-        \DB::table('tasks')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('tasks')->insert([
+            0 => [
                 'id' => 1,
                 'title' => 'fsdafsafsafsa',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-09-28',
@@ -31,12 +28,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-09-28 14:18:54',
                 'updated_at' => '2025-09-28 15:46:05',
                 'created_by' => 1,
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'title' => 'this is my first',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'completed',
                 'due_to' => '2025-09-28',
@@ -44,12 +40,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-09-28 14:40:31',
                 'updated_at' => '2025-09-28 15:13:04',
                 'created_by' => 1,
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'id' => 3,
                 'title' => 'this is my first task',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'completed',
                 'due_to' => '2025-09-29',
@@ -57,12 +52,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-09-29 09:35:26',
                 'updated_at' => '2025-09-29 09:39:22',
                 'created_by' => 4,
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'id' => 4,
                 'title' => 'shat afasklfsaf sadfkasjfsal sdkfjas flas',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Urgent',
                 'status' => 'completed',
                 'due_to' => '2025-09-26',
@@ -70,12 +64,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-09-30 08:52:11',
                 'updated_at' => '2025-09-30 08:53:11',
                 'created_by' => 4,
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'id' => 5,
                 'title' => 'this is the task importen for the laravel',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'High',
                 'status' => 'completed',
                 'due_to' => '2025-10-22',
@@ -83,12 +76,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-04 14:17:37',
                 'updated_at' => '2025-10-04 14:27:17',
                 'created_by' => 1,
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'id' => 6,
                 'title' => 'sdgsdgfsdgsdgds',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'High',
                 'status' => 'Pending',
                 'due_to' => '2025-10-23',
@@ -96,12 +88,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-04 14:36:26',
                 'updated_at' => '2025-10-04 14:36:26',
                 'created_by' => 1,
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'id' => 7,
                 'title' => 'this is the test',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-04',
@@ -109,12 +100,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-04 15:34:34',
                 'updated_at' => '2025-10-04 15:34:34',
                 'created_by' => 1,
-            ),
-            7 => 
-            array (
+            ],
+            7 => [
                 'id' => 8,
                 'title' => 'this is the another event task',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-04',
@@ -122,12 +112,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-04 15:41:01',
                 'updated_at' => '2025-10-04 15:41:01',
                 'created_by' => 1,
-            ),
-            8 => 
-            array (
+            ],
+            8 => [
                 'id' => 9,
                 'title' => 'fsafasddfsafsaf',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-04',
@@ -135,12 +124,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-04 15:42:44',
                 'updated_at' => '2025-10-04 15:42:44',
                 'created_by' => 1,
-            ),
-            9 => 
-            array (
+            ],
+            9 => [
                 'id' => 10,
                 'title' => 'fsafdsafsaf',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-04',
@@ -148,12 +136,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-04 15:44:43',
                 'updated_at' => '2025-10-04 15:44:43',
                 'created_by' => 1,
-            ),
-            10 => 
-            array (
+            ],
+            10 => [
                 'id' => 11,
                 'title' => 'fasdfdsafdsafa',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-04',
@@ -161,12 +148,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-04 15:46:35',
                 'updated_at' => '2025-10-04 15:46:35',
                 'created_by' => 1,
-            ),
-            11 => 
-            array (
+            ],
+            11 => [
                 'id' => 12,
                 'title' => 'fsafdasfasfdas',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-04',
@@ -174,12 +160,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-04 17:06:28',
                 'updated_at' => '2025-10-04 17:06:28',
                 'created_by' => 1,
-            ),
-            12 => 
-            array (
+            ],
+            12 => [
                 'id' => 13,
                 'title' => 'this is just for test',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -187,12 +172,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 08:42:00',
                 'updated_at' => '2025-10-05 08:42:00',
                 'created_by' => 1,
-            ),
-            13 => 
-            array (
+            ],
+            13 => [
                 'id' => 14,
                 'title' => 'this sjust for another tes',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -200,12 +184,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 08:46:03',
                 'updated_at' => '2025-10-05 08:46:03',
                 'created_by' => 1,
-            ),
-            14 => 
-            array (
+            ],
+            14 => [
                 'id' => 15,
                 'title' => 'gsdgfds',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -213,12 +196,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 08:47:35',
                 'updated_at' => '2025-10-05 08:47:35',
                 'created_by' => 1,
-            ),
-            15 => 
-            array (
+            ],
+            15 => [
                 'id' => 16,
                 'title' => 'the problem fhtis',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -226,12 +208,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 08:49:27',
                 'updated_at' => '2025-10-05 08:49:27',
                 'created_by' => 1,
-            ),
-            16 => 
-            array (
+            ],
+            16 => [
                 'id' => 17,
                 'title' => 'fafsahfsadfdsadfa',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -239,12 +220,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 08:52:26',
                 'updated_at' => '2025-10-05 08:52:26',
                 'created_by' => 1,
-            ),
-            17 => 
-            array (
+            ],
+            17 => [
                 'id' => 18,
                 'title' => 'task is ad',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -252,12 +232,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 08:53:24',
                 'updated_at' => '2025-10-05 08:53:24',
                 'created_by' => 1,
-            ),
-            18 => 
-            array (
+            ],
+            18 => [
                 'id' => 19,
                 'title' => 'this is the anoter word',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -265,12 +244,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 10:25:07',
                 'updated_at' => '2025-10-05 10:25:07',
                 'created_by' => 1,
-            ),
-            19 => 
-            array (
+            ],
+            19 => [
                 'id' => 20,
                 'title' => 'fsdafsafsaf',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -278,12 +256,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 10:25:38',
                 'updated_at' => '2025-10-05 10:25:38',
                 'created_by' => 1,
-            ),
-            20 => 
-            array (
+            ],
+            20 => [
                 'id' => 21,
                 'title' => 'fsdafdsaf',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -291,12 +268,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 10:42:43',
                 'updated_at' => '2025-10-05 10:42:43',
                 'created_by' => 1,
-            ),
-            21 => 
-            array (
+            ],
+            21 => [
                 'id' => 22,
                 'title' => 'fdsafdasfdsaf',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -304,12 +280,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 10:44:12',
                 'updated_at' => '2025-10-05 10:44:12',
                 'created_by' => 1,
-            ),
-            22 => 
-            array (
+            ],
+            22 => [
                 'id' => 23,
                 'title' => 'fsafdsafdsa',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -317,12 +292,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 10:45:14',
                 'updated_at' => '2025-10-05 10:45:14',
                 'created_by' => 1,
-            ),
-            23 => 
-            array (
+            ],
+            23 => [
                 'id' => 24,
                 'title' => 'test',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -330,12 +304,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 10:58:03',
                 'updated_at' => '2025-10-05 10:58:03',
                 'created_by' => 1,
-            ),
-            24 => 
-            array (
+            ],
+            24 => [
                 'id' => 25,
                 'title' => 'this is the aother thsre',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -343,12 +316,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 11:08:00',
                 'updated_at' => '2025-10-05 11:08:00',
                 'created_by' => 1,
-            ),
-            25 => 
-            array (
+            ],
+            25 => [
                 'id' => 26,
                 'title' => 'safsdafas',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -356,12 +328,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 11:17:31',
                 'updated_at' => '2025-10-05 11:17:31',
                 'created_by' => 1,
-            ),
-            26 => 
-            array (
+            ],
+            26 => [
                 'id' => 27,
                 'title' => 'the test is done',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -369,12 +340,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:40:24',
                 'updated_at' => '2025-10-05 13:40:24',
                 'created_by' => 1,
-            ),
-            27 => 
-            array (
+            ],
+            27 => [
                 'id' => 28,
                 'title' => 'this anotther test',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -382,12 +352,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:42:07',
                 'updated_at' => '2025-10-05 13:42:07',
                 'created_by' => 1,
-            ),
-            28 => 
-            array (
+            ],
+            28 => [
                 'id' => 29,
                 'title' => 'thisfasdfsafsda',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -395,12 +364,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:43:23',
                 'updated_at' => '2025-10-05 13:43:23',
                 'created_by' => 1,
-            ),
-            29 => 
-            array (
+            ],
+            29 => [
                 'id' => 30,
                 'title' => 'afdasfasdfdsa',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -408,12 +376,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:49:21',
                 'updated_at' => '2025-10-05 13:49:21',
                 'created_by' => 1,
-            ),
-            30 => 
-            array (
+            ],
+            30 => [
                 'id' => 31,
                 'title' => 'the problem of the is pusher is fxe d',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -421,12 +388,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:50:07',
                 'updated_at' => '2025-10-05 13:50:07',
                 'created_by' => 1,
-            ),
-            31 => 
-            array (
+            ],
+            31 => [
                 'id' => 32,
                 'title' => 'fsdafdasfsda',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -434,12 +400,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:50:49',
                 'updated_at' => '2025-10-05 13:50:49',
                 'created_by' => 1,
-            ),
-            32 => 
-            array (
+            ],
+            32 => [
                 'id' => 33,
                 'title' => 'fasfasfdasfsaf',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -447,12 +412,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:52:09',
                 'updated_at' => '2025-10-05 13:52:09',
                 'created_by' => 1,
-            ),
-            33 => 
-            array (
+            ],
+            33 => [
                 'id' => 34,
                 'title' => 'fsadfdasfdasf',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -460,12 +424,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:53:09',
                 'updated_at' => '2025-10-05 13:53:09',
                 'created_by' => 1,
-            ),
-            34 => 
-            array (
+            ],
+            34 => [
                 'id' => 35,
                 'title' => 'fsdafasfdasf',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -473,12 +436,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:55:04',
                 'updated_at' => '2025-10-05 13:55:04',
                 'created_by' => 1,
-            ),
-            35 => 
-            array (
+            ],
+            35 => [
                 'id' => 36,
                 'title' => 'fdsaffsafas',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -486,12 +448,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:55:49',
                 'updated_at' => '2025-10-05 13:55:49',
                 'created_by' => 1,
-            ),
-            36 => 
-            array (
+            ],
+            36 => [
                 'id' => 37,
                 'title' => 'this is the another one',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -499,12 +460,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:57:20',
                 'updated_at' => '2025-10-05 13:57:20',
                 'created_by' => 1,
-            ),
-            37 => 
-            array (
+            ],
+            37 => [
                 'id' => 38,
                 'title' => 'web development project first User management Configurations  Ahmad Edris Malia @edris.malya@dab.gov.af All Tasks all pending and Completed tasks Add a new task... Pending List 21',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -512,12 +472,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 13:59:46',
                 'updated_at' => '2025-10-05 13:59:46',
                 'created_by' => 1,
-            ),
-            38 => 
-            array (
+            ],
+            38 => [
                 'id' => 39,
                 'title' => 'this sht eafasfdasfasfdas',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -525,12 +484,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 14:08:29',
                 'updated_at' => '2025-10-05 14:08:29',
                 'created_by' => 1,
-            ),
-            39 => 
-            array (
+            ],
+            39 => [
                 'id' => 40,
                 'title' => 'gsdfgsdgsdg',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -538,12 +496,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 14:10:37',
                 'updated_at' => '2025-10-05 14:10:37',
                 'created_by' => 1,
-            ),
-            40 => 
-            array (
+            ],
+            40 => [
                 'id' => 41,
                 'title' => 'this the link that must',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -551,12 +508,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 14:18:12',
                 'updated_at' => '2025-10-05 14:18:12',
                 'created_by' => 1,
-            ),
-            41 => 
-            array (
+            ],
+            41 => [
                 'id' => 42,
                 'title' => 'zarhon sha ahmad',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -564,12 +520,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 14:22:38',
                 'updated_at' => '2025-10-05 14:22:38',
                 'created_by' => 1,
-            ),
-            42 => 
-            array (
+            ],
+            42 => [
                 'id' => 43,
                 'title' => 'just for test',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-05',
@@ -577,12 +532,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-05 14:23:38',
                 'updated_at' => '2025-10-05 14:23:38',
                 'created_by' => 1,
-            ),
-            43 => 
-            array (
+            ],
+            43 => [
                 'id' => 44,
                 'title' => 'This is for tesitng',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-06',
@@ -590,12 +544,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-06 16:37:00',
                 'updated_at' => '2025-10-06 16:37:00',
                 'created_by' => 1,
-            ),
-            44 => 
-            array (
+            ],
+            44 => [
                 'id' => 45,
                 'title' => 'Please fix this',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'High',
                 'status' => 'completed',
                 'due_to' => '2025-10-07',
@@ -603,12 +556,11 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-06 16:37:59',
                 'updated_at' => '2025-10-06 16:39:14',
                 'created_by' => 1,
-            ),
-            45 => 
-            array (
+            ],
+            45 => [
                 'id' => 46,
                 'title' => 'test 123',
-                'description' => NULL,
+                'description' => null,
                 'type' => 'Medium',
                 'status' => 'Pending',
                 'due_to' => '2025-10-06',
@@ -616,9 +568,8 @@ class TasksTableSeeder extends Seeder
                 'created_at' => '2025-10-06 16:38:39',
                 'updated_at' => '2025-10-06 16:38:39',
                 'created_by' => 1,
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

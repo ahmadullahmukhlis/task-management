@@ -3,13 +3,10 @@
 namespace App\Providers;
 
 use App\Events\AccountingEvent;
-use App\Events\DoAccountEvent;
 use App\Events\ProductStockChangedEvent;
-use App\Listeners\CreateAccountListener;
 use App\Listeners\DoAccountListener;
 use App\Listeners\ProductQtyListener;
 use App\Listeners\ProductStockChangedListener;
-use App\Listeners\StockUpdateListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -28,10 +25,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         ProductStockChangedEvent::class => [
             ProductStockChangedListener::class,
-            ProductQtyListener::class
+            ProductQtyListener::class,
         ],
         AccountingEvent::class => [
-            DoAccountListener::class
+            DoAccountListener::class,
         ],
     ];
 

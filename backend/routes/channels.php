@@ -24,6 +24,6 @@ Broadcast::channel('applicationChannel', function () {
     return true;
 });
 
-Broadcast::channel('add-task',function (){
+Broadcast::channel('add-task', function () {
     return true;
 });

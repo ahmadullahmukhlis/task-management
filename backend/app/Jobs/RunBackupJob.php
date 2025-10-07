@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Events\NotificationPushedEvent;
 use App\Models\BackupHistory;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,7 +15,9 @@ use Illuminate\Support\Facades\Storage;
 class RunBackupJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     protected $userId;
+
     protected $existFiles;
 
     public function __construct($userId, $existFiles)
@@ -40,8 +41,8 @@ class RunBackupJob implements ShouldQueue
             'user_id' => $this->userId,
             'path' => $path,
             'name' => $file_name,
-            'size' => $file_size
+            'size' => $file_size,
         ]);
-        event(new NotificationPushedEvent('BackupHistory', $file_name." backup succeed", 'notification-system-backup-notifications', $backup->id));
+        event(new NotificationPushedEvent('BackupHistory', $file_name.' backup succeed', 'notification-system-backup-notifications', $backup->id));
     }
 }

@@ -23,15 +23,17 @@ class LanguageWordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'word' => ['required', 'string', 'min:1', function($field, $value, $error){
+            'word' => ['required', 'string', 'min:1', function ($field, $value, $error) {
                 $check = LanguageWord::query()
                     ->where($field, $value)
                     ->where('language_id', $this->language_id)
                     ->where('id', '!=', $this->id);
-                if($check->exists()) $error('Word already exists');
+                if ($check->exists()) {
+                    $error('Word already exists');
+                }
             }],
             'translation' => ['required', 'string', 'min:1'],
-            'language_id' => ['required']
+            'language_id' => ['required'],
         ];
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class LanguagesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,13 +13,11 @@ class LanguagesTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('languages')->delete();
-        
-        \DB::table('languages')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('languages')->insert([
+            0 => [
                 'id' => 1,
                 'name' => 'دری',
                 'abbr' => 'da',
@@ -28,9 +25,8 @@ class LanguagesTableSeeder extends Seeder
                 'direction' => 'rtl',
                 'created_at' => '2023-09-27 17:45:49',
                 'updated_at' => '2023-09-27 17:45:49',
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

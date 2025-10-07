@@ -17,28 +17,31 @@ class PedingTaskResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->id ,
-            'title'=>$this->title,
-            'status'=>$this->status ,
-            'type'=>$this->type ,
-        'project'=>$this->projectName($this->project_id) ,
-        'dueDate'=> $this->getComparisonDateAttribute($this->created_at , $this->dueTo)
+            'id' => $this->id,
+            'title' => $this->title,
+            'status' => $this->status,
+            'type' => $this->type,
+            'project' => $this->projectName($this->project_id),
+            'dueDate' => $this->getComparisonDateAttribute($this->created_at, $this->dueTo),
         ];
     }
-    private function projectName($project) {
-      $pro =  Project::find($project);
-     return $pro->name;
+
+    private function projectName($project)
+    {
+        $pro = Project::find($project);
+
+        return $pro->name;
     }
-private function getComparisonDateAttribute($created_at, $dueTo)
-{
-    $createdAt = Carbon::parse($created_at);
-    $dueDate   = Carbon::parse($dueTo);
 
-    return $createdAt->isSameDay($dueDate)
-        ? $dueDate->format('Y-m-d')
-        : $createdAt->diffForHumans($dueDate, [
-            'syntax' => Carbon::DIFF_RELATIVE_TO_NOW
-        ]);
-}
+    private function getComparisonDateAttribute($created_at, $dueTo)
+    {
+        $createdAt = Carbon::parse($created_at);
+        $dueDate = Carbon::parse($dueTo);
 
+        return $createdAt->isSameDay($dueDate)
+            ? $dueDate->format('Y-m-d')
+            : $createdAt->diffForHumans($dueDate, [
+                'syntax' => Carbon::DIFF_RELATIVE_TO_NOW,
+            ]);
+    }
 }

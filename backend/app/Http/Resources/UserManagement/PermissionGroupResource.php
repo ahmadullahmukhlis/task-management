@@ -18,8 +18,8 @@ class PermissionGroupResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'icon' => $this->icon,
-            'groups' => $this->whenLoaded('groups', fn()=>PermissionGroupResource::collection($this->groups)),
-            'permissions' => $this->whenLoaded('permissions', fn()=>PermissionResource::collection($this->permissions))
+            'groups' => $this->whenLoaded('groups', fn () => PermissionGroupResource::collection($this->groups)),
+            'permissions' => $this->whenLoaded('permissions', fn () => PermissionResource::collection($this->permissions)),
         ];
     }
 }

@@ -12,37 +12,41 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Role extends Model
 {
-    use HasFactory, LogsActivity, CausesActivity;
+    use CausesActivity, HasFactory, LogsActivity;
 
     protected $guarded = [];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-                        ->logOnlyDirty()
-                        ->logOnly(['*'])
-                        ->useLogName('Role')
-                        ->dontSubmitEmptyLogs()
-                        ->dontLogIfAttributesChangedOnly(['updated_at'])
-                        ;
+            ->logOnlyDirty()
+            ->logOnly(['*'])
+            ->useLogName('Role')
+            ->dontSubmitEmptyLogs()
+            ->dontLogIfAttributesChangedOnly(['updated_at']);
     }
-    public function permission_ids() : HasMany{
+
+    public function permission_ids(): HasMany
+    {
         return $this->hasMany(RolePermission::class);
     }
-    public function created_by_user() : BelongsTo
+
+    public function created_by_user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function updated_by_user() : BelongsTo
+    public function updated_by_user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
-    public function users() : HasMany
+
+    public function users(): HasMany
     {
         return $this->hasMany(UserRole::class);
     }
-    public function assignedRoles() : HasMany
+
+    public function assignedRoles(): HasMany
     {
         return $this->hasMany(RolePermission::class)->select('permission_id');
     }

@@ -12,33 +12,37 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class UserProject extends Model
 {
-    use HasFactory, LogsActivity, CausesActivity;
+    use CausesActivity, HasFactory, LogsActivity;
 
     protected $guarded = [];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-                        ->logOnlyDirty()
-                        ->logOnly(['*'])
-                        ->useLogName('UserProject')
-                        ->dontSubmitEmptyLogs()
-                        ->dontLogIfAttributesChangedOnly(['updated_at'])
-                        ;
+            ->logOnlyDirty()
+            ->logOnly(['*'])
+            ->useLogName('UserProject')
+            ->dontSubmitEmptyLogs()
+            ->dontLogIfAttributesChangedOnly(['updated_at']);
     }
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value)
+    {
         $ss = cache()->get('software-settings');
-        if(!$ss) return $value;
+        if (! $ss) {
+            return $value;
+        }
+
         return Carbon::parse($value)->format(cache()->get('software-settings')->date_format.' h:i:s A');
     }
-    public function project() : BelongsTo
 
+    public function project(): BelongsTo
     {
-        return $this->belongsTo(Project::class,'project_id');
+        return $this->belongsTo(Project::class, 'project_id');
     }
-    public function user() : BelongsTo
+
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

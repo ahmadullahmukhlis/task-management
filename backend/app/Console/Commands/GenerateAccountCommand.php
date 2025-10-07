@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Events\AccountingEvent;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 
 class GenerateAccountCommand extends Command
 {
@@ -27,8 +26,9 @@ class GenerateAccountCommand extends Command
      */
     public function handle()
     {
-        event(new AccountingEvent());
+        event(new AccountingEvent);
         $this->info('Succeeded');
+
         return Command::SUCCESS;
     }
 }
