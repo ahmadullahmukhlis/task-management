@@ -86,8 +86,8 @@ class TaskController extends Controller
                         'task_id' => $task->id,
                     ]
                 );
-                event(new TaskEvent($task));
             }
+            event(new TaskEvent($task));
         }
 
         return response()->json(
