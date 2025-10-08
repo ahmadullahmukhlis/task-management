@@ -34,4 +34,5 @@ class UserTask extends Model
 
         return Carbon::parse($value)->format(cache()->get('software-settings')->date_format.' h:i:s A');
     }
+
 }

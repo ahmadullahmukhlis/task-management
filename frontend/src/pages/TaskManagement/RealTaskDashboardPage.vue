@@ -1,5 +1,5 @@
 <template>
-  <div class="p-12">
+<div class="h-screen p-12 overflow-y-auto scroll-smooth">
     <server-data :url="`tasks/load-real-time`" v-slot="{ data }" id="tasks">
       <!-- Users Grid -->
       <div

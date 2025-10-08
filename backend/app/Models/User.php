@@ -104,4 +104,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserTask::class, 'user_id');
     }
+    public function taskAction() : HasMany
+    {
+        return $this->hasMany(TaskAction::class,'user_id');
+    }
 }

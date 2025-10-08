@@ -12,6 +12,7 @@ use App\Models\TaskAction;
 use App\Models\User;
 use App\Models\UserTask;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
@@ -86,6 +87,12 @@ class TaskController extends Controller
                         'task_id' => $task->id,
                     ]
                 );
+                  TaskAction::create(
+            [
+                'user_id' => $item,
+                'task_id' => $task->id,
+                'status'=>'Pending'
+            ]);
             }
             event(new TaskEvent($task));
         }
@@ -152,6 +159,12 @@ class TaskController extends Controller
                 'task_id' => $request->task_id,
             ]
         );
+                  TaskAction::create(
+            [
+                 'user_id' => $request->user_id,
+                'task_id' => $task->id,
+                'status'=>'Pending'
+            ]);
         event(new TaskEvent($task));
 
         return response()->json([
@@ -200,7 +213,7 @@ class TaskController extends Controller
 
     public function realTimeData()
     {
-        $user = User::whereHas('taskUser')->get();
+        $user = User::whereHas('taskUser')->whereRelation('taskAction','status','Pending')->get();
 
         return RealtimeUSerTaskResource::collection($user);
     }
