@@ -37,7 +37,7 @@ class TaskController extends Controller
 
                 $q->whereHas('taskAction', function ($q2) {
                     $q2->where('user_id', auth()->id())
-                        ->where('status', '!=', 'completed');
+                        ->where('status', 'Pending');
                 })
                     ->orWhereDoesntHave('taskAction', function ($q2) {
                         $q2->where('user_id', auth()->id());
@@ -50,13 +50,25 @@ class TaskController extends Controller
                 $q->whereHas('taskAction', function ($q2) {
                     $q2->where('user_id', auth()->id())
                         ->where('status', 'completed');
-                });
+                }) ->orWhereDoesntHave('taskAction', function ($q2) {
+                        $q2->where('user_id', auth()->id());
+                    });
+            })->get();
+            $data =  Task::where('project_id', $project->id)->orderBy('id', 'desc')
+            ->where(function ($q) {
+
+                $q->whereHas('taskAction', function ($q2) {
+                    $q2->where('user_id', auth()->id());
+                }) ->orWhereDoesntHave('taskAction', function ($q2) {
+                        $q2->where('user_id', auth()->id());
+                    });
             })->get();
 
-        return response()->json(['data' => [
-            'complate' => TaskResource::collection($complate),
-            'panding' => TaskResource::collection($pendingTask),
-        ]]);
+                 return TaskResource::collection($data);
+        // return response()->json(['data' => [
+        //     'complate' => TaskResource::collection($complate),
+        //     'panding' => TaskResource::collection($pendingTask),
+        // ]]);
 
     }
 

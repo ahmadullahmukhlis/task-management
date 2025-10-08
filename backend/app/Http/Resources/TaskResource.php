@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Document;
+use App\Models\TaskAction;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,7 +20,7 @@ class TaskResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'completed' => (bool) $this->completed == 'Complate' ? true : false,
+            'completed' => $this->statusCount($this->id),
             'dueDate' => $this->due_to,
             'priority' => $this->type,
             'project_id' => $this->project_id,
@@ -42,4 +43,14 @@ class TaskResource extends JsonResource
 
         return DocumentResource::collection($document);
     }
+   private function statusCount($id)
+{
+    $taskActionCount = TaskAction::where('task_id', $id)->count();
+    $taskActionStatusCount = TaskAction::where('task_id', $id)
+        ->where('status', 'completed')
+        ->count();
+
+    return $taskActionCount > 0 && $taskActionCount == $taskActionStatusCount;
+}
+
 }

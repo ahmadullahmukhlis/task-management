@@ -555,7 +555,7 @@ export default defineComponent({
             } catch (e) {
                 this.loading = false
                 this.$q.notify({
-                    message: 'Something went wrong',
+                    message: 'Something went wrong '+e?.response?.data?.message,
                     color: 'red',
                 })
                 console.log(e)
@@ -591,7 +591,7 @@ await this.router.push(`/message/${encodeURIComponent(encrypted)}`)
             } catch (e) {
                 this.loading = false
                 this.$q.notify({
-                    message: 'Something went wrong',
+                    message: 'Something went wrong '+e?.response?.data?.message,
                     color: 'red',
                 })
                 console.log(e)

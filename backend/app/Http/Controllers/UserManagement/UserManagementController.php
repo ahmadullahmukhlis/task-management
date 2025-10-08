@@ -150,7 +150,7 @@ class UserManagementController extends Controller
             return response()->json(['status' => false, 'message' => 'Invalid OTP.']);
         } catch (\Exception $e) {
 
-            return response()->json(['status' => false, 'message' => 'Something went wrong.']);
+            return response()->json(['status' => false, 'message' => 'Something went wrong']);
         }
     }
 
