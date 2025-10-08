@@ -45,12 +45,21 @@ class TaskResource extends JsonResource
     }
    private function statusCount($id)
 {
-    $taskActionCount = TaskAction::where('task_id', $id)->count();
+    $taskAction = TaskAction::where('task_id', $id)->where('user_id',auth()->id())->count();
+    if($taskAction ==0){
+         $taskActionCount = TaskAction::where('task_id', $id)->count();
     $taskActionStatusCount = TaskAction::where('task_id', $id)
         ->where('status', 'completed')
         ->count();
 
     return $taskActionCount > 0 && $taskActionCount == $taskActionStatusCount;
+    }else {
+    $count=   TaskAction::where('task_id', $id)->where('user_id',auth()->id())
+        ->where('status', 'completed')
+        ->count();
+        return $count  > 0 ? true : false;
+    }
+
 }
 
 }

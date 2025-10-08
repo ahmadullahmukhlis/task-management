@@ -32,43 +32,16 @@ class TaskController extends Controller
                 'message' => 'the project is n ot assign to the user ',
             ]);
         }
-        $pendingTask = Task::where('project_id', $project->id)->orderBy('id', 'desc')
-            ->where(function ($q) {
 
-                $q->whereHas('taskAction', function ($q2) {
-                    $q2->where('user_id', auth()->id())
-                        ->where('status', 'Pending');
-                })
-                    ->orWhereDoesntHave('taskAction', function ($q2) {
-                        $q2->where('user_id', auth()->id());
-                    });
-            })
-            ->get();
-        $complate = Task::where('project_id', $project->id)->orderBy('id', 'desc')
-            ->where(function ($q) {
-
-                $q->whereHas('taskAction', function ($q2) {
-                    $q2->where('user_id', auth()->id())
-                        ->where('status', 'completed');
-                }) ->orWhereDoesntHave('taskAction', function ($q2) {
-                        $q2->where('user_id', auth()->id());
-                    });
-            })->get();
             $data =  Task::where('project_id', $project->id)->orderBy('id', 'desc')
             ->where(function ($q) {
-
                 $q->whereHas('taskAction', function ($q2) {
                     $q2->where('user_id', auth()->id());
-                }) ->orWhereDoesntHave('taskAction', function ($q2) {
-                        $q2->where('user_id', auth()->id());
-                    });
+                }) ->orWhere('created_by', auth()->id());
             })->get();
 
                  return TaskResource::collection($data);
-        // return response()->json(['data' => [
-        //     'complate' => TaskResource::collection($complate),
-        //     'panding' => TaskResource::collection($pendingTask),
-        // ]]);
+
 
     }
 
