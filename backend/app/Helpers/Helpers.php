@@ -1,30 +1,37 @@
 <?php
+
 namespace App\Helpers;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 
-    class Helpers
+class Helpers
 {
-    public static function removeImageFromUrl($url) : void {
+    public static function removeImageFromUrl($url): void
+    {
         $parsedUrl = parse_url($url);
         $path = $parsedUrl['path'];
         $absolutePath = public_path($path);
-        if(File::exists($absolutePath)){
+        if (File::exists($absolutePath)) {
             File::delete($absolutePath);
         }
     }
-    public static function formatFileSize($bytes) {
-        $units = array('B', 'KB', 'MB', 'GB', 'TB');
+
+    public static function formatFileSize($bytes)
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
         $i = 0;
 
         while ($bytes >= 1024 && $i < count($units) - 1) {
             $bytes /= 1024;
             $i++;
         }
-        return round($bytes, 2) . ' ' . $units[$i];
+
+        return round($bytes, 2).' '.$units[$i];
     }
-    public static function filterByDates($query, $field_name='created_at'){
+
+    public static function filterByDates($query, $field_name = 'created_at')
+    {
         $date = request()->get('date');
         $from_date = request()->get('from_date');
         $to_date = request()->get('to_date');

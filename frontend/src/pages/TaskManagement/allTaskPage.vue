@@ -11,9 +11,8 @@
             <div class="text-grey-6">all pending and Completed tasks</div>
           </div>
         </div>
-
-        <!-- Quick Actions / Add Task -->
-        <div class="row q-mb-lg">
+        <ProtectedComponent permission-key="task-create-task">
+               <div class="row q-mb-lg">
           <div class="col-12">
             <q-card flat bordered class="bg-blue-1">
               <q-card-section class="q-pa-sm">
@@ -41,6 +40,9 @@
             </q-card>
           </div>
         </div>
+        </ProtectedComponent>
+        <!-- Quick Actions / Add Task -->
+
 
         <!-- Task List -->
         <server-data :url="`tasks/project/${route.params.id}`" v-slot="{ data }" id="tasks">
@@ -86,7 +88,7 @@
                             </div>
 
                             <!-- Assigned Users -->
-                            <div class="flex -space-x-2 mt-1">
+                            <div class="flex mt-1 -space-x-2">
                               <q-avatar
                                 v-for="member in task.assign || []"
                                 :key="member.id"
@@ -291,10 +293,11 @@ import { useGeneralStore } from 'src/stores/generalStore';
 import AssignModel from './AssignModel.vue';
 import { Dialog, Notify } from 'quasar'
 import TaskDetails from './TaskDetails.vue';
+import ProtectedComponent from 'src/components/ProtectedComponent.vue';
 
 export default {
   name: 'TaskListApp',
-  components: { ServerData, AssignModel, TaskDetails },
+  components: { ServerData, AssignModel, TaskDetails ,ProtectedComponent },
   data() {
     const q = useQuasar();
     const route = useRoute();

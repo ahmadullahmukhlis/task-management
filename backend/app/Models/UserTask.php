@@ -11,24 +11,28 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class UserTask extends Model
 {
-    use HasFactory, LogsActivity, CausesActivity;
+    use CausesActivity, HasFactory, LogsActivity;
 
     protected $guarded = [];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-                        ->logOnlyDirty()
-                        ->logOnly(['*'])
-                        ->useLogName('UserTask')
-                        ->dontSubmitEmptyLogs()
-                        ->dontLogIfAttributesChangedOnly(['updated_at'])
-                        ;
+            ->logOnlyDirty()
+            ->logOnly(['*'])
+            ->useLogName('UserTask')
+            ->dontSubmitEmptyLogs()
+            ->dontLogIfAttributesChangedOnly(['updated_at']);
     }
 
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value)
+    {
         $ss = cache()->get('software-settings');
-        if(!$ss) return $value;
+        if (! $ss) {
+            return $value;
+        }
+
         return Carbon::parse($value)->format(cache()->get('software-settings')->date_format.' h:i:s A');
     }
+
 }

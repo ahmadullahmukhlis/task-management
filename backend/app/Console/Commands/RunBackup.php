@@ -2,10 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Events\TestEvent;
 use App\Http\Controllers\Configurations\BackupController;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 
 class RunBackup extends Command
 {
@@ -28,7 +26,7 @@ class RunBackup extends Command
      */
     public function handle()
     {
-        $backup = new BackupController();
+        $backup = new BackupController;
         $backup->run();
     }
 }

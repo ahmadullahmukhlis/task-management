@@ -15,7 +15,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, LogsActivity, CausesActivity;
+    use CausesActivity, HasApiTokens, HasFactory, LogsActivity, Notifiable;
 
     protected $guarded = [];
 
@@ -26,8 +26,7 @@ class User extends Authenticatable
             ->logOnly(['*'])
             ->useLogName('Users')
             ->dontSubmitEmptyLogs()
-            ->dontLogIfAttributesChangedOnly(['updated_at'])
-            ;
+            ->dontLogIfAttributesChangedOnly(['updated_at']);
     }
 
     /**
@@ -52,54 +51,61 @@ class User extends Authenticatable
         'is_active' => 'boolean',
     ];
 
-
     public static function permissions()
     {
         if (auth()->id() == 1) {
             return [];
         }
 
-        return Cache::remember('permission_keys_'.auth()->id(), 60*24*30, function() {
+        return Cache::remember('permission_keys_'.auth()->id(), 60 * 24 * 30, function () {
             $permissions = auth()->user()->load(['roles.role']);
             $permission_ids = $permissions->roles->pluck('role.assignedRoles')->flatten()->pluck('permission_id')->unique()->toArray();
-            return Permission::whereIn('id', $permission_ids)->select('key')->get()->map(function($item) {
+
+            return Permission::whereIn('id', $permission_ids)->select('key')->get()->map(function ($item) {
                 return $item->key;
             });
         });
     }
 
-    public function roles() : HasMany
+    public function roles(): HasMany
     {
         return $this->hasMany(UserRole::class)->with('role');
     }
 
-    public static function isAllowed($permission, $abort=true)
+    public static function isAllowed($permission, $abort = true)
     {
         $request = request();
-        if ($request->user()->id == 1){
+        if ($request->user()->id == 1) {
             return true;
         }
         $result = in_array($permission, self::permissions()->toArray());
-        if (!$result){
-            if ($abort){
+        if (! $result) {
+            if ($abort) {
                 abort(403, 'Not allowed');
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return true;
         }
     }
-        public function verify(): HasMany
+
+    public function verify(): HasMany
     {
         return $this->hasMany(UserVerification::class);
     }
-    public function userProject() : HasMany
+
+    public function userProject(): HasMany
     {
-        return $this->hasMany(UserProject::class ,'user_id');
+        return $this->hasMany(UserProject::class, 'user_id');
     }
-    public function taskUser() : HasMany
+
+    public function taskUser(): HasMany
     {
-        return $this->hasMany(UserTask::class,'user_id');
+        return $this->hasMany(UserTask::class, 'user_id');
+    }
+    public function taskAction() : HasMany
+    {
+        return $this->hasMany(TaskAction::class,'user_id');
     }
 }

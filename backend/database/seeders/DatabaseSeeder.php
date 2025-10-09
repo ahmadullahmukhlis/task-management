@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,5 +29,12 @@ class DatabaseSeeder extends Seeder
         $this->call(PasswordResetTokensTableSeeder::class);
         $this->call(PersonalAccessTokensTableSeeder::class);
         $this->call(WebsocketsStatisticsEntriesTableSeeder::class);
+        $this->call(DocumentsTableSeeder::class);
+        $this->call(ProjectsTableSeeder::class);
+        $this->call(TaskActionsTableSeeder::class);
+        $this->call(TasksTableSeeder::class);
+        $this->call(UserProjectsTableSeeder::class);
+        $this->call(UserTasksTableSeeder::class);
+        $this->call(UserVerificationsTableSeeder::class);
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class PasswordResetTokensTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class PasswordResetTokensTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('password_reset_tokens')->delete();
-        
-        
-        
+
     }
 }

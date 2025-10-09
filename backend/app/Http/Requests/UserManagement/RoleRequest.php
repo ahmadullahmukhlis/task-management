@@ -25,6 +25,7 @@ class RoleRequest extends FormRequest
             'name' => ['required', 'string', 'min:3', 'unique:roles', 'max:30'],
         ];
     }
+
     public function validated($key = null, $default = null)
     {
         return [

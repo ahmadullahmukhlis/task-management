@@ -10,18 +10,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Images extends Model
 {
-    use HasFactory, LogsActivity, CausesActivity;
+    use CausesActivity, HasFactory, LogsActivity;
 
     protected $guarded = [];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-                        ->logOnlyDirty()
-                        ->logOnly(['*'])
-                        ->useLogName('Images')
-                        ->dontSubmitEmptyLogs()
-                        ->dontLogIfAttributesChangedOnly(['updated_at'])
-                        ;
+            ->logOnlyDirty()
+            ->logOnly(['*'])
+            ->useLogName('Images')
+            ->dontSubmitEmptyLogs()
+            ->dontLogIfAttributesChangedOnly(['updated_at']);
     }
 }

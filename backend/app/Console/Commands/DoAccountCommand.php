@@ -34,6 +34,7 @@ class DoAccountCommand extends Command
             8
         ));
         $this->info($this->argument('service'));
+
         return Command::SUCCESS;
     }
 }

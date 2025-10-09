@@ -4,7 +4,7 @@
         :dir="languageStore.direction"
         :class="languageStore.direction === 'rtl' ? 'text-right' : 'text-left'"
     >
-        <div v-if="isLoading" class="h-screen flex items-center justify-center">
+        <div v-if="isLoading" class="flex items-center justify-center h-screen">
             <q-spinner color="primary" size="3rem" />
         </div>
         <span v-else>
@@ -141,7 +141,7 @@
                                 @click="logout"
                             />
                         </div>
-                        <div class="absolute-bottom bg-transparent">
+                        <div class="bg-transparent absolute-bottom">
                             <q-avatar size="56px" class="q-mb-sm">
                                 <q-img
                                     :src="
@@ -167,7 +167,7 @@
                     <q-page-container>
                         <div
                             v-if="$route?.meta?.breadcrumb?.length > 0"
-                            class="bg-white p-3 shadow z-50 border"
+                            class="z-50 p-3 bg-white border shadow"
                         >
                             <q-breadcrumbs>
                                 <q-breadcrumbs-el icon="home" to="/" />
@@ -251,7 +251,7 @@ export default defineComponent({
     },
     async mounted() {
         this.$echo
-            .private('applicationChannel')
+            .channel('applicationChannel')
             .listen('UserUpdatedEvent', e => {
                 this.authStore.getLoggedInUse()
                 if (

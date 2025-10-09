@@ -2,11 +2,8 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -15,7 +12,9 @@ class ProductStockChangedEvent
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $product;
+
     public $warehouse_id;
+
     public function __construct($product, $warehouse_id)
     {
         $this->product = $product;

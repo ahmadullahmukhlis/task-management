@@ -23,16 +23,16 @@ class PermissionGroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:3', function($field, $value, $error){
-                if(PermissionGroup::query()
+            'name' => ['required', 'string', 'min:3', function ($field, $value, $error) {
+                if (PermissionGroup::query()
                     ->where($field, $value)
                     ->where('permission_group_id', $this->request->get('permission_group_id'))
-                    ->exists()){
+                    ->exists()) {
                     $error('This name is already taken');
                 }
             }],
             'icon' => ['string', 'nullable'],
-            'permission_group_id' => ['required', 'int']
+            'permission_group_id' => ['required', 'int'],
         ];
     }
 }

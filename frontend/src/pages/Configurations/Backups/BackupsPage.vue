@@ -94,7 +94,7 @@ export default defineComponent({
     },
     mounted() {
         this.$echo
-            .private('applicationChannel')
+            .channel('applicationChannel')
             .listen('BackupRestoringEvent', message => {
                 this.$q.loading.show({
                     message: message.message,

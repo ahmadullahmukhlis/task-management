@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
 
 class DashboardTaskResource extends JsonResource
 {
@@ -15,22 +15,23 @@ class DashboardTaskResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-           return [
+        return [
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
             'statusText' => $this->status, // method in Task model
             'statusColor' => $this->getStatusColor($this->status), // dynamic color
-     'dueDate' => $this->due_to
+            'dueDate' => $this->due_to
     ? Carbon::parse($this->due_to)->format('M d')
     : 'Tomorrow',
-            'assignee' => auth()->id() == $this->created_by? 'You'  : $this->user?->first_name.' ' . $this->user?->last_name,
+            'assignee' => auth()->id() == $this->created_by ? 'You' : $this->user?->first_name.' '.$this->user?->last_name,
 
         ];
     }
-    private  function getStatusColor($status)
+
+    private function getStatusColor($status)
     {
-        return match($status) {
+        return match ($status) {
             'To Do' => 'grey-6',
             'In Progress' => 'blue',
             'Pending' => 'yellow',
@@ -38,5 +39,4 @@ class DashboardTaskResource extends JsonResource
             default => 'grey-6',
         };
     }
-
 }

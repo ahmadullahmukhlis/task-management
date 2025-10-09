@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class UserRolesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,18 +13,15 @@ class UserRolesTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('user_roles')->delete();
-        
-        \DB::table('user_roles')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('user_roles')->insert([
+            0 => [
                 'user_id' => 2,
-                'role_id' => 1,
-            ),
-        ));
-        
-        
+                'role_id' => 2,
+            ],
+        ]);
+
     }
 }

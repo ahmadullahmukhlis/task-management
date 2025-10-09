@@ -20,7 +20,10 @@ const routes = [
             { path: 'all-task/:id', component: () => import('pages/TaskManagement/allTaskPage.vue') },
 
         ],
+
     },
+            { path: '/real-time', component: () => import('pages/TaskManagement/RealTaskDashboardPage.vue') },
+
 {
     path: '/verify/:id',
     component: () => import('pages/verifyPage.vue'),

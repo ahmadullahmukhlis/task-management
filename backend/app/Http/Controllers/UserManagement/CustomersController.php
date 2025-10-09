@@ -13,21 +13,22 @@ class CustomersController extends Controller
 {
     public function index(Request $request)
     {
-        if($request->has('for-api')){
+        if ($request->has('for-api')) {
             return CustomersResource::collection(
                 Customer::query()->get()
             );
         }
         $this->allowed('customers-access');
         $query = Customer::query();
-        if($request->has('is_active')){
-            if($request->get('is_active')=='true'){
+        if ($request->has('is_active')) {
+            if ($request->get('is_active') == 'true') {
                 $query = $query->where('status', true);
-            }else{
+            } else {
                 $query = $query->where('status', false);
             }
         }
         $datatable = new DatatableBuilder($query, ['first_name', 'last_name', 'email', 'phone_number', 'address']);
+
         return CustomersResource::collection(
             $datatable->build()
         );
@@ -37,15 +38,17 @@ class CustomersController extends Controller
     {
         $this->allowed('customers-create');
         Customer::query()->create($request->validated());
+
         return response()->json([
             'result' => true,
-            'message' => "Created successfully"
+            'message' => 'Created successfully',
         ]);
     }
 
     public function show(Request $request, Customer $customer)
     {
         $this->allowed('customers-access');
+
         return new CustomersResource($customer);
     }
 
@@ -53,9 +56,10 @@ class CustomersController extends Controller
     {
         $this->allowed('customers-update');
         $customer->update($request->validated());
+
         return response()->json([
             'result' => true,
-            'message' => "Updated successfully"
+            'message' => 'Updated successfully',
         ]);
     }
 
@@ -63,9 +67,10 @@ class CustomersController extends Controller
     {
         $this->allowed('customers-delete');
         $customer->delete();
+
         return response()->json([
             'result' => true,
-            'message' => "Deleted successfully"
+            'message' => 'Deleted successfully',
         ]);
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class OtpLoginMail extends Mailable implements ShouldQueue
@@ -16,7 +15,7 @@ class OtpLoginMail extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-        public $otp;
+    public $otp;
 
     public $user;
 

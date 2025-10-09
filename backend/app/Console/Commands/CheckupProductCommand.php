@@ -32,12 +32,12 @@ class CheckupProductCommand extends Command
         $oneMonthFromNow = Carbon::now()->addMonth();
         $expiredProducts = Product::query()->whereDate('expiry_date', '<', now())->get();
         $nearToExpire = Product::query()->whereDate('expiry_date', '<=', $oneMonthFromNow)->whereDate('expiry_date', '>=', now())->get();
-        foreach ($expiredProducts as $expiredProduct){
-            if(
-                !Notification::query()
+        foreach ($expiredProducts as $expiredProduct) {
+            if (
+                ! Notification::query()
                     ->where('model', 'product-expiration')
                     ->where('subject_id', $expiredProduct->id)->exists()
-            ){
+            ) {
                 event(new NotificationPushedEvent(
                     'product-expiration',
                     $expiredProduct->name.' ('.$expiredProduct->code.') product has expired',
@@ -46,12 +46,12 @@ class CheckupProductCommand extends Command
                 ));
             }
         }
-        foreach ($nearToExpire as $nearToExpireProduct){
-            if(
-                !Notification::query()
+        foreach ($nearToExpire as $nearToExpireProduct) {
+            if (
+                ! Notification::query()
                     ->where('model', 'near-to-expire')
                     ->where('subject_id', $nearToExpireProduct->id)->exists()
-            ){
+            ) {
                 event(new NotificationPushedEvent(
                     'near-to-expire',
                     $nearToExpireProduct->name.' ('.$nearToExpireProduct->code.') product  will be expired '.Carbon::make($nearToExpireProduct->expiry_date)->diffForHumans(),
@@ -61,6 +61,7 @@ class CheckupProductCommand extends Command
             }
         }
         $this->info('Succeed');
+
         return Command::SUCCESS;
     }
 }

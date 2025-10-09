@@ -196,7 +196,7 @@
                                 "
                             />
                             <p
-                                class="text-xs text-red-500 mb-3"
+                                class="mb-3 text-xs text-red-500"
                                 v-if="!!errorMessage"
                             >
                                 {{ errorMessage?.replaceAll('_', ' ') }}
@@ -269,7 +269,7 @@ import { errorHandler } from 'src/lib/errorHandler'
 import NewSelectComponent from 'components/NewSelectComponent.vue'
 import FormValuesListener from 'components/FormValuesListener.vue'
 import MoneyInput from 'components/MonyField.vue'
-// import FileSelectorComponent from 'components/FileSelectorComponent.vue'
+import FileSelectorComponent from 'components/FileSelectorComponent.vue'
 import FullEditorComponent from 'components/FullEditorComponent.vue'
 // import TipEditorComponent from 'components/TipEditor/TipEditorComponent.vue'
 import ColorPacker from './ColorPacker.vue'
@@ -278,7 +278,7 @@ export default {
     components: {
         // TipEditor: TipEditorComponent,
         FullEditorComponent,
-        // FileSelectorComponent,
+        FileSelectorComponent,
         MoneyInput,
         FormValuesListener,
         DatepickerComponent,

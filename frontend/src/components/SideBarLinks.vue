@@ -6,6 +6,14 @@
             to="/"
             :active="generalStore.active_page === 'home'"
         />
+        <ProtectedComponent permission-key="for-all">
+                <SidebarLink
+            icon="rtt"
+            :name="$translate('RealTime Dashboard')"
+            to="/real-time"
+            :active="generalStore.active_page === 'realTimeTask'"
+        />
+        </ProtectedComponent>
         <ServerData
             url="projects"
             v-slot="{ data }"

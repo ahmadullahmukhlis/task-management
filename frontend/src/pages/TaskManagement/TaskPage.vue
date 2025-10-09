@@ -11,9 +11,8 @@
             <div class="text-grey-6">all pending and Completed tasks</div>
           </div>
         </div>
-
-        <!-- Quick Actions / Add Task -->
-        <div class="row q-mb-lg">
+        <ProtectedComponent permission-key="task-create-task">
+               <div class="row q-mb-lg">
           <div class="col-12">
             <q-card flat bordered class="bg-blue-1">
               <q-card-section class="q-pa-sm">
@@ -41,13 +40,16 @@
             </q-card>
           </div>
         </div>
+        </ProtectedComponent>
+        <!-- Quick Actions / Add Task -->
+
 
         <!-- Task List -->
         <server-data :url="`tasks/project/${route.params.id}`" v-slot="{ data }" id="tasks">
           <div class="q-mb-xl">
-            <div class="text-h6 q-mb-md">Pending List {{ data.panding.length }}</div>
+            <div class="text-h6 q-mb-md">Pending List {{ pendingTasks(data)?.length }}</div>
             <div class="task-list">
-              <div v-for="task in data.panding" :key="task.id" class="q-mb-sm">
+              <div v-for="task in pendingTasks(data)" :key="task.id" class="q-mb-sm">
                 <q-card class="task-card" flat bordered>
                   <q-card-section class="q-pa-sm">
                     <div class="items-center row">
@@ -74,7 +76,7 @@
                               <div class="col-auto" v-if="task.dueDate">
                                 <q-badge outline color="orange" class="q-mr-sm">
                                   <q-icon name="schedule" size="12px" class="q-mr-xs" />
-                                  {{ formatDate(task.dueDate) }}
+                                  {{ (task.dueDate) }}
                                 </q-badge>
                               </div>
                               <div class="col-auto" v-if="task.priority">
@@ -86,7 +88,7 @@
                             </div>
 
                             <!-- Assigned Users -->
-                            <div class="flex -space-x-2 mt-1">
+                            <div class="flex mt-1 -space-x-2">
                               <q-avatar
                                 v-for="member in task.assign || []"
                                 :key="member.id"
@@ -131,10 +133,10 @@
           </div>
 
           <!-- Completed Tasks -->
-          <div v-if="data.complate.length > 0">
-            <div class="text-h6 q-mb-md">Completed ({{ data.complate.length }})</div>
+          <div v-if="completedTasks(data)?.length > 0">
+            <div class="text-h6 q-mb-md">Completed ({{ completedTasks(data)?.lengt }})</div>
             <div class="task-list completed-tasks">
-              <div v-for="task in data.complate" :key="task.id" class="q-mb-sm">
+                 <div v-for="task in completedTasks(data)" :key="task.id" class="q-mb-sm">
                 <q-card class="task-card completed" flat bordered>
                   <q-card-section class="q-pa-sm">
                     <div class="items-center row">
@@ -161,7 +163,7 @@
           </div>
 
           <!-- No Tasks -->
-          <div v-if="data.complate.length === 0 && data.panding.length === 0" class="text-center q-pa-xl">
+          <div v-if="completedTasks(data)?.length === 0 && pendingTasks(data)?.length === 0" class="text-center q-pa-xl">
             <q-icon name="check_circle" size="64px" color="grey-4" />
             <div class="text-h6 text-grey-6 q-mt-md">No tasks yet</div>
             <div class="text-grey-6">Add your first task to get started!</div>
@@ -291,10 +293,11 @@ import { useGeneralStore } from 'src/stores/generalStore';
 import AssignModel from './AssignModel.vue';
 import { Dialog, Notify } from 'quasar'
 import TaskDetails from './TaskDetails.vue';
+import ProtectedComponent from 'src/components/ProtectedComponent.vue';
 
 export default {
   name: 'TaskListApp',
-  components: { ServerData, AssignModel, TaskDetails },
+  components: { ServerData, AssignModel, TaskDetails ,ProtectedComponent },
   data() {
     const q = useQuasar();
     const route = useRoute();
@@ -484,7 +487,19 @@ export default {
       return colors[priority] || 'grey';
     },
     setDueDate() { console.log('Due date set to:', this.selectedDueDate); },
-    setPriority() { console.log('Priority set to:', this.selectedPriority); }
+    setPriority() { console.log('Priority set to:', this.selectedPriority); },
+     pendingTasks(tasks) {
+      if (tasks && Array.isArray(tasks)) {
+        return tasks.filter(t => !t.completed)
+      }
+      return []
+    },
+    completedTasks(tasks) {
+        if (tasks && Array.isArray(tasks)) {
+        return tasks.filter(t => t.completed)
+      }
+      return []
+    }
   },
   mounted() {
     this.generalStore.setActivePage(this.route.params.id);
