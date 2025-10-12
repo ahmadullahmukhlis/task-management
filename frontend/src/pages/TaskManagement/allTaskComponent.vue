@@ -108,7 +108,7 @@
                             <q-btn flat round dense icon="more_vert" size="sm">
                               <q-menu>
                                   <q-list>
-                                  <q-item clickable v-close-popup @click="openDetail(task)">
+                                  <q-item clickable v-close-popup @click="openComment(task)">
                                     <q-item-section>comment</q-item-section>
                                   </q-item>
                                 </q-list>
@@ -279,7 +279,13 @@
       :project_id="route.params.id"
       :task="currentTask"
     />
-
+ <CommentModel
+      v-if="commentModel"
+      :handle-modal="commentModel"
+      :handleModelClose="closeComment"
+      :project_id="route.params.id"
+      :task="commentTask"
+    />
     <TaskDetails
       v-if="taskDetailModel"
       :handle-modal="taskDetailModel"
@@ -299,10 +305,11 @@ import AssignModel from './AssignModel.vue';
 import { Dialog, Notify } from 'quasar'
 import TaskDetails from './TaskDetails.vue';
 import ProtectedComponent from 'src/components/ProtectedComponent.vue';
+import CommentModel from './commentModel.vue';
 
 export default {
   name: 'TaskListApp',
-  components: { ServerData, AssignModel, TaskDetails ,ProtectedComponent },
+  components: { ServerData, AssignModel, TaskDetails ,ProtectedComponent ,CommentModel },
   data() {
     const q = useQuasar();
     const route = useRoute();
