@@ -10,6 +10,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskAction;
 use App\Models\User;
+use App\Models\Comment;
 use App\Models\UserTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -242,5 +243,17 @@ class TaskController extends Controller
         $task = Task::find($id);
 
         return new TaskResource($task);
+    }
+    public function comment(Request $request) {
+        Comment::create([
+            'body' => $request->body,
+        'user_id' => auth()->id(),
+        'commentable_type'=>Task::class,
+        'commentable_id'=>$request->task_id
+        ]);
+          return response()->json([
+            'result' => true,
+            'message' => 'The comment has been saved',
+        ]);
     }
 }
