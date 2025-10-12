@@ -222,10 +222,16 @@ class ProjectController extends Controller
 
     public function myTask()
     {
-        $tasks = Task::whereRelation('taskAssign', 'user_id', auth()->id())->orWhere('created_by', auth()->id())
-            ->orderBy('id', 'desc')
-            ->take(6)
-            ->get();
+       $tasks = Task::whereRelation('taskAssign', 'user_id', auth()->id())
+    ->where(function ($q) {
+        $q->whereRelation('project.userProject', 'user_id', auth()->id())
+          ->orWhereRelation('project', 'created_by', auth()->id());
+    })
+    ->orWhere('created_by', auth()->id())
+    ->orderBy('id', 'desc')
+    ->take(6)
+    ->get();
+
 
         return DashboardTaskResource::collection($tasks);
     }
