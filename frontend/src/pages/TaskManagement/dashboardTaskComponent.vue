@@ -50,6 +50,7 @@
             color="purple"
             size="sm"
             no-caps
+            @click="projectredirect(project.id)"
           />
         </div>
         <div class="divide-y divide-gray-100">
