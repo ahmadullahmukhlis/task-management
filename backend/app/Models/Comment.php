@@ -31,4 +31,13 @@ class Comment extends Model
         if(!$ss) return $value;
         return Carbon::parse($value)->format(cache()->get('software-settings')->date_format.' h:i:s A');
     }
+      public function commentable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class ,'user_id');
+    }
 }
