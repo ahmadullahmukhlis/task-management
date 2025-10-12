@@ -107,6 +107,11 @@
                           <div>
                             <q-btn flat round dense icon="more_vert" size="sm">
                               <q-menu>
+                                  <q-list>
+                                  <q-item clickable v-close-popup @click="openDetail(task)">
+                                    <q-item-section>comment</q-item-section>
+                                  </q-item>
+                                </q-list>
                                 <q-list>
                                   <q-item clickable v-close-popup @click="openDetail(task)">
                                     <q-item-section>View</q-item-section>
@@ -328,7 +333,10 @@ export default {
       ],
       taskDetailModel: false,
       taskinfo: null,
-      assignPeople: null
+      assignPeople: null ,
+      commentTask:null,
+      commentModel:false,
+
     }
   },
   methods: {
@@ -481,6 +489,13 @@ export default {
     closeDetail() {
       this.taskDetailModel = false;
       this.taskinfo = null;
+    },  openComment(task) {
+      this.commentModel = true;
+      this.commentTask = task;
+    },
+    closeComment() {
+         this.commentModel = false;
+      this.commentTask = null;
     },
     getPriorityColor(priority) {
       const colors = { Low: 'green', Medium: 'blue', High: 'orange', Urgent: 'red' };
