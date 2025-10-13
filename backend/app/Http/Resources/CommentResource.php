@@ -20,6 +20,7 @@ class CommentResource extends JsonResource
         'id'=>$this->id,
         'comment'=>$this->body,
         'user'=>$this->users($this->user_id),
+        'created_at'=>$this->created_at
       ];
     }
     private function users($user_id) {

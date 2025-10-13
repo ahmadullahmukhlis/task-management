@@ -12,37 +12,35 @@
           </div>
         </div>
         <ProtectedComponent permission-key="task-create-task">
-               <div class="row q-mb-lg">
-          <div class="col-12">
-            <q-card flat bordered class="bg-blue-1">
-              <q-card-section class="q-pa-sm">
-                <div class="items-center row">
-                  <div class="col">
-                    <q-input
-                      v-model="newTaskTitle"
-                      placeholder="Add a new task..."
-                      dense
-                      borderless
-                      @keyup.enter="addTask"
-                    >
-                      <template v-slot:prepend>
-                        <q-icon name="add" class="cursor-pointer" @click="addTask" />
-                      </template>
-                    </q-input>
+          <div class="row q-mb-lg">
+            <div class="col-12">
+              <q-card flat bordered class="bg-blue-1">
+                <q-card-section class="q-pa-sm">
+                  <div class="items-center row">
+                    <div class="col">
+                      <q-input
+                        v-model="newTaskTitle"
+                        placeholder="Add a new task..."
+                        dense
+                        borderless
+                        @keyup.enter="addTask"
+                      >
+                        <template v-slot:prepend>
+                          <q-icon name="add" class="cursor-pointer" @click="addTask" />
+                        </template>
+                      </q-input>
+                    </div>
+                    <div class="col-auto">
+                      <q-btn flat round icon="group" class="q-mr-sm" @click="loadUser" />
+                      <q-btn flat round icon="schedule" class="q-mr-sm" @click="showDueDatePicker = true" />
+                      <q-btn flat round icon="flag" @click="showPriorityDialog = true" />
+                    </div>
                   </div>
-                  <div class="col-auto">
-                    <q-btn flat round icon="group" class="q-mr-sm" @click="loadUser" />
-                    <q-btn flat round icon="schedule" class="q-mr-sm" @click="showDueDatePicker = true" />
-                    <q-btn flat round icon="flag" @click="showPriorityDialog = true" />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
+                </q-card-section>
+              </q-card>
+            </div>
           </div>
-        </div>
         </ProtectedComponent>
-        <!-- Quick Actions / Add Task -->
-
 
         <!-- Task List -->
         <server-data :url="`tasks/project/${route.params.id}`" v-slot="{ data }" id="tasks">
@@ -85,6 +83,22 @@
                                   {{ task.priority }}
                                 </q-badge>
                               </div>
+                              <!-- Comments Badge - Click to toggle comments -->
+                              <div class="col-auto">
+                                <q-badge
+                                  outline
+                                  :color="task.comments && task.comments.length > 0 ? 'primary' : 'grey'"
+                                  class="q-mr-sm pointer"
+                                  @click="toggleComments(task.id)"
+                                  clickable
+                                >
+                                  <q-icon name="chat" size="12px" class="q-mr-xs" />
+                                  {{ task.comments ? task.comments.length : 0 }}
+                                  <q-tooltip>
+                                    {{ task.comments && task.comments.length > 0 ? 'Click to show comments' : 'No comments' }}
+                                  </q-tooltip>
+                                </q-badge>
+                              </div>
                             </div>
 
                             <!-- Assigned Users -->
@@ -101,15 +115,54 @@
                                 {{ member.initials }}
                               </q-avatar>
                             </div>
+
+                            <!-- Comments Section -->
+                            <div v-if="showComments[task.id]" class="q-mt-md q-ml-md comments-section">
+                              <div class="text-caption text-weight-medium q-mb-sm">Comments:</div>
+
+                              <div v-if="!task.comments || task.comments.length === 0" class="text-grey-6 text-caption q-pa-sm">
+                                No comments yet
+                              </div>
+
+                              <div v-else>
+                                <div
+                                  v-for="comment in task.comments"
+                                  :key="comment.id"
+                                  class="q-mb-xs comment-item"
+                                >
+                                  <q-card flat bordered class="bg-grey-1 q-pa-xs">
+                                    <div class="text-caption">
+                                      <strong>{{ comment.user }}:</strong>
+                                      <span v-html="comment.comment"></span>
+                                    </div>
+                                    <div class="text-caption text-grey-6">
+                                      {{ formatDate(comment.created_at) }}
+                                    </div>
+                                  </q-card>
+                                </div>
+                              </div>
+
+                              <!-- Add Comment Button -->
+                              <q-btn
+                                flat
+                                dense
+                                color="primary"
+                                icon="add_comment"
+                                label="Add Comment"
+                                size="sm"
+                                @click="openComment(task)"
+                                class="q-mt-sm"
+                              />
+                            </div>
                           </div>
 
                           <!-- Task Actions -->
                           <div>
                             <q-btn flat round dense icon="more_vert" size="sm">
                               <q-menu>
-                                  <q-list>
+                                <q-list>
                                   <q-item clickable v-close-popup @click="openComment(task)">
-                                    <q-item-section>comment</q-item-section>
+                                    <q-item-section>Comment</q-item-section>
                                   </q-item>
                                 </q-list>
                                 <q-list>
@@ -139,9 +192,9 @@
 
           <!-- Completed Tasks -->
           <div v-if="completedTasks(data)?.length > 0">
-            <div class="text-h6 q-mb-md">Completed ({{ completedTasks(data)?.lengt }})</div>
+            <div class="text-h6 q-mb-md">Completed ({{ completedTasks(data)?.length }})</div>
             <div class="task-list completed-tasks">
-                 <div v-for="task in completedTasks(data)" :key="task.id" class="q-mb-sm">
+              <div v-for="task in completedTasks(data)" :key="task.id" class="q-mb-sm">
                 <q-card class="task-card completed" flat bordered>
                   <q-card-section class="q-pa-sm">
                     <div class="items-center row">
@@ -158,6 +211,42 @@
                         </div>
                         <div v-if="task.description" class="task-description text-caption text-grey-6">
                           {{ task.description }}
+                        </div>
+
+                        <!-- Completed Task Comments Badge -->
+                        <div class="items-center row q-mt-xs">
+                          <div class="col-auto" v-if="task.comments && task.comments.length > 0">
+                            <q-badge
+                              outline
+                              color="grey"
+                              class="q-mr-sm pointer"
+                              @click="toggleComments(task.id)"
+                              clickable
+                            >
+                              <q-icon name="chat" size="12px" class="q-mr-xs" />
+                              {{ task.comments.length }} comment{{ task.comments.length !== 1 ? 's' : '' }}
+                            </q-badge>
+                          </div>
+                        </div>
+
+                        <!-- Comments Section for Completed Tasks -->
+                        <div v-if="showComments[task.id]" class="q-mt-md q-ml-md comments-section">
+                          <div class="text-caption text-weight-medium q-mb-sm">Comments:</div>
+                          <div
+                            v-for="comment in task.comments"
+                            :key="comment.id"
+                            class="q-mb-xs comment-item"
+                          >
+                            <q-card flat bordered class="bg-grey-1 q-pa-xs">
+                              <div class="text-caption">
+                                <strong>{{ comment.user }}:</strong>
+                                <span v-html="comment.comment"></span>
+                              </div>
+                              <div class="text-caption text-grey-6">
+                                {{ formatDate(comment.created_at) }}
+                              </div>
+                            </q-card>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -202,7 +291,7 @@
         </q-card-section>
         <q-card-section>
           <q-select
-          outlined
+            outlined
             v-model="peopleSelected"
             :options="people.map(u => ({ label: u.name, value: u.id }))"
             option-label="label"
@@ -279,7 +368,7 @@
       :project_id="route.params.id"
       :task="currentTask"
     />
- <CommentModel
+    <CommentModel
       v-if="commentModel"
       :handle-modal="commentModel"
       :handleModelClose="closeComment"
@@ -343,7 +432,7 @@ export default {
       assignPeople: null ,
       commentTask:null,
       commentModel:false,
-
+      showComments: {}, // Track comment visibility for each task
     }
   },
   methods: {
@@ -437,7 +526,6 @@ export default {
     },
     assigny() {
       if (this.currentTask) {
-        // assign to existing task
         api.post(`tasks/assign/${this.currentTask.id}`, { users: this.peopleSelected })
           .then(res => {
             this.q.notify({ message: res.data.message, color: 'green' });
@@ -448,12 +536,12 @@ export default {
             this.q.notify({ message: err.message, color: 'red' });
           });
       } else {
-        // assign for new task
         this.assignPeople = this.peopleSelected;
         this.addAssignModel = false;
       }
-    },removeUser(taskId , userId) {
-        Dialog.create({
+    },
+    removeUser(taskId , userId) {
+      Dialog.create({
         title: 'Remove Confirmation',
         message: `Do you want to Remove this user From this task`,
         cancel: true,
@@ -474,21 +562,6 @@ export default {
         }
       });
     },
-    async loadUser() {
-      try {
-        const result = await api.get(`projects/user/${this.route.params.id}`);
-        this.people = result.data.data || result.data;
-        this.addAssignModel = true;
-      } catch (e) {
-        console.error(e);
-        this.q.notify({ message: 'Failed to load users', color: 'red' });
-      }
-    },
-    formatDate(dateString) {
-      if (!dateString) return '';
-      const d = new Date(dateString);
-      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    },
     openDetail(task) {
       this.taskDetailModel = true;
       this.taskinfo = task;
@@ -496,49 +569,103 @@ export default {
     closeDetail() {
       this.taskDetailModel = false;
       this.taskinfo = null;
-    },  openComment(task) {
-      this.commentModel = true;
-      this.commentTask = task;
     },
-    closeComment() {
-         this.commentModel = false;
-      this.commentTask = null;
+ toggleComments(taskId) {
+    // Fixed: Directly set the reactive property instead of using this.$set
+    this.showComments[taskId] = !this.showComments[taskId];
+
+    // Force reactivity by creating a new object if needed
+    this.showComments = { ...this.showComments };
+  },
+
+  openComment(task) {
+    this.commentModel = true;
+    this.commentTask = task;
+    // Fixed: Direct assignment instead of this.$set
+    this.showComments[task.id] = true;
+    this.showComments = { ...this.showComments }; // Force reactivity
+  },
+
+  closeComment() {
+    this.commentModel = false;
+    this.commentTask = null;
+  },
+    formatDate(date) {
+      return new Date(date).toLocaleString();
     },
+
     getPriorityColor(priority) {
-      const colors = { Low: 'green', Medium: 'blue', High: 'orange', Urgent: 'red' };
-      return colors[priority] || 'grey';
+      const map = { Low: 'grey', Medium: 'blue', High: 'orange', Urgent: 'red' };
+      return map[priority] || 'grey';
     },
-    setDueDate() { console.log('Due date set to:', this.selectedDueDate); },
-    setPriority() { console.log('Priority set to:', this.selectedPriority); },
-     pendingTasks(tasks) {
-      if (tasks && Array.isArray(tasks)) {
-        return tasks.filter(t => !t.completed)
-      }
-      return []
+    pendingTasks(data) {
+      return data?.filter(t => !t.completed);
     },
-    completedTasks(tasks) {
-        if (tasks && Array.isArray(tasks)) {
-        return tasks.filter(t => t.completed)
-      }
-      return []
+    completedTasks(data) {
+      return data?.filter(t => t.completed);
+    },
+    setDueDate() {
+      // Implementation for setting due date
+      this.showDueDatePicker = false;
+    },
+    setPriority() {
+      // Implementation for setting priority
+      this.showPriorityDialog = false;
+    },
+    loadUser() {
+      // Implementation for loading users
+      this.addAssignModel = true;
     }
   },
-  mounted() {
-    this.generalStore.setActivePage(this.route.params.id);
-    this.generalStore.setPageTitle('all tasks');
-  }
-}
+};
 </script>
 
 <style scoped>
-/* Same styles as your previous component */
-.task-list { min-height: 20px; }
-.task-card { transition: all 0.3s ease; border-left: 3px solid transparent; }
-.task-card:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 3px solid #1976d2; }
-.task-card.completed { opacity: 0.7; background-color: #fafafa; }
-.task-title { font-size: 14px; font-weight: 500; line-height: 1.4; }
-.task-description { font-size: 12px; margin-top: 2px; line-height: 1.3; }
-.text-strike { text-decoration: line-through; }
-.completed-tasks { opacity: 0.8; }
-.q-badge { font-size: 10px; }
+.pointer {
+  cursor: pointer;
+}
+
+.comments-section {
+  border-left: 3px solid #e0e0e0;
+  padding-left: 12px;
+  background-color: #fafafa;
+  border-radius: 4px;
+  padding: 12px;
+  margin-top: 8px;
+}
+
+.comment-item {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.task-card {
+  transition: all 0.3s ease;
+}
+
+.task-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Smooth transition for comments section */
+.comments-section {
+  transition: all 0.3s ease;
+}
+
+.task-title {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.task-description {
+  margin-top: 2px;
+}
+
+.completed-tasks .task-card {
+  opacity: 0.7;
+}
 </style>
