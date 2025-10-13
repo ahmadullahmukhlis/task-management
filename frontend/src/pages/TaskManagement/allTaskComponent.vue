@@ -65,8 +65,8 @@
                             <div :class="['task-title', task.completed ? 'text-strike text-grey-6' : '']">
                               {{ task.title }}
                             </div>
-                            <div v-if="task.description" class="task-description text-caption text-grey-6">
-                              {{ task.description }}
+                            <div v-if="task.description" class="task-description text-caption text-grey-6" v-html=" task.description">
+
                             </div>
 
                             <!-- Task Meta -->
@@ -333,7 +333,14 @@
 
         <q-card-section class="q-pt-none">
           <q-input v-model="editTaskTitle" label="Task title" class="q-mb-md" autofocus />
-          <q-input v-model="editTaskDescription" label="Description" type="textarea" class="q-mb-md" />
+          <full-editor-component
+    :value="editTaskDescription"
+    :label="'Description'"
+    :on-change="data => editTaskDescription = data"
+    :error="null"
+/>
+
+
 
           <div class="row q-mb-md">
             <div class="col-6">
@@ -395,10 +402,11 @@ import { Dialog, Notify } from 'quasar'
 import TaskDetails from './TaskDetails.vue';
 import ProtectedComponent from 'src/components/ProtectedComponent.vue';
 import CommentModel from './commentModel.vue';
+import FullEditorComponent from 'src/components/FullEditorComponent.vue';
 
 export default {
   name: 'TaskListApp',
-  components: { ServerData, AssignModel, TaskDetails ,ProtectedComponent ,CommentModel },
+  components: { ServerData, AssignModel, TaskDetails ,ProtectedComponent ,CommentModel ,FullEditorComponent },
   data() {
     const q = useQuasar();
     const route = useRoute();
