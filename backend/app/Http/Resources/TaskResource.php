@@ -5,6 +5,9 @@ namespace App\Http\Resources;
 use App\Models\Document;
 use App\Models\TaskAction;
 use App\Models\User;
+use App\Models\Task;
+use App\Models\Comment;
+use App\Http\Resources\CommentResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TaskResource extends JsonResource
@@ -27,6 +30,7 @@ class TaskResource extends JsonResource
             'created_by' => $this->created_by == auth()->id() ? true : false,
             'assign' => $this->userLoad($this->id),
             'documents' => $this->loadDocument($this->id),
+            'comments'=> $this->loadComments($this->id),
         ];
     }
 
@@ -61,5 +65,10 @@ class TaskResource extends JsonResource
     }
 
 }
+private function loadComments($task_id) {
+    $comment =  Comment::where('commentable_type',Task::class)->where('commentable_id',$task_id)->get();
+    return CommentResource::collection($comment);
+}
+
 
 }

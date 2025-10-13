@@ -34,7 +34,7 @@ class TaskController extends Controller
             ]);
         }
 
-            $data =  Task::where('project_id', $project->id)->orderBy('id', 'desc')
+            $data =  Task::with('comments')->where('project_id', $project->id)->orderBy('id', 'desc')
             ->where(function ($q) {
                 $q->whereHas('taskAction', function ($q2) {
                     $q2->where('user_id', auth()->id());
