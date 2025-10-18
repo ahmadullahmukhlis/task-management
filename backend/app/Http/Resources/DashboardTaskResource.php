@@ -18,6 +18,7 @@ class DashboardTaskResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'project_id' => $this->project_id,
             'description' => $this->description,
             'statusText' => $this->status, // method in Task model
             'statusColor' => $this->getStatusColor($this->status), // dynamic color
