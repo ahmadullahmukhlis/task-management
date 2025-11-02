@@ -625,6 +625,9 @@ export default {
       this.addAssignModel = true;
     }
   },
+     mounted() {
+        this.generalStore.setActivePage(this.route.params.id)
+    },
 };
 </script>
 
