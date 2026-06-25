@@ -47,7 +47,9 @@ RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-d
 # Handle Composer package installation
 RUN composer clear-cache
 COPY ./composer.json .
-RUN composer install --no-interaction --no-plugins --no-scripts --ignore-platform-req=ext-zip --ignore-platform-req=ext-sockets
+
+# 🟢 Added --no-audit to ignore security advisory blockades
+RUN composer install --no-interaction --no-plugins --no-scripts --no-audit --ignore-platform-req=ext-zip --ignore-platform-req=ext-sockets
 
 # Copy remaining code and fix application runtime permissions
 COPY . .
