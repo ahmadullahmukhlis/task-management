@@ -32,8 +32,8 @@ RUN apt-get install -y \
     unixodbc-dev
 
 # Setup Microsoft SQL Server Drivers (MSODBC)
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | tee /etc/apt/trusted.gpg.d/microsoft.asc \
-    && curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list | tee /etc/apt/sources.list.d/mssql-release.list \
+RUN curl https://microsoft.com | tee /etc/apt/trusted.gpg.d/microsoft.asc \
+    && curl https://microsoft.com(lsb_release -rs)/prod.list | tee /etc/apt/sources.list.d/mssql-release.list \
     && apt-get update \
     && ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18 \
     && echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
@@ -48,8 +48,8 @@ RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-d
 RUN composer clear-cache
 COPY ./composer.json .
 
-# 🟢 Added --no-audit to ignore security advisory blockades
-RUN composer install --no-interaction --no-plugins --no-scripts --no-audit --ignore-platform-req=ext-zip --ignore-platform-req=ext-sockets
+# 🟢 FIX: Placed --no-audit as a global flag and added --no-security-blocking
+RUN composer --no-audit install --no-interaction --no-plugins --no-scripts --no-security-blocking --ignore-platform-req=ext-zip --ignore-platform-req=ext-sockets
 
 # Copy remaining code and fix application runtime permissions
 COPY . .
